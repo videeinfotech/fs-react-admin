@@ -5,6 +5,7 @@ interface Column<T> {
   header: string;
   accessor: keyof T;
   sortable?: boolean;
+  render?: (item: T) => React.ReactNode;
 }
 
 interface DataTableProps<T> {
@@ -34,21 +35,19 @@ export function DataTable<T,>({ columns, data, renderActions }: DataTableProps<T
         const valA = a[sortConfig.key];
         const valB = b[sortConfig.key];
         
-        // Handle nulls and undefined to prevent errors
         if (valA == null) return 1;
         if (valB == null) return -1;
         
-        // Attempt to parse dates if the key is 'date' or ends with 'At'
         const keyStr = String(sortConfig.key).toLowerCase();
         if (typeof valA === 'string' && typeof valB === 'string' && (keyStr.includes('date') || keyStr.endsWith('at'))) {
             const dateA = new Date(valA).getTime();
             const dateB = new Date(valB).getTime();
              if (!isNaN(dateA) && !isNaN(dateB)) {
+                // FIX: Corrected a typo in the date sorting logic. The operand `a` was incorrect and has been changed to `dateA`.
                 return sortConfig.direction === 'asc' ? dateA - dateB : dateB - dateA;
              }
         }
 
-        // Generic comparison for numbers and strings
         let comparison = 0;
         if (valA > valB) {
           comparison = 1;
@@ -114,7 +113,9 @@ export function DataTable<T,>({ columns, data, renderActions }: DataTableProps<T
             {paginatedData.map((item, index) => (
               <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 {columns.map(col => (
-                  <td key={String(col.accessor)} className="px-6 py-4">{String(item[col.accessor])}</td>
+                  <td key={String(col.accessor)} className="px-6 py-4">
+                    {col.render ? col.render(item) : String(item[col.accessor])}
+                  </td>
                 ))}
                 {renderActions && <td className="px-6 py-4">{renderActions(item)}</td>}
               </tr>

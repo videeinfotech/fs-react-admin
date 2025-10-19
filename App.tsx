@@ -7,9 +7,8 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
-import Users from './pages/Users';
+import Monitoring from './pages/Monitoring'; // New Monitoring Page
 import UserDetails from './pages/UserDetails';
-import Listeners from './pages/Listeners';
 import ListenerDetails from './pages/ListenerDetails';
 import Wallet from './pages/Wallet';
 import Sessions from './pages/Sessions';
@@ -27,7 +26,6 @@ import Analytics from './pages/Analytics';
 import LiveSessions from './pages/LiveSessions';
 import AdminDoc from './pages/AdminDoc';
 import ApiDoc from './pages/ApiDoc';
-import ActivityMonitor from './pages/ActivityMonitor';
 
 
 function App() {
@@ -40,14 +38,12 @@ function App() {
             <Route element={<ProtectedRoute />}>
               <Route path="/" element={<Layout />}>
                 <Route index element={<Dashboard />} />
-                <Route path="users" element={<Users />} />
+                <Route path="monitoring" element={<Monitoring />} />
                 <Route path="users/:id" element={<UserDetails />} />
-                <Route path="listeners" element={<Listeners />} />
                 <Route path="listeners/:id" element={<ListenerDetails />} />
                 <Route path="wallet" element={<Wallet />} />
                 <Route path="sessions" element={<Sessions />} />
                 <Route path="live-sessions" element={<LiveSessions />} />
-                <Route path="activity-monitor" element={<ActivityMonitor />} />
                 <Route path="sessions/:id" element={<SessionDetails />} />
                 <Route path="feedback" element={<Feedback />} />
                 <Route path="tickets" element={<Tickets />} />
