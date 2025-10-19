@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { DataTable } from '../components/ui/DataTable';
 import { Transaction } from '../types';

@@ -1,4 +1,3 @@
-
 export interface Address {
   street: string;
   city: string;
@@ -46,7 +45,7 @@ export interface Session {
   userId: number;
   listener: string;
   listenerId: number;
-  type: 'Chat' | 'Call';
+  type: 'Chat' | 'Call' | 'Video';
   status: 'Completed' | 'Ongoing' | 'Cancelled';
   duration: string;
   cost: number;

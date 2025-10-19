@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
@@ -25,6 +24,7 @@ import Notifications from './pages/Notifications';
 import Roles from './pages/Roles';
 import AuditLogs from './pages/AuditLogs';
 import Analytics from './pages/Analytics';
+import LiveSessions from './pages/LiveSessions';
 
 
 function App() {
@@ -43,6 +43,7 @@ function App() {
                 <Route path="listeners/:id" element={<ListenerDetails />} />
                 <Route path="wallet" element={<Wallet />} />
                 <Route path="sessions" element={<Sessions />} />
+                <Route path="live-sessions" element={<LiveSessions />} />
                 <Route path="sessions/:id" element={<SessionDetails />} />
                 <Route path="feedback" element={<Feedback />} />
                 <Route path="tickets" element={<Tickets />} />
