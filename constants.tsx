@@ -7,6 +7,7 @@ import { IconProps } from './components/ui/icons/Icon';
 import { AnalyticsIcon } from './components/ui/icons/AnalyticsIcon';
 import { LiveIcon } from './components/ui/icons/LiveIcon';
 import { DocIcon } from './components/ui/icons/DocIcon';
+import { ApiIcon } from './components/ui/icons/ApiIcon';
 
 // A helper type for nav links
 export interface NavLinkInfo {
@@ -34,5 +35,6 @@ export const NAV_LINKS: NavLinkInfo[] = [
     { name: 'Reports', path: '/reports', icon: <ReportsIcon /> },
     { name: 'Analytics', path: '/analytics', icon: <AnalyticsIcon /> },
     { name: 'Admin Doc', path: '/admin-doc', icon: <DocIcon /> },
+    { name: 'API Doc', path: '/api-doc', icon: <ApiIcon /> },
     { name: 'Settings', path: '/settings', icon: <SettingsIcon /> },
 ];

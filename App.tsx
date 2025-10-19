@@ -26,6 +26,7 @@ import AuditLogs from './pages/AuditLogs';
 import Analytics from './pages/Analytics';
 import LiveSessions from './pages/LiveSessions';
 import AdminDoc from './pages/AdminDoc';
+import ApiDoc from './pages/ApiDoc';
 
 
 function App() {
@@ -52,6 +53,7 @@ function App() {
                 <Route path="reports" element={<Reports />} />
                 <Route path="analytics" element={<Analytics />} />
                 <Route path="admin-doc" element={<AdminDoc />} />
+                <Route path="api-doc" element={<ApiDoc />} />
                 <Route path="settings" element={<Settings />} />
                 {/* Adding some other placeholder routes for completeness */}
                 <Route path="cms" element={<CMS />} />
