@@ -8,6 +8,7 @@ import { AnalyticsIcon } from './components/ui/icons/AnalyticsIcon';
 import { LiveIcon } from './components/ui/icons/LiveIcon';
 import { DocIcon } from './components/ui/icons/DocIcon';
 import { ApiIcon } from './components/ui/icons/ApiIcon';
+import { ActivityIcon } from './components/ui/icons/ActivityIcon';
 
 // A helper type for nav links
 export interface NavLinkInfo {
@@ -30,6 +31,7 @@ export const NAV_LINKS: NavLinkInfo[] = [
     { name: 'Wallet', path: '/wallet', icon: <WalletIcon /> },
     { name: 'Sessions', path: '/sessions', icon: <SessionsIcon /> },
     { name: 'Live Sessions', path: '/live-sessions', icon: <LiveIcon /> },
+    { name: 'Activity Monitor', path: '/activity-monitor', icon: <ActivityIcon /> },
     { name: 'Feedback', path: '/feedback', icon: <FeedbackIcon /> },
     { name: 'Support Tickets', path: '/tickets', icon: <TicketsIcon /> },
     { name: 'Reports', path: '/reports', icon: <ReportsIcon /> },

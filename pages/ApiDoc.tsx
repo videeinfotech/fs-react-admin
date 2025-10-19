@@ -38,94 +38,107 @@ const ApiDoc: React.FC = () => {
             </p>
 
             <ApiEndpointCard title="Database Schema Design (MongoDB)">
-                <p>The foundation of the backend is a well-structured MongoDB database. Below are the recommended Mongoose schemas for each collection. These schemas define the data structure, types, and relationships between different parts of the application.</p>
-                <ul className="list-disc list-inside space-y-3">
-                    <li>
-                        <strong>Admin:</strong> Stores admin credentials.
-                        <CodeBlock language="json">{`{
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true }
-}`}</CodeBlock>
-                    </li>
-                     <li>
-                        <strong>User:</strong> Represents a platform user.
-                        <CodeBlock language="json">{`{
-  name: String,
-  email: { type: String, required: true, unique: true },
-  phone: String,
-  status: { type: String, enum: ['Active', 'Suspended', 'Deleted'], default: 'Active' },
-  wallet: { type: Number, default: 0 },
-  createdAt: { type: Date, default: Date.now },
-  lastLogin: Date,
-  address: { street: String, city: String, state: String, zip: String }
-}`}</CodeBlock>
-                    </li>
-                     <li>
-                        <strong>Listener:</strong> Represents a coach or listener.
-                        <CodeBlock language="json">{`{
-  name: String,
-  email: { type: String, required: true, unique: true },
-  status: { type: String, enum: ['Active', 'Pending', 'Blocked'], default: 'Pending' },
-  avgRating: { type: Number, default: 0 },
-  totalSessions: { type: Number, default: 0 },
-  totalEarnings: { type: Number, default: 0 },
-  rate: Number, // Rate per minute
-  bio: String,
-  expertise: [String],
-  createdAt: { type: Date, default: Date.now }
-}`}</CodeBlock>
-                    </li>
-                     <li>
-                        <strong>Session:</strong> Tracks a communication session.
-                        <CodeBlock language="json">{`{
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  listenerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Listener' },
-  type: { type: String, enum: ['Chat', 'Call', 'Video'] },
-  status: { type: String, enum: ['Ongoing', 'Completed', 'Cancelled'] },
-  duration: String, // e.g., "15 mins"
-  cost: Number,
-  startedAt: Date,
-  endedAt: Date,
-  transcript: [{
-    sender: String, // 'User' or 'Listener'
-    message: String,
-    timestamp: Date
-  }]
-}`}</CodeBlock>
-                    </li>
-                      <li>
-                        <strong>Transaction:</strong> Logs all financial activities.
-                        <CodeBlock language="json">{`{
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  userOrListener: String, // Denormalized name for easy display
-  amount: Number,
-  type: { type: String, enum: ['Credit', 'Debit', 'Refund'] },
-  method: { type: String, enum: ['Payment Gateway', 'Manual Adjustment', 'Session Fee'] },
-  status: { type: String, enum: ['Completed', 'Pending', 'Failed'] },
-  description: String,
-  date: { type: Date, default: Date.now }
-}`}</CodeBlock>
-                    </li>
-                     <li>
-                        <strong>Setting:</strong> A single document to store all admin panel settings.
-                        <CodeBlock language="json">{`{
-  platformName: String,
-  defaultCallRate: Number,
-  paymentGateways: {
-    razorpay: { keyId: String, secretKey: String },
-    paypal: { clientId: String, secretKey: String },
-    // ... other gateways
-  },
-  system: {
-    smtp: { host: String, port: Number, user: String, pass: String },
-    firebase: Object,
-    // ... other system configs
-  }
-}`}</CodeBlock>
-                    </li>
-                </ul>
-            </ApiEndpointCard>
+                <p>The foundation of the backend is a well-structured MongoDB database. We use a referenced data model, where documents in different collections are linked using `ObjectId`. This approach maintains data consistency and is well-suited for the relational nature of our entities.</p>
+                
+                <h3 className="text-xl font-semibold">Core Models & Relationships</h3>
+                 <ul className="list-disc list-inside space-y-2">
+                    <li><strong>User & Listener:</strong> The two primary actors in the system. They are distinct collections.</li>
+                    <li><strong>Session:</strong> Connects one `User` and one `Listener`. This is a one-to-many relationship (a User can have many Sessions).</li>
+                    <li><strong>Transaction:</strong> Belongs to a `User` and tracks all financial movements in their wallet.</li>
+                    <li><strong>Feedback:</strong> Links a `User` to a `Listener` after a session, containing a rating and comment.</li>
+                    <li><strong>Ticket:</strong> Belongs to a `User` and is used for support.</li>
+                 </ul>
 
+                <h3 className="text-xl font-semibold mt-4">Mongoose Schemas</h3>
+                <p>Below are the recommended Mongoose schemas. They include types, validation, and default values.</p>
+                
+                <details className="space-y-4">
+                    <summary className="font-semibold text-lg cursor-pointer">View Schemas</summary>
+                    <div>
+                        <h4 className="font-bold">Admin Schema</h4>
+                        <CodeBlock language="javascript">{`const adminSchema = new mongoose.Schema({
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true }
+});`}</CodeBlock>
+                    </div>
+                     <div>
+                        <h4 className="font-bold">User Schema</h4>
+                        <CodeBlock language="javascript">{`const userSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true, index: true }, // Indexed for fast lookups
+    phone: { type: String },
+    status: { type: String, enum: ['Active', 'Suspended', 'Deleted'], default: 'Active', index: true },
+    wallet: { type: Number, default: 0 }, // Store currency in the smallest unit (e.g., cents)
+    createdAt: { type: Date, default: Date.now },
+    lastLogin: { type: Date },
+    address: { 
+        street: String, 
+        city: String, 
+        state: String, 
+        zip: String 
+    }
+}, { timestamps: true });`}</CodeBlock>
+                    </div>
+                     <div>
+                        <h4 className="font-bold">Listener Schema</h4>
+                        <CodeBlock language="javascript">{`const listenerSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true, index: true },
+    status: { type: String, enum: ['Active', 'Pending', 'Blocked'], default: 'Pending', index: true },
+    avgRating: { type: Number, default: 0 },
+    totalSessions: { type: Number, default: 0 },
+    totalEarnings: { type: Number, default: 0 },
+    rate: { type: Number, required: true }, // Rate per minute, in smallest currency unit
+    bio: { type: String },
+    expertise: { type: [String], index: true },
+    createdAt: { type: Date, default: Date.now }
+}, { timestamps: true });`}</CodeBlock>
+                    </div>
+                    <div>
+                        <h4 className="font-bold">Session Schema</h4>
+                        <CodeBlock language="javascript">{`const sessionSchema = new mongoose.Schema({
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, index: true },
+    listenerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Listener', required: true, index: true },
+    type: { type: String, enum: ['Chat', 'Call', 'Video'], required: true },
+    status: { type: String, enum: ['Ongoing', 'Completed', 'Cancelled'], required: true, index: true },
+    duration: { type: String }, // e.g., "15:30"
+    cost: { type: Number, default: 0 },
+    startedAt: { type: Date, default: Date.now },
+    endedAt: { type: Date },
+    transcript: [{
+        senderId: { type: mongoose.Schema.Types.ObjectId, required: true },
+        senderModel: { type: String, enum: ['User', 'Listener'], required: true },
+        message: { type: String },
+        timestamp: { type: Date, default: Date.now }
+    }]
+}, { timestamps: true });`}</CodeBlock>
+                    </div>
+                    <div>
+                        <h4 className="font-bold">Transaction Schema</h4>
+                        <CodeBlock language="javascript">{`const transactionSchema = new mongoose.Schema({
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, index: true },
+    // Denormalized fields for faster display in admin panel
+    userOrListener: { type: String, required: true }, 
+    type: { type: String, enum: ['Credit', 'Debit', 'Refund'], required: true, index: true },
+    amount: { type: Number, required: true },
+    method: { type: String, enum: ['Payment Gateway', 'Manual Adjustment', 'Session Fee'], required: true },
+    status: { type: String, enum: ['Completed', 'Pending', 'Failed'], required: true, index: true },
+    description: { type: String },
+    date: { type: Date, default: Date.now }
+}, { timestamps: true });`}</CodeBlock>
+                    </div>
+                </details>
+
+                 <h3 className="text-xl font-semibold mt-6">Performance & Indexing</h3>
+                 <p>Indexes are crucial for fast query performance, especially as the data grows. Ensure the following indexes are created on your MongoDB collections.</p>
+                 <ul className="list-disc list-inside space-y-2">
+                    <li><strong>Users:</strong> `email` (unique), `status`</li>
+                    <li><strong>Listeners:</strong> `email` (unique), `status`, `expertise`</li>
+                    <li><strong>Sessions:</strong> `userId`, `listenerId`, `status`</li>
+                    <li><strong>Transactions:</strong> `userId`, `type`, `status`</li>
+                 </ul>
+            </ApiEndpointCard>
+            
             <ApiEndpointCard title="1. Project Setup & Authentication">
                 <p>Initialize a Node.js project with Express. The core of the application is secure authentication using JSON Web Tokens (JWT). All protected routes will use a middleware to verify this token.</p>
                 <h3 className="text-xl font-semibold">API Routes</h3>
@@ -138,7 +151,7 @@ const ApiDoc: React.FC = () => {
 1.  **Project Structure**: Create folders for \`config\`, \`routes\`, \`controllers\`, \`middleware\`, and \`models\`.
 2.  **Dependencies**: The \`package.json\` should include \`express\`, \`mongoose\`, \`jsonwebtoken\`, \`bcryptjs\`, \`cors\`, \`dotenv\`, and \`express-validator\`.
 3.  **Database Connection**: Set up a MongoDB connection in a \`config/db.js\` file using Mongoose.
-4.  **Admin Model**: Create the \`Admin\` model based on the schema defined in the database design section. In a separate script, add a default admin with email "admin@findsukoon.com" and password "password" (hash the password with bcryptjs).
+4.  **Admin Model**: Create the \`Admin\` model based on the detailed schema from the documentation. In a separate script, add a default admin with email "admin@findsukoon.com" and password "password" (hash the password with bcryptjs).
 5.  **Auth Controller**: Create a controller with a \`login\` function. It should find the admin by email, compare the hashed password using bcryptjs, and if valid, generate a JWT signed with a secret from environment variables.
 6.  **Auth Route**: Create a route \`POST /api/auth/login\` that points to the login controller function.
 7.  **Auth Middleware**: Create a file \`middleware/auth.js\`. This middleware should read the JWT from the 'Authorization' header, verify it, and attach the decoded admin payload to the \`req\` object. If the token is invalid or missing, it should return a 401 error.`}
@@ -149,16 +162,17 @@ const ApiDoc: React.FC = () => {
                 <p>Endpoints for CRUD operations for both users and listeners. These are very similar in structure.</p>
                 <h3 className="text-xl font-semibold">API Routes</h3>
                 <ul className="list-disc list-inside">
-                    <li><code>GET /api/users</code> & <code>GET /api/listeners</code>: Fetch lists with filtering (by status, date), sorting, and pagination.</li>
-                    <li><code>GET /api/users/:id</code> & <code>GET /api/listeners/:id</code>: Get details for a single user/listener, including related data like their sessions and transactions.</li>
+                    {/* FIX: The following list item was corrupted by a copy-paste error. */}
+                    <li><code>GET /api/users</code> &amp; <code>GET /api/listeners</code>: Fetch lists with filtering (by status, date), sorting, and pagination.</li>
+                    <li><code>GET /api/users/:id</code> &amp; <code>GET /api/listeners/:id</code>: Get details for a single user/listener, including related data like their sessions and transactions.</li>
                     <li><code>PUT /api/users/:id</code>: Update a user's status (e.g., 'Active', 'Suspended').</li>
                      <li><code>PUT /api/listeners/:id/approve</code>: Update listener status to 'Active'.</li>
                     <li><code>PUT /api/listeners/:id/block</code>: Update listener status to 'Blocked'.</li>
                 </ul>
                  <PromptBlock>
-{`Using Node.js, Express, and Mongoose, create the full set of API endpoints for managing Users and Listeners, based on the database schema design. All routes must be protected by the JWT auth middleware.
+{`Using Node.js, Express, and Mongoose, create the full set of API endpoints for managing Users and Listeners, based on the detailed database schema design. All routes must be protected by the JWT auth middleware.
 
-1.  **User & Listener Models**: Create the Mongoose models for 'User' and 'Listener' as defined in the schema documentation.
+1.  **User & Listener Models**: Create the Mongoose models for 'User' and 'Listener' as defined in the schema documentation. Ensure all specified indexes are created.
 2.  **User Routes & Controller**:
     *   \`GET /api/users\`: Implement filtering by \`status\` and a date range for \`createdAt\`. Also add pagination and sorting.
     *   \`GET /api/users/:id\`: Return the user's profile. Use Mongoose's \`.populate()\` or separate queries to also find and return their associated sessions and transactions.
@@ -180,7 +194,7 @@ const ApiDoc: React.FC = () => {
                 <PromptBlock>
 {`Create the API for handling wallet transactions in Node.js, Express, and Mongoose, based on the defined schemas. All routes must be protected by auth middleware.
 
-1.  **Transaction Model**: Create the Mongoose model for 'Transaction' as specified in the schema design.
+1.  **Transaction Model**: Create the Mongoose model for 'Transaction' as specified in the schema design, including all indexes.
 2.  **Transaction Controller**:
     *   \`GET /api/transactions\`: Create a function to fetch all transactions. It must support filtering by \`type\`, \`status\`, and search by \`userOrListener\` or transaction ID. Add pagination.
     *   \`POST /api/wallet/adjust\`: Create a function that receives \`userId\`, \`amount\`, \`type\` ('Credit' or 'Debit'), and \`reason\`. The function must perform two actions atomically (using a Mongoose session/transaction):
@@ -201,10 +215,10 @@ const ApiDoc: React.FC = () => {
                 <PromptBlock>
 {`Build the API endpoints for session management in Node.js, Express, and Mongoose based on the defined Session schema. All routes must be protected.
 
-1.  **Session Model**: Create the Mongoose model for 'Session'.
+1.  **Session Model**: Create the Mongoose model for 'Session' with all specified indexes.
 2.  **Session Controller**:
-    *   \`GET /api/sessions\`: Fetch historical sessions (status is 'Completed' or 'Cancelled'). Support pagination and filtering.
-    *   \`GET /api/sessions/live\`: Fetch all sessions where status is 'Ongoing'.
+    *   \`GET /api/sessions\`: Fetch historical sessions (status is 'Completed' or 'Cancelled'). Support pagination and filtering. Populate user and listener names.
+    *   \`GET /api/sessions/live\`: Fetch all sessions where status is 'Ongoing'. Populate user and listener names.
     *   \`GET /api/sessions/:id\`: Fetch a single session by its ID.
     *   \`POST /api/sessions/:id/end\`: Forcibly end a session by updating its status to 'Completed' and setting the 'endedAt' timestamp. This should also trigger a WebSocket event (see next section).`}
                 </PromptBlock>

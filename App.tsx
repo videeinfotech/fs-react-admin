@@ -27,6 +27,7 @@ import Analytics from './pages/Analytics';
 import LiveSessions from './pages/LiveSessions';
 import AdminDoc from './pages/AdminDoc';
 import ApiDoc from './pages/ApiDoc';
+import ActivityMonitor from './pages/ActivityMonitor';
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
                 <Route path="wallet" element={<Wallet />} />
                 <Route path="sessions" element={<Sessions />} />
                 <Route path="live-sessions" element={<LiveSessions />} />
+                <Route path="activity-monitor" element={<ActivityMonitor />} />
                 <Route path="sessions/:id" element={<SessionDetails />} />
                 <Route path="feedback" element={<Feedback />} />
                 <Route path="tickets" element={<Tickets />} />
