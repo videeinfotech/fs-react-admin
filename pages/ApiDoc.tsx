@@ -37,6 +37,95 @@ const ApiDoc: React.FC = () => {
                 This guide provides a complete blueprint for building the backend API for the Find Sukoon admin panel using Node.js, Express, and MongoDB. Each section includes the API specification and a generative prompt you can use to create the backend code.
             </p>
 
+            <ApiEndpointCard title="Database Schema Design (MongoDB)">
+                <p>The foundation of the backend is a well-structured MongoDB database. Below are the recommended Mongoose schemas for each collection. These schemas define the data structure, types, and relationships between different parts of the application.</p>
+                <ul className="list-disc list-inside space-y-3">
+                    <li>
+                        <strong>Admin:</strong> Stores admin credentials.
+                        <CodeBlock language="json">{`{
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true }
+}`}</CodeBlock>
+                    </li>
+                     <li>
+                        <strong>User:</strong> Represents a platform user.
+                        <CodeBlock language="json">{`{
+  name: String,
+  email: { type: String, required: true, unique: true },
+  phone: String,
+  status: { type: String, enum: ['Active', 'Suspended', 'Deleted'], default: 'Active' },
+  wallet: { type: Number, default: 0 },
+  createdAt: { type: Date, default: Date.now },
+  lastLogin: Date,
+  address: { street: String, city: String, state: String, zip: String }
+}`}</CodeBlock>
+                    </li>
+                     <li>
+                        <strong>Listener:</strong> Represents a coach or listener.
+                        <CodeBlock language="json">{`{
+  name: String,
+  email: { type: String, required: true, unique: true },
+  status: { type: String, enum: ['Active', 'Pending', 'Blocked'], default: 'Pending' },
+  avgRating: { type: Number, default: 0 },
+  totalSessions: { type: Number, default: 0 },
+  totalEarnings: { type: Number, default: 0 },
+  rate: Number, // Rate per minute
+  bio: String,
+  expertise: [String],
+  createdAt: { type: Date, default: Date.now }
+}`}</CodeBlock>
+                    </li>
+                     <li>
+                        <strong>Session:</strong> Tracks a communication session.
+                        <CodeBlock language="json">{`{
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  listenerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Listener' },
+  type: { type: String, enum: ['Chat', 'Call', 'Video'] },
+  status: { type: String, enum: ['Ongoing', 'Completed', 'Cancelled'] },
+  duration: String, // e.g., "15 mins"
+  cost: Number,
+  startedAt: Date,
+  endedAt: Date,
+  transcript: [{
+    sender: String, // 'User' or 'Listener'
+    message: String,
+    timestamp: Date
+  }]
+}`}</CodeBlock>
+                    </li>
+                      <li>
+                        <strong>Transaction:</strong> Logs all financial activities.
+                        <CodeBlock language="json">{`{
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  userOrListener: String, // Denormalized name for easy display
+  amount: Number,
+  type: { type: String, enum: ['Credit', 'Debit', 'Refund'] },
+  method: { type: String, enum: ['Payment Gateway', 'Manual Adjustment', 'Session Fee'] },
+  status: { type: String, enum: ['Completed', 'Pending', 'Failed'] },
+  description: String,
+  date: { type: Date, default: Date.now }
+}`}</CodeBlock>
+                    </li>
+                     <li>
+                        <strong>Setting:</strong> A single document to store all admin panel settings.
+                        <CodeBlock language="json">{`{
+  platformName: String,
+  defaultCallRate: Number,
+  paymentGateways: {
+    razorpay: { keyId: String, secretKey: String },
+    paypal: { clientId: String, secretKey: String },
+    // ... other gateways
+  },
+  system: {
+    smtp: { host: String, port: Number, user: String, pass: String },
+    firebase: Object,
+    // ... other system configs
+  }
+}`}</CodeBlock>
+                    </li>
+                </ul>
+            </ApiEndpointCard>
+
             <ApiEndpointCard title="1. Project Setup & Authentication">
                 <p>Initialize a Node.js project with Express. The core of the application is secure authentication using JSON Web Tokens (JWT). All protected routes will use a middleware to verify this token.</p>
                 <h3 className="text-xl font-semibold">API Routes</h3>
@@ -49,7 +138,7 @@ const ApiDoc: React.FC = () => {
 1.  **Project Structure**: Create folders for \`config\`, \`routes\`, \`controllers\`, \`middleware\`, and \`models\`.
 2.  **Dependencies**: The \`package.json\` should include \`express\`, \`mongoose\`, \`jsonwebtoken\`, \`bcryptjs\`, \`cors\`, \`dotenv\`, and \`express-validator\`.
 3.  **Database Connection**: Set up a MongoDB connection in a \`config/db.js\` file using Mongoose.
-4.  **Admin Model**: Create an \`Admin\` model with fields for \`email\` (unique, required) and \`password\` (required). In a separate script, add a default admin with email "admin@findsukoon.com" and password "password" (make sure to hash the password with bcryptjs).
+4.  **Admin Model**: Create the \`Admin\` model based on the schema defined in the database design section. In a separate script, add a default admin with email "admin@findsukoon.com" and password "password" (hash the password with bcryptjs).
 5.  **Auth Controller**: Create a controller with a \`login\` function. It should find the admin by email, compare the hashed password using bcryptjs, and if valid, generate a JWT signed with a secret from environment variables.
 6.  **Auth Route**: Create a route \`POST /api/auth/login\` that points to the login controller function.
 7.  **Auth Middleware**: Create a file \`middleware/auth.js\`. This middleware should read the JWT from the 'Authorization' header, verify it, and attach the decoded admin payload to the \`req\` object. If the token is invalid or missing, it should return a 401 error.`}
@@ -67,18 +156,17 @@ const ApiDoc: React.FC = () => {
                     <li><code>PUT /api/listeners/:id/block</code>: Update listener status to 'Blocked'.</li>
                 </ul>
                  <PromptBlock>
-{`Using Node.js, Express, and Mongoose, create the full set of API endpoints for managing Users and Listeners. All routes must be protected by the JWT auth middleware created previously.
+{`Using Node.js, Express, and Mongoose, create the full set of API endpoints for managing Users and Listeners, based on the database schema design. All routes must be protected by the JWT auth middleware.
 
-1.  **User Model**: Create a Mongoose schema for 'User' with fields: \`name\`, \`email\`, \`phone\`, \`status\` ('Active', 'Suspended', 'Deleted'), \`createdAt\`, \`lastLogin\`, \`address\` (sub-document), \`wallet\` (Number), etc.
-2.  **Listener Model**: Create a Mongoose schema for 'Listener' with fields: \`name\`, \`email\`, \`status\` ('Active', 'Pending', 'Blocked'), \`avgRating\`, \`totalEarnings\`, \`rate\`, \`bio\`, \`expertise\` (Array of strings).
-3.  **User Routes & Controller**:
+1.  **User & Listener Models**: Create the Mongoose models for 'User' and 'Listener' as defined in the schema documentation.
+2.  **User Routes & Controller**:
     *   \`GET /api/users\`: Implement filtering by \`status\` and a date range for \`createdAt\`. Also add pagination and sorting.
-    *   \`GET /api/users/:id\`: Return the user's profile. Also, find and return their associated sessions and transactions.
+    *   \`GET /api/users/:id\`: Return the user's profile. Use Mongoose's \`.populate()\` or separate queries to also find and return their associated sessions and transactions.
     *   \`PUT /api/users/:id\`: Update the user's status.
-4.  **Listener Routes & Controller**:
+3.  **Listener Routes & Controller**:
     *   \`GET /api/listeners\`: Implement filtering by \`status\`, pagination, and sorting.
-    *   \`GET /api/listeners/:id\`: Return the listener's profile. Also, find and return their associated sessions and feedback.
-    *   \`PUT /api/listeners/:id\`: Implement status changes, for example, changing 'Pending' to 'Active' (for approvals) or any status to 'Blocked'.`}
+    *   \`GET /api/listeners/:id\`: Return the listener's profile. Also find their associated sessions and feedback.
+    *   \`PUT /api/listeners/:id\`: Implement status changes, for example, changing 'Pending' to 'Active' or any status to 'Blocked'.`}
                 </PromptBlock>
             </ApiEndpointCard>
 
@@ -90,12 +178,12 @@ const ApiDoc: React.FC = () => {
                     <li><code>POST /api/wallet/adjust</code>: Manually credit or debit a user's wallet. This must be an atomic operation.</li>
                 </ul>
                 <PromptBlock>
-{`Create the API for handling wallet transactions in Node.js, Express, and Mongoose. All routes must be protected by auth middleware.
+{`Create the API for handling wallet transactions in Node.js, Express, and Mongoose, based on the defined schemas. All routes must be protected by auth middleware.
 
-1.  **Transaction Model**: Create a Mongoose schema for 'Transaction' with fields: \`userId\`, \`userOrListener\` (String), \`amount\`, \`type\` ('Credit', 'Debit', 'Refund'), \`method\` ('Payment Gateway', 'Manual Adjustment', 'Session Fee'), \`status\` ('Completed', 'Pending', 'Failed'), \`description\`, and \`date\`.
+1.  **Transaction Model**: Create the Mongoose model for 'Transaction' as specified in the schema design.
 2.  **Transaction Controller**:
     *   \`GET /api/transactions\`: Create a function to fetch all transactions. It must support filtering by \`type\`, \`status\`, and search by \`userOrListener\` or transaction ID. Add pagination.
-    *   \`POST /api/wallet/adjust\`: Create a function that receives \`userId\`, \`amount\`, \`type\` ('Credit' or 'Debit'), and \`reason\`. The function must perform two actions atomically (using a transaction if possible):
+    *   \`POST /api/wallet/adjust\`: Create a function that receives \`userId\`, \`amount\`, \`type\` ('Credit' or 'Debit'), and \`reason\`. The function must perform two actions atomically (using a Mongoose session/transaction):
         a. Find the user by \`userId\` and update their \`wallet\` balance.
         b. Create a new document in the Transaction collection with the method 'Manual Adjustment' and the reason as the description.`}
                 </PromptBlock>
@@ -111,9 +199,9 @@ const ApiDoc: React.FC = () => {
                     <li><code>POST /api/sessions/:id/end</code>: Endpoint for admins to forcibly end a session.</li>
                 </ul>
                 <PromptBlock>
-{`Build the API endpoints for session management in Node.js, Express, and Mongoose. All routes must be protected.
+{`Build the API endpoints for session management in Node.js, Express, and Mongoose based on the defined Session schema. All routes must be protected.
 
-1.  **Session Model**: Create a Mongoose schema for 'Session'. It should include \`userId\`, \`listenerId\`, \`user\`, \`listener\`, \`type\` ('Chat', 'Call', 'Video'), \`status\` ('Ongoing', 'Completed', 'Cancelled'), \`duration\`, \`cost\`, \`startedAt\`, \`endedAt\`, and \`transcript\` (an array of objects with \`sender\`, \`message\`, \`timestamp\`).
+1.  **Session Model**: Create the Mongoose model for 'Session'.
 2.  **Session Controller**:
     *   \`GET /api/sessions\`: Fetch historical sessions (status is 'Completed' or 'Cancelled'). Support pagination and filtering.
     *   \`GET /api/sessions/live\`: Fetch all sessions where status is 'Ongoing'.
@@ -181,7 +269,7 @@ const ApiDoc: React.FC = () => {
                 <PromptBlock>
 {`Create API endpoints to manage application settings.
 
-1.  **Settings Model**: Create a Mongoose schema for 'Setting'. Design it to store a single document containing a large JSON object with all the fields from the General, Payment Gateway, and System Configuration tabs. For example: \`{ platformName: 'Find Sukoon', paymentGateways: { razorpay: { keyId: '...' } }, system: { smtp: { ... } } }\`. Use \`{ type: Object }\` for nested configurations.
+1.  **Settings Model**: Create the Mongoose schema for 'Setting' as defined in the database design. It should store a single document containing all configurations.
 2.  **Settings Controller**:
     *   \`GET /api/settings\`: Find and return the single settings document. If it doesn't exist, return a default object.
     *   \`POST /api/settings\`: Receive a settings object in the request body. Use \`findOneAndUpdate\` with \`upsert: true\` to update the single settings document in the database with the new values.`}
