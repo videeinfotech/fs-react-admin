@@ -3,6 +3,7 @@ import { ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Tooltip, L
 import { useToast } from '../hooks/useToast';
 import { DataTable } from '../components/ui/DataTable';
 import { BrainIcon } from '../components/ui/icons/OtherIcons';
+import { QuizCategory } from '../types';
 
 // --- MOCK DATA ---
 const mockQuestions = [
@@ -21,11 +22,36 @@ const mockReports = [
     { id: 'L-0899', name: "Rohan Desai", quizType: "Daily", score: 82, attempts: 12, avgDifficulty: "Medium", weakArea: "Communication", lastTaken: "2023-10-20" },
 
 ];
+const mockCategoriesData: QuizCategory[] = [
+    { id: 1, name: "Empathy", description: "Questions related to understanding and sharing the feelings of another.", questionCount: 25, status: "Active" },
+    { id: 2, name: "Communication", description: "Focuses on active listening and clear communication techniques.", questionCount: 18, status: "Active" },
+    { id: 3, name: "Conflict Resolution", description: "Scenarios involving de-escalation and handling difficult users.", questionCount: 12, status: "Active" },
+    { id: 4, name: "Professionalism", description: "Maintaining professional boundaries and conduct.", questionCount: 8, status: "Inactive" },
+];
+
 const aiInsightsData = {
     categoryPerformance: [{ name: 'Empathy', score: 82 }, { name: 'Communication', score: 74 }, { name: 'Stress Handling', score: 68 }],
     scoreTrend: [{ name: 'W1', score: 72 }, { name: 'W2', score: 75 }, { name: 'W3', score: 74 }, { name: 'W4', score: 78 }],
     skillStrength: [{ subject: 'Empathy', A: 120, fullMark: 150 }, { subject: 'Communication', A: 98, fullMark: 150 }, { subject: 'Conflict Res.', A: 86, fullMark: 150 }, { subject: 'Professionalism', A: 99, fullMark: 150 }, { subject: 'Active Listening', A: 110, fullMark: 150 }],
 };
+
+const ToggleSwitch: React.FC<{ enabled: boolean; setEnabled: (enabled: boolean) => void; }> = ({ enabled, setEnabled }) => (
+  <button
+    type="button"
+    className={`${
+      enabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-gray-700'
+    } relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-600 focus:ring-offset-2`}
+    onClick={(e) => { e.stopPropagation(); setEnabled(!enabled); }}
+  >
+    <span className="sr-only">Use setting</span>
+    <span
+      aria-hidden="true"
+      className={`${
+        enabled ? 'translate-x-5' : 'translate-x-0'
+      } pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out`}
+    />
+  </button>
+);
 
 
 // --- VIEWS / TABS ---
@@ -129,7 +155,115 @@ const QuestionBankView = () => {
     );
 };
 
-// 2. Quiz Assignment View
+// 2. Categories View
+const CategoriesView = () => {
+    const { addToast } = useToast();
+    const [categories, setCategories] = useState<QuizCategory[]>(mockCategoriesData);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [currentCategory, setCurrentCategory] = useState<QuizCategory | null>(null);
+
+    const handleOpenModal = (category: QuizCategory | null) => {
+        setCurrentCategory(category);
+        setIsModalOpen(true);
+    };
+
+    const handleSaveCategory = (categoryData: Omit<QuizCategory, 'id' | 'questionCount'>) => {
+        if (currentCategory) {
+            // Edit
+            setCategories(cats => cats.map(c => c.id === currentCategory.id ? { ...currentCategory, ...categoryData } : c));
+            addToast('Category updated!', 'success');
+        } else {
+            // Add
+            const newCategory: QuizCategory = {
+                id: Math.max(...categories.map(c => c.id)) + 1,
+                ...categoryData,
+                questionCount: 0,
+                status: 'Active',
+            };
+            setCategories(cats => [...cats, newCategory]);
+            addToast('Category added!', 'success');
+        }
+        setIsModalOpen(false);
+        setCurrentCategory(null);
+    };
+
+    const handleDelete = (id: number) => {
+        if (window.confirm('Are you sure you want to delete this category?')) {
+            setCategories(cats => cats.filter(c => c.id !== id));
+            addToast('Category deleted!', 'success');
+        }
+    };
+    
+    const toggleStatus = (id: number) => {
+        setCategories(cats => cats.map(c => c.id === id ? {...c, status: c.status === 'Active' ? 'Inactive' : 'Active'} : c));
+        addToast('Category status updated!', 'info');
+    };
+
+    const columns = useMemo(() => [
+        { header: 'Category Name', accessor: 'name' as const, sortable: true },
+        { header: 'Description', accessor: 'description' as const, sortable: false },
+        { header: 'Questions', accessor: 'questionCount' as const, sortable: true },
+        { header: 'Status', accessor: 'status' as const, sortable: true, render: (item: QuizCategory) => (
+            <ToggleSwitch enabled={item.status === 'Active'} setEnabled={() => toggleStatus(item.id)} />
+        ) },
+    ], []);
+
+    const renderActions = (item: QuizCategory) => (
+        <div className="space-x-2">
+            <button onClick={() => handleOpenModal(item)} className="text-primary-600 hover:underline">Edit</button>
+            <button onClick={() => handleDelete(item.id)} className="text-red-600 hover:underline">Delete</button>
+        </div>
+    );
+
+    return (
+        <div className="space-y-4">
+            <div className="flex justify-between items-center">
+                <h2 className="text-xl font-bold">Manage Categories</h2>
+                <button onClick={() => handleOpenModal(null)} className="px-4 py-2 text-sm bg-primary-600 text-white rounded-md">+ Add New Category</button>
+            </div>
+            <DataTable columns={columns} data={categories} renderActions={renderActions} />
+            {isModalOpen && <CategoryModal category={currentCategory} onSave={handleSaveCategory} onClose={() => setIsModalOpen(false)} />}
+        </div>
+    );
+};
+
+const CategoryModal: React.FC<{
+    category: QuizCategory | null;
+    onSave: (data: Omit<QuizCategory, 'id' | 'questionCount'>) => void;
+    onClose: () => void;
+}> = ({ category, onSave, onClose }) => {
+    const [name, setName] = useState(category?.name || '');
+    const [description, setDescription] = useState(category?.description || '');
+    
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        onSave({ name, description, status: category?.status || 'Active' });
+    };
+
+    return (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center animate-fade-in">
+            <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-md">
+                <h3 className="text-lg font-bold mb-4">{category ? 'Edit' : 'Add'} Category</h3>
+                <div className="space-y-4">
+                    <div>
+                        <label htmlFor="name" className="block text-sm font-medium">Category Name</label>
+                        <input id="name" type="text" value={name} onChange={e => setName(e.target.value)} required className="mt-1 block w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600" />
+                    </div>
+                    <div>
+                        <label htmlFor="description" className="block text-sm font-medium">Description</label>
+                        <textarea id="description" value={description} onChange={e => setDescription(e.target.value)} rows={3} className="mt-1 block w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600" />
+                    </div>
+                </div>
+                <div className="flex justify-end space-x-2 mt-6">
+                    <button type="button" onClick={onClose} className="px-4 py-2 text-sm bg-gray-200 dark:bg-gray-600 rounded-md">Cancel</button>
+                    <button type="submit" className="px-4 py-2 text-sm bg-primary-600 text-white rounded-md">Save</button>
+                </div>
+            </form>
+        </div>
+    );
+};
+
+// 3. Quiz Assignment View
 const QuizAssignmentView = () => (
     <div className="space-y-4">
         <div className="flex justify-between items-center">
@@ -149,7 +283,7 @@ const QuizAssignmentView = () => (
     </div>
 );
 
-// 3. Quiz Reports View
+// 4. Quiz Reports View
 const QuizReportsView = () => {
     const [weakAreaFilter, setWeakAreaFilter] = useState('All');
     const [quizTypeFilter, setQuizTypeFilter] = useState('All');
@@ -233,7 +367,7 @@ const QuizReportsView = () => {
     );
 };
 
-// 4. AI Insights View
+// 5. AI Insights View
 const AIInsightsView = () => {
      const StatCard: React.FC<{ title: string; value: string }> = ({ title, value }) => (
         <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
@@ -297,11 +431,12 @@ const AIInsightsView = () => {
 
 // --- MAIN PAGE COMPONENT ---
 const QuizEvaluation: React.FC = () => {
-    type Tab = 'bank' | 'assign' | 'reports' | 'insights';
+    type Tab = 'bank' | 'categories' | 'assign' | 'reports' | 'insights';
     const [activeTab, setActiveTab] = useState<Tab>('bank');
     
     const tabs: { id: Tab, name: string }[] = [
         { id: 'bank', name: 'Question Bank' },
+        { id: 'categories', name: 'Categories' },
         { id: 'assign', name: 'Assign & Schedule' },
         { id: 'reports', name: 'Quiz Reports' },
         { id: 'insights', name: 'AI Insights' },
@@ -310,6 +445,7 @@ const QuizEvaluation: React.FC = () => {
     const renderContent = () => {
         switch(activeTab) {
             case 'bank': return <QuestionBankView />;
+            case 'categories': return <CategoriesView />;
             case 'assign': return <QuizAssignmentView />;
             case 'reports': return <QuizReportsView />;
             case 'insights': return <AIInsightsView />;

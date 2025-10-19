@@ -8,7 +8,9 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Monitoring from './pages/Monitoring'; // New Monitoring Page
+import UsersList from './pages/UsersList';
 import UserDetails from './pages/UserDetails';
+import ListenersList from './pages/ListenersList';
 import ListenerDetails from './pages/ListenerDetails';
 import Wallet from './pages/Wallet';
 import Sessions from './pages/Sessions';
@@ -41,7 +43,9 @@ function App() {
               <Route path="/" element={<Layout />}>
                 <Route index element={<Dashboard />} />
                 <Route path="monitoring" element={<Monitoring />} />
+                <Route path="users" element={<UsersList />} />
                 <Route path="users/:id" element={<UserDetails />} />
+                <Route path="listeners" element={<ListenersList />} />
                 <Route path="listeners/:id" element={<ListenerDetails />} />
                 <Route path="wallet" element={<Wallet />} />
                 <Route path="sessions" element={<Sessions />} />

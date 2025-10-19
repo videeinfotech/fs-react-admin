@@ -106,3 +106,11 @@ export interface AnonymousReport {
     date: string;
     status: 'New' | 'Under Review' | 'Resolved' | 'Dismissed';
 }
+
+export interface QuizCategory {
+    id: number;
+    name: string;
+    description: string;
+    questionCount: number;
+    status: 'Active' | 'Inactive';
+}

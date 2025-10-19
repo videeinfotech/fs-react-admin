@@ -10,6 +10,8 @@ import { MonitoringIcon } from './components/ui/icons/MonitoringIcon';
 import { PushIcon } from './components/ui/icons/PushIcon';
 import { QuizIcon } from './components/ui/icons/QuizIcon';
 import { FlagIcon } from './components/ui/icons/FlagIcon';
+import { UsersIcon } from './components/ui/icons/UsersIcon';
+import { ListenersIcon } from './components/ui/icons/ListenersIcon';
 
 // A helper type for nav links
 export interface NavLinkInfo {
@@ -28,6 +30,8 @@ const SettingsIcon: React.FC<IconProps> = ({ className }) => <svg xmlns="http://
 export const NAV_LINKS: NavLinkInfo[] = [
     { name: 'Dashboard', path: '/', icon: <DashboardIcon /> },
     { name: 'Monitoring', path: '/monitoring', icon: <MonitoringIcon /> },
+    { name: 'Users', path: '/users', icon: <UsersIcon /> },
+    { name: 'Listeners', path: '/listeners', icon: <ListenersIcon /> },
     { name: 'Wallet', path: '/wallet', icon: <WalletIcon /> },
     { name: 'Sessions', path: '/sessions', icon: <SessionsIcon /> },
     { name: 'Live Sessions', path: '/live-sessions', icon: <LiveIcon /> },
