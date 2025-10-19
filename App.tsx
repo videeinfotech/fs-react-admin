@@ -25,6 +25,7 @@ import Roles from './pages/Roles';
 import AuditLogs from './pages/AuditLogs';
 import Analytics from './pages/Analytics';
 import LiveSessions from './pages/LiveSessions';
+import AdminDoc from './pages/AdminDoc';
 
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
                 <Route path="tickets/:id" element={<TicketDetails />} />
                 <Route path="reports" element={<Reports />} />
                 <Route path="analytics" element={<Analytics />} />
+                <Route path="admin-doc" element={<AdminDoc />} />
                 <Route path="settings" element={<Settings />} />
                 {/* Adding some other placeholder routes for completeness */}
                 <Route path="cms" element={<CMS />} />
