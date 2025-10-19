@@ -57,11 +57,13 @@ export interface Session {
 
 export interface Transaction {
     id: number;
-    userName: string;
+    userOrListener: string;
+    userId: number;
     description: string;
     date: string;
-    type: 'Credit' | 'Debit';
+    type: 'Credit' | 'Debit' | 'Refund';
     amount: number;
+    method: 'Payment Gateway' | 'Manual Adjustment' | 'Session Fee';
     status: 'Completed' | 'Pending' | 'Failed';
 }
 

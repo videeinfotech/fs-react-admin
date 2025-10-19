@@ -14,7 +14,7 @@ const UserDetails: React.FC = () => {
     const user = mockUsers.find(u => u.id === userId);
 
     const userSessions = mockSessions.filter(s => s.userId === userId);
-    const userTransactions = mockTransactions.filter(t => t.userName === user?.name);
+    const userTransactions = mockTransactions.filter(t => t.userOrListener === user?.name);
 
     if (!user) {
         return (
