@@ -1,0 +1,5 @@
+{
+  "name": "Find Sukoon Admin Panel",
+  "description": "A responsive admin panel for the Find Sukoon emotional support platform, built with React and Tailwind CSS. It includes features for managing users, listeners, sessions, transactions, and more.",
+  "requestFramePermissions": []
+}
