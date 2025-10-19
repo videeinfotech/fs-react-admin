@@ -19,7 +19,7 @@ import TicketDetails from './pages/TicketDetails';
 import Reports from './pages/Reports';
 import Settings from './pages/Settings';
 import CMS from './pages/CMS';
-import Notifications from './pages/Notifications';
+import PushNotifications from './pages/PushNotifications'; // New Push Notifications page
 import Roles from './pages/Roles';
 import AuditLogs from './pages/AuditLogs';
 import Analytics from './pages/Analytics';
@@ -50,12 +50,12 @@ function App() {
                 <Route path="tickets/:id" element={<TicketDetails />} />
                 <Route path="reports" element={<Reports />} />
                 <Route path="analytics" element={<Analytics />} />
+                <Route path="push-notifications" element={<PushNotifications />} />
                 <Route path="admin-doc" element={<AdminDoc />} />
                 <Route path="api-doc" element={<ApiDoc />} />
                 <Route path="settings" element={<Settings />} />
                 {/* Adding some other placeholder routes for completeness */}
                 <Route path="cms" element={<CMS />} />
-                <Route path="notifications" element={<Notifications />} />
                 <Route path="roles" element={<Roles />} />
                 <Route path="audit-logs" element={<AuditLogs />} />
                 <Route path="*" element={<Navigate to="/" replace />} />

@@ -7,6 +7,7 @@ import { LiveIcon } from './components/ui/icons/LiveIcon';
 import { DocIcon } from './components/ui/icons/DocIcon';
 import { ApiIcon } from './components/ui/icons/ApiIcon';
 import { MonitoringIcon } from './components/ui/icons/MonitoringIcon';
+import { PushIcon } from './components/ui/icons/PushIcon';
 
 // A helper type for nav links
 export interface NavLinkInfo {
@@ -32,6 +33,7 @@ export const NAV_LINKS: NavLinkInfo[] = [
     { name: 'Support Tickets', path: '/tickets', icon: <TicketsIcon /> },
     { name: 'Reports', path: '/reports', icon: <ReportsIcon /> },
     { name: 'Analytics', path: '/analytics', icon: <AnalyticsIcon /> },
+    { name: 'Push Notifications', path: '/push-notifications', icon: <PushIcon /> },
     { name: 'Admin Doc', path: '/admin-doc', icon: <DocIcon /> },
     { name: 'API Doc', path: '/api-doc', icon: <ApiIcon /> },
     { name: 'Settings', path: '/settings', icon: <SettingsIcon /> },
