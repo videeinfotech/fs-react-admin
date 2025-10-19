@@ -30,7 +30,12 @@ export interface Listener {
   rate: number;
   createdAt: string;
   bio: string;
-  expertise: string[];
+  skills: string[];
+  avatarUrl: string;
+  language: string[];
+  dob: string;
+  age: number;
+  city: string;
 }
 
 export interface TranscriptMessage {
@@ -90,4 +95,14 @@ export interface Ticket {
     status: 'Open' | 'Closed' | 'In Progress';
     createdAt: string;
     history: TicketHistory[];
+}
+
+export interface AnonymousReport {
+    id: number;
+    listenerId: number;
+    listenerName: string;
+    reason: 'Inappropriate Language' | 'Unprofessional Conduct' | 'Safety Concern' | 'Other';
+    details: string;
+    date: string;
+    status: 'New' | 'Under Review' | 'Resolved' | 'Dismissed';
 }

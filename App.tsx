@@ -27,6 +27,7 @@ import LiveSessions from './pages/LiveSessions';
 import AdminDoc from './pages/AdminDoc';
 import ApiDoc from './pages/ApiDoc';
 import QuizEvaluation from './pages/QuizEvaluation';
+import AnonymizedReporting from './pages/AnonymizedReporting';
 
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
                 <Route path="live-sessions" element={<LiveSessions />} />
                 <Route path="sessions/:id" element={<SessionDetails />} />
                 <Route path="feedback" element={<Feedback />} />
+                <Route path="anonymized-reporting" element={<AnonymizedReporting />} />
                 <Route path="tickets" element={<Tickets />} />
                 <Route path="tickets/:id" element={<TicketDetails />} />
                 <Route path="reports" element={<Reports />} />

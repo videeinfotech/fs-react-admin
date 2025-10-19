@@ -16,8 +16,10 @@ const mockAssignments = [
 ];
 const mockReports = [
     { id: 'L-0123', name: "Ananya Mehta", quizType: "Daily", score: 90, attempts: 15, avgDifficulty: "Medium", weakArea: "None", lastTaken: "2023-10-19" },
-    { id: 'L-0450', name: "Sameer Verma", quizType: "Onboarding", score: 68, attempts: 1, avgDifficulty: "Easy", weakArea: "Conflict Handling", lastTaken: "2023-10-17" },
+    { id: 'L-0450', name: "Sameer Verma", quizType: "Onboarding", score: 68, attempts: 1, avgDifficulty: "Easy", weakArea: "Conflict Resolution", lastTaken: "2023-10-17" },
     { id: 'L-0712', name: "Sunita Rao", quizType: "Daily", score: 55, attempts: 8, avgDifficulty: "Medium", weakArea: "Empathy", lastTaken: "2023-10-18" },
+    { id: 'L-0899', name: "Rohan Desai", quizType: "Daily", score: 82, attempts: 12, avgDifficulty: "Medium", weakArea: "Communication", lastTaken: "2023-10-20" },
+
 ];
 const aiInsightsData = {
     categoryPerformance: [{ name: 'Empathy', score: 82 }, { name: 'Communication', score: 74 }, { name: 'Stress Handling', score: 68 }],
@@ -41,6 +43,12 @@ const QuestionBankView = () => {
         { header: 'Status', accessor: 'status' as const, sortable: true },
         { header: 'Created By', accessor: 'createdBy' as const, sortable: true },
     ], []);
+    
+    const handleAddQuestion = (e: React.FormEvent) => {
+        e.preventDefault();
+        addToast('Question added!', 'success'); 
+        setAddModalOpen(false);
+    }
 
     return (
         <div className="space-y-4">
@@ -55,16 +63,51 @@ const QuestionBankView = () => {
 
             {/* Add Question Modal */}
             {isAddModalOpen && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">
-                    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-lg">
-                        <h3 className="text-lg font-bold mb-4">Add New Question</h3>
-                        {/* Form would go here */}
-                        <p>Question form fields...</p>
-                        <div className="flex justify-end space-x-2 mt-4">
-                            <button onClick={() => setAddModalOpen(false)} className="px-4 py-2 text-sm bg-gray-200 dark:bg-gray-600 rounded-md">Cancel</button>
-                            <button onClick={() => { addToast('Question added!', 'success'); setAddModalOpen(false); }} className="px-4 py-2 text-sm bg-primary-600 text-white rounded-md">Save Question</button>
+                <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center animate-fade-in">
+                    <form onSubmit={handleAddQuestion} className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-lg">
+                        <div className="flex justify-between items-center mb-4 border-b dark:border-gray-700 pb-2">
+                            <h3 className="text-lg font-bold text-gray-900 dark:text-white">Add New Question</h3>
+                            <button type="button" onClick={() => setAddModalOpen(false)} className="text-gray-400 hover:text-gray-600 dark:hover:text-white text-2xl">&times;</button>
                         </div>
-                    </div>
+
+                        <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2">
+                            <div>
+                                <label htmlFor="question" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Question Text</label>
+                                <textarea id="question" rows={3} placeholder="e.g., A user says they feel hopeless..." required className="mt-1 block w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 focus:ring-primary-500 focus:border-primary-500" />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Options & Correct Answer</label>
+                                <p className="text-xs text-gray-500 dark:text-gray-400">Select the radio button for the correct answer.</p>
+                                <div className="mt-2 space-y-2">
+                                    {[0, 1, 2, 3].map(index => (
+                                        <div key={index} className="flex items-center space-x-3">
+                                            <input type="radio" name="correctAnswer" value={index} defaultChecked={index === 0} className="h-4 w-4 text-primary-600 border-gray-300 focus:ring-primary-500" />
+                                            <input type="text" placeholder={`Option ${index + 1}`} required className="block w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 focus:ring-primary-500 focus:border-primary-500" />
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label htmlFor="category" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Category</label>
+                                    <input type="text" id="category" placeholder="e.g., Empathy" required className="mt-1 block w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 focus:ring-primary-500 focus:border-primary-500" />
+                                </div>
+                                <div>
+                                    <label htmlFor="difficulty" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Difficulty</label>
+                                    <select id="difficulty" className="mt-1 block w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 focus:ring-primary-500 focus:border-primary-500">
+                                        <option>Easy</option>
+                                        <option>Medium</option>
+                                        <option>Hard</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex justify-end space-x-2 mt-6 pt-4 border-t dark:border-gray-700">
+                            <button type="button" onClick={() => setAddModalOpen(false)} className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-gray-500">Cancel</button>
+                            <button type="submit" className="px-4 py-2 text-sm font-medium text-white bg-primary-600 rounded-md hover:bg-primary-700">Save Question</button>
+                        </div>
+                    </form>
                 </div>
             )}
              {/* AI Generator Side Panel */}
@@ -108,6 +151,20 @@ const QuizAssignmentView = () => (
 
 // 3. Quiz Reports View
 const QuizReportsView = () => {
+    const [weakAreaFilter, setWeakAreaFilter] = useState('All');
+    const [quizTypeFilter, setQuizTypeFilter] = useState('All');
+
+    const uniqueWeakAreas = useMemo(() => ['All', ...new Set(mockReports.map(r => r.weakArea).filter(Boolean))], []);
+    const uniqueQuizTypes = useMemo(() => ['All', ...new Set(mockReports.map(r => r.quizType))], []);
+
+    const filteredReports = useMemo(() => {
+        return mockReports.filter(report => {
+            const weakAreaMatch = weakAreaFilter === 'All' || report.weakArea === weakAreaFilter;
+            const quizTypeMatch = quizTypeFilter === 'All' || report.quizType === quizTypeFilter;
+            return weakAreaMatch && quizTypeMatch;
+        });
+    }, [weakAreaFilter, quizTypeFilter]);
+
     const StatCard: React.FC<{ title: string; value: string }> = ({ title, value }) => (
         <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
             <p className="text-sm font-medium text-gray-500 dark:text-gray-400">{title}</p>
@@ -122,16 +179,56 @@ const QuizReportsView = () => {
                 <StatCard title="Improvement (WoW)" value="+3%" />
                 <StatCard title="Quizzes Completed" value="1,234" />
             </div>
-            <DataTable 
-                 columns={useMemo(() => [
-                    { header: 'Listener', accessor: 'name' as const, sortable: true },
-                    { header: 'Quiz Type', accessor: 'quizType' as const, sortable: true },
-                    { header: 'Score (%)', accessor: 'score' as const, sortable: true },
-                    { header: 'Weak Area', accessor: 'weakArea' as const, sortable: true },
-                    { header: 'Last Taken', accessor: 'lastTaken' as const, sortable: true },
-                ], [])}
-                data={mockReports}
-            />
+
+             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
+                    <h3 className="font-semibold mb-2 text-center">Listener Skill Strength</h3>
+                    <ResponsiveContainer width="100%" height={300}>
+                        <RadarChart cx="50%" cy="50%" outerRadius="80%" data={aiInsightsData.skillStrength}>
+                            <PolarGrid />
+                            <PolarAngleAxis dataKey="subject" />
+                            <PolarRadiusAxis />
+                            <Tooltip />
+                            <Radar name="Score" dataKey="A" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+                        </RadarChart>
+                    </ResponsiveContainer>
+                </div>
+                <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
+                    <h3 className="font-semibold mb-2 text-center">Average Score Trend (Last 4 Weeks)</h3>
+                    <ResponsiveContainer width="100%" height={300}>
+                        <LineChart data={aiInsightsData.scoreTrend}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="name" />
+                            <YAxis domain={[60, 90]} />
+                            <Tooltip />
+                            <Legend />
+                            <Line type="monotone" dataKey="score" stroke="#82ca9d" />
+                        </LineChart>
+                    </ResponsiveContainer>
+                </div>
+            </div>
+
+            <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                     <h3 className="text-lg font-bold md:col-span-1">Listener Reports</h3>
+                    <select value={quizTypeFilter} onChange={e => setQuizTypeFilter(e.target.value)} className="w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        {uniqueQuizTypes.map(type => <option key={type} value={type}>{type === 'All' ? 'All Quiz Types' : type}</option>)}
+                    </select>
+                     <select value={weakAreaFilter} onChange={e => setWeakAreaFilter(e.target.value)} className="w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        {uniqueWeakAreas.map(area => <option key={area} value={area}>{area === 'All' ? 'All Weak Areas' : area}</option>)}
+                    </select>
+                </div>
+                <DataTable 
+                     columns={useMemo(() => [
+                        { header: 'Listener', accessor: 'name' as const, sortable: true },
+                        { header: 'Quiz Type', accessor: 'quizType' as const, sortable: true },
+                        { header: 'Score (%)', accessor: 'score' as const, sortable: true },
+                        { header: 'Weak Area', accessor: 'weakArea' as const, sortable: true },
+                        { header: 'Last Taken', accessor: 'lastTaken' as const, sortable: true },
+                    ], [])}
+                    data={filteredReports}
+                />
+            </div>
         </div>
     );
 };

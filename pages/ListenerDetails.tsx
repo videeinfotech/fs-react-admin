@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useToast } from '../hooks/useToast';
 import { mockListeners } from './Listeners';
 import { mockSessions } from './Sessions';
-import { mockFeedback } from './Feedback'; // Assuming mockFeedback is exported
+import { mockFeedback } from './Feedback';
+import { Listener } from '../types';
+import { AvatarPicker } from '../components/ui/AvatarPicker';
 
 const StarRating: React.FC<{ rating: number }> = ({ rating }) => (
     <div className="flex items-center">
@@ -20,7 +22,20 @@ const ListenerDetails: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const { addToast } = useToast();
     const listenerId = parseInt(id || '0', 10);
-    const listener = mockListeners.find(l => l.id === listenerId);
+    
+    const [listeners, setListeners] = useState(mockListeners);
+    const listener = listeners.find(l => l.id === listenerId);
+
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [editableListener, setEditableListener] = useState<Listener | null>(null);
+
+    useEffect(() => {
+        if (isEditModalOpen && listener) {
+            setEditableListener(listener);
+        } else {
+            setEditableListener(null);
+        }
+    }, [isEditModalOpen, listener]);
 
     const listenerSessions = mockSessions.filter(s => s.listenerId === listenerId);
     const listenerFeedback = mockFeedback.filter(f => f.listener === listener?.name);
@@ -38,6 +53,64 @@ const ListenerDetails: React.FC = () => {
         addToast(`${action} listener ${listener.id}`, 'info');
     };
 
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        if (editableListener) {
+            const { name, value } = e.target;
+            const isNumberField = ['age', 'rate', 'totalSessions', 'totalEarnings'].includes(name);
+            setEditableListener({ ...editableListener, [name]: isNumberField ? Number(value) : value });
+        }
+    };
+    
+    const handleArrayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (editableListener) {
+            const { name, value } = e.target;
+            setEditableListener({ ...editableListener, [name]: value.split(',').map(s => s.trim()) });
+        }
+    };
+
+    const handleAvatarSelect = (url: string) => {
+        if (editableListener) {
+            setEditableListener({ ...editableListener, avatarUrl: url });
+        }
+    };
+
+    const handleSaveChanges = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (editableListener) {
+            setListeners(prev => prev.map(l => l.id === editableListener.id ? editableListener : l));
+            addToast('Listener profile updated successfully!', 'success');
+            setIsEditModalOpen(false);
+        }
+    };
+
+    const EditProfileModal = () => (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center animate-fade-in p-4">
+            <form onSubmit={handleSaveChanges} className="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-2xl">
+                <div className="p-6 border-b dark:border-gray-700">
+                    <h3 className="text-xl font-bold">Edit Profile: {editableListener?.name}</h3>
+                </div>
+                <div className="p-6 space-y-4 max-h-[70vh] overflow-y-auto">
+                    <AvatarPicker selectedAvatar={editableListener!.avatarUrl} onSelectAvatar={handleAvatarSelect} />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div><label className="block text-sm font-medium">Name</label><input type="text" name="name" value={editableListener!.name} onChange={handleInputChange} className="mt-1 w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600" /></div>
+                        <div><label className="block text-sm font-medium">Email</label><input type="email" name="email" value={editableListener!.email} onChange={handleInputChange} className="mt-1 w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600" /></div>
+                        <div><label className="block text-sm font-medium">Age</label><input type="number" name="age" value={editableListener!.age} onChange={handleInputChange} className="mt-1 w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600" /></div>
+                        <div><label className="block text-sm font-medium">Date of Birth</label><input type="date" name="dob" value={editableListener!.dob} onChange={handleInputChange} className="mt-1 w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600" /></div>
+                        <div><label className="block text-sm font-medium">City</label><input type="text" name="city" value={editableListener!.city} onChange={handleInputChange} className="mt-1 w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600" /></div>
+                        <div><label className="block text-sm font-medium">Session Rate (/min)</label><input type="number" step="0.01" name="rate" value={editableListener!.rate} onChange={handleInputChange} className="mt-1 w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600" /></div>
+                        <div><label className="block text-sm font-medium">Skills (comma-separated)</label><input type="text" name="skills" value={editableListener!.skills.join(', ')} onChange={handleArrayChange} className="mt-1 w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600" /></div>
+                        <div><label className="block text-sm font-medium">Languages (comma-separated)</label><input type="text" name="language" value={editableListener!.language.join(', ')} onChange={handleArrayChange} className="mt-1 w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600" /></div>
+                    </div>
+                    <div><label className="block text-sm font-medium">Bio</label><textarea name="bio" value={editableListener!.bio} onChange={handleInputChange} rows={4} className="mt-1 w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600"></textarea></div>
+                </div>
+                <div className="p-4 bg-gray-50 dark:bg-gray-700/50 flex justify-end space-x-2 rounded-b-lg">
+                    <button type="button" onClick={() => setIsEditModalOpen(false)} className="px-4 py-2 text-sm font-medium bg-gray-200 rounded-md hover:bg-gray-300 dark:bg-gray-600 dark:hover:bg-gray-500">Cancel</button>
+                    <button type="submit" className="px-4 py-2 text-sm font-medium text-white bg-primary-600 rounded-md hover:bg-primary-700">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    );
+
     return (
         <div className="space-y-6">
             <nav className="text-sm" aria-label="Breadcrumb">
@@ -53,39 +126,50 @@ const ListenerDetails: React.FC = () => {
             </nav>
 
             <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-                <div className="flex flex-col md:flex-row justify-between items-start">
-                    <div>
-                        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">{listener.name}</h1>
-                        <p className="text-gray-500 dark:text-gray-400">{listener.email}</p>
-                        <span className={`mt-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${listener.status === 'Active' ? 'bg-green-100 text-green-800' : listener.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800'}`}>
-                            {listener.status}
-                        </span>
-                    </div>
-                    <div className="mt-4 md:mt-0 space-x-2">
-                        {listener.status === 'Pending' && <button onClick={() => handleAction('Approving')} className="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700">Approve</button>}
-                        {listener.status !== 'Blocked' && <button onClick={() => handleAction('Blocking')} className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700">Block</button>}
+                <div className="flex flex-col md:flex-row items-start">
+                    <img src={listener.avatarUrl} alt={listener.name} className="w-24 h-24 rounded-full mr-6 mb-4 md:mb-0 border-4 border-primary-200 object-cover" />
+                    <div className="flex-grow">
+                        <div className="flex flex-col md:flex-row justify-between items-start">
+                             <div>
+                                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">{listener.name}</h1>
+                                <p className="text-gray-500 dark:text-gray-400">{listener.email}</p>
+                                <span className={`mt-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${listener.status === 'Active' ? 'bg-green-100 text-green-800' : listener.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800'}`}>
+                                    {listener.status}
+                                </span>
+                            </div>
+                            <div className="mt-4 md:mt-0 flex-shrink-0 flex space-x-2">
+                                <button onClick={() => setIsEditModalOpen(true)} className="px-4 py-2 text-sm font-medium text-white bg-primary-600 rounded-lg hover:bg-primary-700">Edit Profile</button>
+                                {listener.status === 'Pending' && <button onClick={() => handleAction('Approving')} className="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700">Approve</button>}
+                                {listener.status !== 'Blocked' && <button onClick={() => handleAction('Blocking')} className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700">Block</button>}
+                            </div>
+                        </div>
+                        <p className="mt-4 text-gray-600 dark:text-gray-300">{listener.bio}</p>
                     </div>
                 </div>
-                <p className="mt-4 text-gray-600 dark:text-gray-300">{listener.bio}</p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                  <div className="lg:col-span-1 space-y-6">
                     <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-                        <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Performance</h2>
+                        <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Information</h2>
                          <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
+                            <li><strong>Age:</strong> {listener.age}</li>
+                            <li><strong>Date of Birth:</strong> {listener.dob}</li>
+                            <li><strong>City:</strong> {listener.city}</li>
+                            <li><strong>Languages:</strong> {listener.language.join(', ')}</li>
+                            <li><strong>Joined:</strong> {listener.createdAt}</li>
+                             <hr className="my-2 dark:border-gray-700"/>
                             <li><strong>Average Rating:</strong> <StarRating rating={listener.avgRating} /></li>
                             <li><strong>Session Rate:</strong> ₹{listener.rate.toFixed(2)} / minute</li>
                             <li><strong>Total Sessions:</strong> {listener.totalSessions}</li>
                             <li><strong>Total Earnings:</strong> ₹{listener.totalEarnings.toFixed(2)}</li>
-                            <li><strong>Joined:</strong> {listener.createdAt}</li>
                         </ul>
                     </div>
                     <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-                        <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Expertise</h2>
+                        <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Skills</h2>
                         <div className="flex flex-wrap gap-2">
-                           {listener.expertise.map(exp => (
-                               <span key={exp} className="px-2 py-1 bg-primary-100 text-primary-800 text-xs font-medium rounded-full">{exp}</span>
+                           {listener.skills.map(skill => (
+                               <span key={skill} className="px-2 py-1 bg-primary-100 text-primary-800 text-xs font-medium rounded-full">{skill}</span>
                            ))}
                         </div>
                     </div>
@@ -107,6 +191,7 @@ const ListenerDetails: React.FC = () => {
                     </div>
                 </div>
             </div>
+            {isEditModalOpen && editableListener && <EditProfileModal />}
         </div>
     );
 };
