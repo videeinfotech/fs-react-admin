@@ -31,6 +31,13 @@ import ApiDoc from './pages/ApiDoc';
 import QuizEvaluation from './pages/QuizEvaluation';
 import AnonymizedReporting from './pages/AnonymizedReporting';
 
+// Payout Management Pages
+import EarningsOverview from './pages/EarningsOverview';
+import PayoutCycles from './pages/PayoutCycles';
+import ProcessPayouts from './pages/ProcessPayouts';
+import PayoutHistory from './pages/PayoutHistory';
+import GatewaySettings from './pages/GatewaySettings';
+
 
 function App() {
   return (
@@ -51,6 +58,13 @@ function App() {
                 <Route path="sessions" element={<Sessions />} />
                 <Route path="live-sessions" element={<LiveSessions />} />
                 <Route path="sessions/:id" element={<SessionDetails />} />
+                {/* Payout Routes */}
+                <Route path="earnings-overview" element={<EarningsOverview />} />
+                <Route path="payout-cycles" element={<PayoutCycles />} />
+                <Route path="process-payouts" element={<ProcessPayouts />} />
+                <Route path="payout-history" element={<PayoutHistory />} />
+                <Route path="gateway-settings" element={<GatewaySettings />} />
+                
                 <Route path="feedback" element={<Feedback />} />
                 <Route path="anonymized-reporting" element={<AnonymizedReporting />} />
                 <Route path="tickets" element={<Tickets />} />

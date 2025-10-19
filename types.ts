@@ -114,3 +114,39 @@ export interface QuizCategory {
     questionCount: number;
     status: 'Active' | 'Inactive';
 }
+
+// Payout Management System Types
+export type PayoutStatus = 'Pending' | 'Processing' | 'Completed' | 'Failed';
+export type Gateway = 'Razorpay' | 'PayPal' | 'Payoneer' | 'PhonePe' | 'Manual';
+
+export interface Payout {
+  id: string;
+  listenerId: number;
+  listenerName: string;
+  earnings: number;
+  commissionPercent: number;
+  payableAmount: number;
+  gateway: Gateway;
+  status: PayoutStatus;
+  date: string;
+}
+
+export interface PayoutCycle {
+  id: string;
+  type: 'Weekly' | 'Monthly';
+  period: string;
+  listenerCount: number;
+  totalAmount: number;
+  status: 'Pending' | 'Completed' | 'Processing';
+}
+
+export interface GatewaySetting {
+  id: Gateway;
+  name: string;
+  clientId: string;
+  secretKey: string;
+  webhookUrl: string;
+  mode: 'Test' | 'Live';
+  connected: boolean;
+  lastUpdated: string;
+}

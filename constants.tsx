@@ -12,6 +12,11 @@ import { QuizIcon } from './components/ui/icons/QuizIcon';
 import { FlagIcon } from './components/ui/icons/FlagIcon';
 import { UsersIcon } from './components/ui/icons/UsersIcon';
 import { ListenersIcon } from './components/ui/icons/ListenersIcon';
+import { EarningsIcon } from './components/ui/icons/EarningsIcon';
+import { PayoutCycleIcon } from './components/ui/icons/PayoutCycleIcon';
+import { ProcessPayoutsIcon } from './components/ui/icons/ProcessPayoutsIcon';
+import { PayoutHistoryIcon } from './components/ui/icons/PayoutHistoryIcon';
+import { GatewaySettingsIcon } from './components/ui/icons/GatewaySettingsIcon';
 
 // A helper type for nav links
 export interface NavLinkInfo {
@@ -35,6 +40,11 @@ export const NAV_LINKS: NavLinkInfo[] = [
     { name: 'Wallet', path: '/wallet', icon: <WalletIcon /> },
     { name: 'Sessions', path: '/sessions', icon: <SessionsIcon /> },
     { name: 'Live Sessions', path: '/live-sessions', icon: <LiveIcon /> },
+    { name: 'Earnings Overview', path: '/earnings-overview', icon: <EarningsIcon /> },
+    { name: 'Payout Cycles', path: '/payout-cycles', icon: <PayoutCycleIcon /> },
+    { name: 'Process Payouts', path: '/process-payouts', icon: <ProcessPayoutsIcon /> },
+    { name: 'Payout History', path: '/payout-history', icon: <PayoutHistoryIcon /> },
+    { name: 'Gateway Settings', path: '/gateway-settings', icon: <GatewaySettingsIcon /> },
     { name: 'Feedback', path: '/feedback', icon: <FeedbackIcon /> },
     { name: 'Anonymized Reporting', path: '/anonymized-reporting', icon: <FlagIcon /> },
     { name: 'Support Tickets', path: '/tickets', icon: <TicketsIcon /> },
