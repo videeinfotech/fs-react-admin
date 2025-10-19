@@ -11,17 +11,17 @@ const userLoginData = Array.from({ length: 24 }, (_, i) => ({ name: `${i}:00`, l
 const engagementData = [{ name: 'Chat', value: 400 }, { name: 'Voice', value: 300 }, { name: 'Video', value: 300 }];
 const funnelData = [{ stage: 'App Open', value: 10000 }, { stage: 'Login', value: 8500 }, { stage: 'Chat Started', value: 5100 }, { stage: 'Call Made', value: 2550 }, { stage: 'Feedback Submitted', value: 1275 }];
 const mockUserActivity = [
-    { id: 1, name: 'John Doe', email: 'john@example.com', status: 'Online', lastActive: '1 min ago', sessions: 12, wallet: 50.25, spent: 450, rating: 4.5 },
-    { id: 2, name: 'Jane Smith', email: 'jane@example.com', status: 'In Call', lastActive: 'Now', sessions: 5, wallet: 25.00, spent: 150, rating: 4.8 },
-    { id: 3, name: 'Sam Wilson', email: 'sam@example.com', status: 'Idle', lastActive: '15 mins ago', sessions: 25, wallet: 300.00, spent: 800, rating: 4.9 },
-    { id: 4, name: 'Emily Brown', email: 'emily@example.com', status: 'Offline', lastActive: '2 hours ago', sessions: 2, wallet: 0.00, spent: 50, rating: 4.2 },
+    { id: 1, name: 'John Doe', email: 'john@example.com', status: 'Online', lastActive: '1 min ago', sessions: 12, wallet: 5025.50, spent: 45000, rating: 4.5 },
+    { id: 2, name: 'Jane Smith', email: 'jane@example.com', status: 'In Call', lastActive: 'Now', sessions: 5, wallet: 2500.00, spent: 15000, rating: 4.8 },
+    { id: 3, name: 'Sam Wilson', email: 'sam@example.com', status: 'Idle', lastActive: '15 mins ago', sessions: 25, wallet: 30000.00, spent: 80000, rating: 4.9 },
+    { id: 4, name: 'Emily Brown', email: 'emily@example.com', status: 'Offline', lastActive: '2 hours ago', sessions: 2, wallet: 0.00, spent: 5000, rating: 4.2 },
 ];
 
 const listenerOnlineData = Array.from({ length: 24 }, (_, i) => ({ name: `${i}:00`, online: Math.floor(Math.random() * 50) + 5 }));
 const topListenersData = [
-    { name: 'Alice J.', sessions: 150, rating: 4.8, earnings: 3000, availability: '95%', status: 'Online' },
-    { name: 'Charles D.', sessions: 120, rating: 4.9, earnings: 2500, availability: '92%', status: 'Offline' },
-    { name: 'Eva G.', sessions: 110, rating: 4.7, earnings: 2200, availability: '88%', status: 'In Call' },
+    { name: 'Alice J.', sessions: 150, rating: 4.8, earnings: 240000, availability: '95%', status: 'Online' },
+    { name: 'Charles D.', sessions: 120, rating: 4.9, earnings: 200000, availability: '92%', status: 'Offline' },
+    { name: 'Eva G.', sessions: 110, rating: 4.7, earnings: 176000, availability: '88%', status: 'In Call' },
 ];
 const revenuePerListenerData = topListenersData.map(l => ({ name: l.name, revenue: l.earnings })).sort((a,b) => b.revenue - a.revenue);
 const mockListenerActivity = topListenersData.map((l, i) => ({ id: i + 1, ...l }));
@@ -102,7 +102,7 @@ const UserActivityView: React.FC = () => {
             return <div className="flex items-center gap-2"><span className={`w-2.5 h-2.5 rounded-full ${colors[item.status]}`}></span>{item.status}</div>
         }},
         { header: 'Last Active', accessor: 'lastActive' as const, sortable: true },
-        { header: 'Wallet', accessor: 'wallet' as const, sortable: true, render: (item: any) => `$${item.wallet.toFixed(2)}` },
+        { header: 'Wallet', accessor: 'wallet' as const, sortable: true, render: (item: any) => `₹${item.wallet.toFixed(2)}` },
         { header: 'Avg Rating', accessor: 'rating' as const, sortable: true },
     ], []);
 
@@ -114,7 +114,7 @@ const UserActivityView: React.FC = () => {
                 <StatCard title="Avg Session (Today)" value="18 min" icon={<ClockIcon />} />
                 <StatCard title="Chats Started (Today)" value="456" icon={<ListenersIcon />} />
                 <StatCard title="Calls (Today)" value="123" icon={<PhoneVideoIcon />} />
-                <StatCard title="Recharges (Today)" value="$2,345" icon={<WalletRechargeIcon />} />
+                <StatCard title="Recharges (Today)" value="₹1,92,345" icon={<WalletRechargeIcon />} />
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -152,7 +152,7 @@ const ListenerActivityView: React.FC = () => {
             const colors = { Online: 'bg-green-500', 'In Call': 'bg-blue-500', Offline: 'bg-gray-400' };
             return <div className="flex items-center gap-2"><span className={`w-2.5 h-2.5 rounded-full ${colors[item.status]}`}></span>{item.status}</div>
         }},
-        { header: 'Earnings (Today)', accessor: 'earnings' as const, sortable: true, render: (item: any) => `$${(item.earnings/30).toFixed(2)}` },
+        { header: 'Earnings (Today)', accessor: 'earnings' as const, sortable: true, render: (item: any) => `₹${(item.earnings/30).toFixed(2)}` },
         { header: 'Avg Rating', accessor: 'rating' as const, sortable: true },
         { header: 'Total Sessions', accessor: 'sessions' as const, sortable: true },
     ], []);
@@ -163,7 +163,7 @@ const ListenerActivityView: React.FC = () => {
                 <StatCard title="Listeners Online" value="45" icon={<ListenersIcon />} />
                 <StatCard title="Active Sessions" value="28" icon={<PhoneVideoIcon />} />
                 <StatCard title="Avg Session (Today)" value="22 min" icon={<ClockIcon />} />
-                <StatCard title="Earnings (Today)" value="$5,678" icon={<RevenueIcon />} />
+                <StatCard title="Earnings (Today)" value="₹4,65,789" icon={<RevenueIcon />} />
                 <StatCard title="Avg Rating (7d)" value="4.85" icon={<RatingIcon />} />
                 <StatCard title="Pending Requests" value="3" icon={<BellIcon />} />
             </div>
@@ -181,7 +181,7 @@ const ListenerActivityView: React.FC = () => {
                             <CartesianGrid strokeDasharray="3 3" className="dark:stroke-gray-600" />
                             <XAxis type="number" hide />
                             <YAxis dataKey="name" type="category" width={80} className="text-xs dark:fill-gray-400" />
-                            <Tooltip /><Bar dataKey="revenue" fill="#34d399" />
+                            <Tooltip formatter={(value: number) => `₹${value.toLocaleString()}`} /><Bar dataKey="revenue" fill="#34d399" />
                         </BarChart>
                     </ResponsiveContainer>
                 </div>

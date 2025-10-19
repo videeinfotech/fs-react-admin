@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useToast } from '../hooks/useToast';
@@ -75,9 +74,9 @@ const UserDetails: React.FC = () => {
                     <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
                         <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Wallet & Stats</h2>
                         <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
-                            <li><strong>Wallet Balance:</strong> ${user.wallet.toFixed(2)}</li>
+                            <li><strong>Wallet Balance:</strong> ₹{user.wallet.toFixed(2)}</li>
                             <li><strong>Total Sessions:</strong> {user.totalSessions}</li>
-                            <li><strong>Total Spent:</strong> ${user.totalSpent.toFixed(2)}</li>
+                            <li><strong>Total Spent:</strong> ₹{user.totalSpent.toFixed(2)}</li>
                         </ul>
                     </div>
                 </div>
@@ -93,7 +92,7 @@ const UserDetails: React.FC = () => {
                                             <p className="font-medium text-gray-800 dark:text-gray-200">Session with {s.listener}</p>
                                             <p className="text-sm text-gray-500">{s.startedAt}</p>
                                         </div>
-                                        <span className="text-sm font-semibold">${s.cost.toFixed(2)}</span>
+                                        <span className="text-sm font-semibold">₹{s.cost.toFixed(2)}</span>
                                     </Link>
                                 </li>
                             )) : <p className="text-sm text-gray-500">No sessions found.</p>}
@@ -109,7 +108,7 @@ const UserDetails: React.FC = () => {
                                         <p className="text-sm text-gray-500">{t.date}</p>
                                     </div>
                                     <span className={`font-semibold ${t.type === 'Credit' ? 'text-green-500' : 'text-red-500'}`}>
-                                        {t.type === 'Credit' ? '+' : '-'}${t.amount.toFixed(2)}
+                                        {t.type === 'Credit' ? '+' : '-'}₹{t.amount.toFixed(2)}
                                     </span>
                                 </li>
                             )) : <p className="text-sm text-gray-500">No transactions found.</p>}

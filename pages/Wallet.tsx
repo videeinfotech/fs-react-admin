@@ -5,14 +5,14 @@ import { useToast } from '../hooks/useToast';
 
 // More detailed mock transactions
 export const mockTransactions: Transaction[] = [
-    { id: 1, userId: 1, userOrListener: 'John Doe', description: 'Wallet Top-up', date: '2023-10-25', type: 'Credit', method: 'Payment Gateway', amount: 50.00, status: 'Completed' },
-    { id: 2, userId: 2, userOrListener: 'Jane Smith', description: 'Session with Alice', date: '2023-10-24', type: 'Debit', method: 'Session Fee', amount: 15.00, status: 'Completed' },
-    { id: 3, userId: 1, userOrListener: 'John Doe', description: 'Session with Bob', date: '2023-10-23', type: 'Debit', method: 'Session Fee', amount: 22.50, status: 'Completed' },
-    { id: 4, userId: 3, userOrListener: 'Sam Wilson', description: 'Wallet Top-up', date: '2023-10-22', type: 'Credit', method: 'Payment Gateway', amount: 100.00, status: 'Completed' },
-    { id: 5, userId: 1, userOrListener: 'John Doe', description: 'Refund for failed session', date: '2023-10-21', type: 'Refund', method: 'Manual Adjustment', amount: 10.00, status: 'Completed' },
-    { id: 6, userId: 4, userOrListener: 'Emily Brown', description: 'Wallet Top-up', date: '2023-10-20', type: 'Credit', method: 'Payment Gateway', amount: 25.00, status: 'Failed' },
-    { id: 7, userId: 5, userOrListener: 'Michael Clark', description: 'Admin Credit', date: '2023-10-19', type: 'Credit', method: 'Manual Adjustment', amount: 5.00, status: 'Completed' },
-    { id: 8, userId: 2, userOrListener: 'Jane Smith', description: 'Wallet Top-up', date: '2023-10-18', type: 'Credit', method: 'Payment Gateway', amount: 30.00, status: 'Pending' },
+    { id: 1, userId: 1, userOrListener: 'John Doe', description: 'Wallet Top-up', date: '2023-10-25', type: 'Credit', method: 'Payment Gateway', amount: 4000.00, status: 'Completed' },
+    { id: 2, userId: 2, userOrListener: 'Jane Smith', description: 'Session with Alice', date: '2023-10-24', type: 'Debit', method: 'Session Fee', amount: 1200.00, status: 'Completed' },
+    { id: 3, userId: 1, userOrListener: 'John Doe', description: 'Session with Bob', date: '2023-10-23', type: 'Debit', method: 'Session Fee', amount: 1800.00, status: 'Completed' },
+    { id: 4, userId: 3, userOrListener: 'Sam Wilson', description: 'Wallet Top-up', date: '2023-10-22', type: 'Credit', method: 'Payment Gateway', amount: 8000.00, status: 'Completed' },
+    { id: 5, userId: 1, userOrListener: 'John Doe', description: 'Refund for failed session', date: '2023-10-21', type: 'Refund', method: 'Manual Adjustment', amount: 800.00, status: 'Completed' },
+    { id: 6, userId: 4, userOrListener: 'Emily Brown', description: 'Wallet Top-up', date: '2023-10-20', type: 'Credit', method: 'Payment Gateway', amount: 2000.00, status: 'Failed' },
+    { id: 7, userId: 5, userOrListener: 'Michael Clark', description: 'Admin Credit', date: '2023-10-19', type: 'Credit', method: 'Manual Adjustment', amount: 400.00, status: 'Completed' },
+    { id: 8, userId: 2, userOrListener: 'Jane Smith', description: 'Wallet Top-up', date: '2023-10-18', type: 'Credit', method: 'Payment Gateway', amount: 2400.00, status: 'Pending' },
 ];
 
 
@@ -127,7 +127,7 @@ const Wallet: React.FC = () => {
                         <input type="number" name="userId" id="userId" value={adjustment.userId} onChange={handleAdjustmentChange} className="mt-1 block w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600" required />
                     </div>
                     <div>
-                        <label htmlFor="amount" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Amount ($)</label>
+                        <label htmlFor="amount" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Amount (₹)</label>
                         <input type="number" name="amount" id="amount" value={adjustment.amount} onChange={handleAdjustmentChange} step="0.01" className="mt-1 block w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600" required />
                     </div>
                     <div>
@@ -169,15 +169,15 @@ const Wallet: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
                     <h2 className="text-lg font-semibold text-gray-600 dark:text-gray-300">Total Inflow</h2>
-                    <p className="text-3xl font-bold text-green-500 mt-2">${summary.inflow.toFixed(2)}</p>
+                    <p className="text-3xl font-bold text-green-500 mt-2">₹{summary.inflow.toFixed(2)}</p>
                 </div>
                 <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
                     <h2 className="text-lg font-semibold text-gray-600 dark:text-gray-300">Total Outflow</h2>
-                    <p className="text-3xl font-bold text-red-500 mt-2">${summary.outflow.toFixed(2)}</p>
+                    <p className="text-3xl font-bold text-red-500 mt-2">₹{summary.outflow.toFixed(2)}</p>
                 </div>
                 <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
                     <h2 className="text-lg font-semibold text-gray-600 dark:text-gray-300">Net Revenue</h2>
-                    <p className="text-3xl font-bold text-gray-900 dark:text-white mt-2">${summary.netRevenue.toFixed(2)}</p>
+                    <p className="text-3xl font-bold text-gray-900 dark:text-white mt-2">₹{summary.netRevenue.toFixed(2)}</p>
                 </div>
             </div>
 

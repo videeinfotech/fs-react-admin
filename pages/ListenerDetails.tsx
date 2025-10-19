@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useToast } from '../hooks/useToast';
@@ -76,9 +75,9 @@ const ListenerDetails: React.FC = () => {
                         <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Performance</h2>
                          <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
                             <li><strong>Average Rating:</strong> <StarRating rating={listener.avgRating} /></li>
-                            <li><strong>Session Rate:</strong> ${listener.rate.toFixed(2)} / minute</li>
+                            <li><strong>Session Rate:</strong> ₹{listener.rate.toFixed(2)} / minute</li>
                             <li><strong>Total Sessions:</strong> {listener.totalSessions}</li>
-                            <li><strong>Total Earnings:</strong> ${listener.totalEarnings.toFixed(2)}</li>
+                            <li><strong>Total Earnings:</strong> ₹{listener.totalEarnings.toFixed(2)}</li>
                             <li><strong>Joined:</strong> {listener.createdAt}</li>
                         </ul>
                     </div>

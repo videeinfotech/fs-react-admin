@@ -19,20 +19,20 @@ const userGrowthData = [
 ];
 
 const revenueData = [
-  { name: 'Jan', revenue: 2400 },
-  { name: 'Feb', revenue: 1398 },
-  { name: 'Mar', revenue: 9800 },
-  { name: 'Apr', revenue: 3908 },
-  { name: 'May', revenue: 4800 },
-  { name: 'Jun', revenue: 3800 },
+  { name: 'Jan', revenue: 240000 },
+  { name: 'Feb', revenue: 139800 },
+  { name: 'Mar', revenue: 980000 },
+  { name: 'Apr', revenue: 390800 },
+  { name: 'May', revenue: 480000 },
+  { name: 'Jun', revenue: 380000 },
 ];
 
 const topListenersData = [
-  { name: 'Alice J.', revenue: 1200 },
-  { name: 'Charles D.', revenue: 980 },
-  { name: 'Eva G.', revenue: 850 },
-  { name: 'Frank H.', revenue: 700 },
-  { name: 'Grace I.', revenue: 600 },
+  { name: 'Alice J.', revenue: 120000 },
+  { name: 'Charles D.', revenue: 98000 },
+  { name: 'Eva G.', revenue: 85000 },
+  { name: 'Frank H.', revenue: 70000 },
+  { name: 'Grace I.', revenue: 60000 },
 ];
 
 const sessionVolumeData = [
@@ -84,7 +84,7 @@ const Reports: React.FC = () => {
                 <StatCard title="Total Users" value="1,234" icon={<UsersIcon />} />
                 <StatCard title="Total Listeners" value="78" icon={<ListenersIcon />} />
                 <StatCard title="Total Sessions" value="2,456" icon={<SessionsTotalIcon />} />
-                <StatCard title="Revenue (30d)" value="$15,678" icon={<RevenueIcon />} />
+                <StatCard title="Revenue (30d)" value="₹12,98,760" icon={<RevenueIcon />} />
                 <StatCard title="Avg. Rating" value="4.8" icon={<RatingIcon />} />
             </div>
 
@@ -110,7 +110,7 @@ const Reports: React.FC = () => {
                             <CartesianGrid strokeDasharray="3 3" className="dark:stroke-gray-600" />
                             <XAxis dataKey="name" className="text-xs dark:fill-gray-400" />
                             <YAxis className="text-xs dark:fill-gray-400" />
-                            <Tooltip contentStyle={{ backgroundColor: '#1f2937', border: '1px solid #374151' }} />
+                            <Tooltip formatter={(value: number) => `₹${value.toLocaleString()}`} contentStyle={{ backgroundColor: '#1f2937', border: '1px solid #374151' }} />
                             <Legend />
                             <Area type="monotone" dataKey="revenue" stroke="#10b981" fill="#10b981" fillOpacity={0.3} />
                         </AreaChart>
@@ -123,7 +123,7 @@ const Reports: React.FC = () => {
                             <CartesianGrid strokeDasharray="3 3" className="dark:stroke-gray-600" />
                             <XAxis type="number" hide />
                             <YAxis dataKey="name" type="category" width={80} className="text-xs dark:fill-gray-400" />
-                            <Tooltip contentStyle={{ backgroundColor: '#1f2937', border: '1px solid #374151' }} />
+                            <Tooltip formatter={(value: number) => `₹${value.toLocaleString()}`} contentStyle={{ backgroundColor: '#1f2937', border: '1px solid #374151' }} />
                             <Bar dataKey="revenue" fill="#34d399" background={{ fill: '#4b5563' }} />
                         </BarChart>
                     </ResponsiveContainer>

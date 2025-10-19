@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 const Dashboard: React.FC = () => {
@@ -16,7 +15,7 @@ const Dashboard: React.FC = () => {
                 </div>
                 <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
                     <h2 className="text-lg font-semibold text-gray-600 dark:text-gray-300">Total Revenue</h2>
-                    <p className="text-3xl font-bold text-gray-900 dark:text-white mt-2">$15,678</p>
+                    <p className="text-3xl font-bold text-gray-900 dark:text-white mt-2">₹1,29,876</p>
                 </div>
                 <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
                     <h2 className="text-lg font-semibold text-gray-600 dark:text-gray-300">Open Tickets</h2>

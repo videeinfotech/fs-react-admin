@@ -41,8 +41,8 @@ const GeneralSettings = () => (
                      <select id="timezone" className="mt-1 block w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600">
                         <option> (GMT-12:00) International Date Line West</option>
                         <option> (GMT-11:00) Midway Island, Samoa</option>
-                        <option selected> (GMT-05:00) Eastern Time (US & Canada)</option>
-                        <option> (GMT+05:30) Chennai, Kolkata, Mumbai, New Delhi</option>
+                        <option> (GMT-05:00) Eastern Time (US & Canada)</option>
+                        <option selected> (GMT+05:30) Chennai, Kolkata, Mumbai, New Delhi</option>
                     </select>
                 </div>
             </div>
@@ -52,17 +52,17 @@ const GeneralSettings = () => (
             <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-3 sm:gap-x-4">
                 <div>
                     <label htmlFor="call-rate" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Default Call Rate (/min)</label>
-                    <input type="number" id="call-rate" defaultValue="1.00" className="mt-1 block w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600" />
+                    <input type="number" id="call-rate" defaultValue="80.00" className="mt-1 block w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600" />
                 </div>
                 <div>
                     <label htmlFor="min-balance" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Minimum Wallet Balance</label>
-                    <input type="number" id="min-balance" defaultValue="5.00" className="mt-1 block w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600" />
+                    <input type="number" id="min-balance" defaultValue="500.00" className="mt-1 block w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600" />
                 </div>
                  <div>
                     <label htmlFor="currency" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Default Currency</label>
                     <select id="currency" className="mt-1 block w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600">
-                        <option>INR</option>
-                        <option selected>USD</option>
+                        <option selected>INR</option>
+                        <option>USD</option>
                         <option>EUR</option>
                     </select>
                 </div>

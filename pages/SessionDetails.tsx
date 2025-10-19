@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { mockSessions } from './Sessions';
@@ -41,7 +40,7 @@ const SessionDetails: React.FC = () => {
                             <li><strong>Type:</strong> {session.type}</li>
                             <li><strong>Status:</strong> {session.status}</li>
                             <li><strong>Duration:</strong> {session.duration}</li>
-                            <li><strong>Cost:</strong> ${session.cost.toFixed(2)}</li>
+                            <li><strong>Cost:</strong> ₹{session.cost.toFixed(2)}</li>
                              <hr className="dark:border-gray-600"/>
                             <li><strong>Started:</strong> {session.startedAt}</li>
                             <li><strong>Ended:</strong> {session.endedAt || 'N/A'}</li>

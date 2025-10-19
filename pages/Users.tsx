@@ -4,12 +4,12 @@ import { DataTable } from '../components/ui/DataTable';
 import { User } from '../types';
 
 export const mockUsers: User[] = [
-    { id: 1, name: 'John Doe', email: 'john.d@example.com', phone: '123-456-7890', status: 'Active', createdAt: '2023-01-15', lastLogin: '2023-10-25', address: { street: '123 Main St', city: 'Anytown', state: 'CA', zip: '12345' }, wallet: 150.75, totalSessions: 12, totalSpent: 450.00 },
-    { id: 2, name: 'Jane Smith', email: 'jane.s@example.com', phone: '987-654-3210', status: 'Suspended', createdAt: '2023-02-20', lastLogin: '2023-09-15', address: { street: '456 Oak Ave', city: 'Someville', state: 'NY', zip: '67890' }, wallet: 25.00, totalSessions: 5, totalSpent: 150.50 },
-    { id: 3, name: 'Sam Wilson', email: 'sam.w@example.com', phone: '555-123-4567', status: 'Active', createdAt: '2023-05-10', lastLogin: '2023-10-26', address: { street: '789 Pine Ln', city: 'Forestown', state: 'TX', zip: '54321' }, wallet: 300.00, totalSessions: 25, totalSpent: 800.00 },
-    { id: 4, name: 'Emily Brown', email: 'emily.b@example.com', phone: '555-987-6543', status: 'Deleted', createdAt: '2022-11-30', lastLogin: '2023-01-01', address: { street: '101 Maple Dr', city: 'Riverdale', state: 'FL', zip: '13579' }, wallet: 0.00, totalSessions: 2, totalSpent: 50.00 },
-    { id: 5, name: 'Michael Clark', email: 'michael.c@example.com', phone: '555-555-5555', status: 'Active', createdAt: '2023-08-01', lastLogin: '2023-10-24', address: { street: '222 Birch St', city: 'Lakeside', state: 'WA', zip: '97531' }, wallet: 75.50, totalSessions: 8, totalSpent: 220.00 },
-    { id: 6, name: 'Sarah Davis', email: 'sarah.d@example.com', phone: '555-444-3333', status: 'Suspended', createdAt: '2022-12-25', lastLogin: '2023-08-15', address: { street: '333 Elm Rd', city: 'Hilltop', state: 'GA', zip: '86420' }, wallet: 10.00, totalSessions: 3, totalSpent: 90.00 },
+    { id: 1, name: 'John Doe', email: 'john.d@example.com', phone: '123-456-7890', status: 'Active', createdAt: '2023-01-15', lastLogin: '2023-10-25', address: { street: '123 Main St', city: 'Anytown', state: 'CA', zip: '12345' }, wallet: 12500.50, totalSessions: 12, totalSpent: 35000.00 },
+    { id: 2, name: 'Jane Smith', email: 'jane.s@example.com', phone: '987-654-3210', status: 'Suspended', createdAt: '2023-02-20', lastLogin: '2023-09-15', address: { street: '456 Oak Ave', city: 'Someville', state: 'NY', zip: '67890' }, wallet: 2000.00, totalSessions: 5, totalSpent: 12000.00 },
+    { id: 3, name: 'Sam Wilson', email: 'sam.w@example.com', phone: '555-123-4567', status: 'Active', createdAt: '2023-05-10', lastLogin: '2023-10-26', address: { street: '789 Pine Ln', city: 'Forestown', state: 'TX', zip: '54321' }, wallet: 25000.00, totalSessions: 25, totalSpent: 65000.00 },
+    { id: 4, name: 'Emily Brown', email: 'emily.b@example.com', phone: '555-987-6543', status: 'Deleted', createdAt: '2022-11-30', lastLogin: '2023-01-01', address: { street: '101 Maple Dr', city: 'Riverdale', state: 'FL', zip: '13579' }, wallet: 0.00, totalSessions: 2, totalSpent: 4000.00 },
+    { id: 5, name: 'Michael Clark', email: 'michael.c@example.com', phone: '555-555-5555', status: 'Active', createdAt: '2023-08-01', lastLogin: '2023-10-24', address: { street: '222 Birch St', city: 'Lakeside', state: 'WA', zip: '97531' }, wallet: 6000.00, totalSessions: 8, totalSpent: 18000.00 },
+    { id: 6, name: 'Sarah Davis', email: 'sarah.d@example.com', phone: '555-444-3333', status: 'Suspended', createdAt: '2022-12-25', lastLogin: '2023-08-15', address: { street: '333 Elm Rd', city: 'Hilltop', state: 'GA', zip: '86420' }, wallet: 800.00, totalSessions: 3, totalSpent: 7500.00 },
 ];
 
 
