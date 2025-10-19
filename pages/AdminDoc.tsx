@@ -24,7 +24,45 @@ const AdminDoc: React.FC = () => {
                 This document outlines the features of the Find Sukoon Admin Panel and the prompts used to generate them.
             </p>
 
-            <FeatureCard title="Wallet & Transactions Page" prompt={`Purpose: Oversee all financial transactions and manual wallet controls.
+            <FeatureCard 
+                title="User Management" 
+                prompt={`Create a user management page. It should have a filterable and sortable data table showing user name, email, status, join date, and wallet balance. Add filters for user status and join date range. Each row should have a "View Details" button that navigates to a user detail page.
+
+The user detail page should display:
+- A header with user name, email, status, and action buttons (Suspend, Delete).
+- A card with detailed user info (phone, address, join date, last login).
+- A card for wallet stats (balance, total spent).
+- A list of the user's recent sessions, linking to session details.
+- A list of the user's recent transactions.`}
+            >
+                <ul className="list-disc list-inside">
+                    <li>View a list of all users with search and filtering capabilities.</li>
+                    <li>Filter users by status (Active, Suspended, Deleted) and join date.</li>
+                    <li>View a detailed profile for each user, including personal info, wallet balance, session history, and transaction history.</li>
+                    <li>Perform administrative actions like suspending or deleting a user.</li>
+                </ul>
+            </FeatureCard>
+
+             <FeatureCard 
+                title="Listener Management" 
+                prompt={`Create a listener management page with a data table. The table should show the listener's name, email, status, average rating, and total sessions. Each row should link to a listener detail page.
+
+The listener detail page should show:
+- A header with listener's name, email, status, and action buttons (Approve, Block).
+- A card with performance stats (avg rating, session rate, total earnings, join date).
+- A card displaying areas of expertise as tags.
+- A section showing recent user feedback and comments.`}
+            >
+                <ul className="list-disc list-inside">
+                    <li>Browse a list of all listeners (coaches) in a sortable table.</li>
+                    <li>View detailed listener profiles, including bio, expertise, and performance metrics (rating, earnings).</li>
+                    <li>Approve pending listener applications or block existing listeners.</li>
+                </ul>
+            </FeatureCard>
+
+            <FeatureCard 
+                title="Wallet & Transactions Page" 
+                prompt={`Purpose: Oversee all financial transactions and manual wallet controls.
 Design elements:
 
 Tabs:
@@ -40,7 +78,8 @@ Search bar + filters (Date, Type, Status)
 
 “Manual Adjustment” button → opens modal to credit/debit wallet
 
-Transaction summary cards (total inflow, outflow, net revenue)`}>
+Transaction summary cards (total inflow, outflow, net revenue)`}
+            >
                 <ul className="list-disc list-inside">
                     <li>Displays summary cards for total inflow, outflow, and net revenue.</li>
                     <li>Organizes transactions into tabs: All, Credits, Debits, and Refunds.</li>
@@ -49,8 +88,25 @@ Transaction summary cards (total inflow, outflow, net revenue)`}>
                     <li>Provides search and filter functionality by user/ID, transaction type, and status.</li>
                 </ul>
             </FeatureCard>
+
+             <FeatureCard 
+                title="Session History & Transcripts" 
+                prompt={`Create a session history page. It needs a data table listing past sessions with columns for Session ID, User, Listener, Type, Status, and Date. Each row should link to a session detail page.
+
+The session detail page should display:
+- A summary card with all session details (user, listener, type, status, cost, duration, timestamps).
+- A chat transcript viewer for text-based sessions, styled to distinguish between the user and listener.`}
+            >
+                <ul className="list-disc list-inside">
+                    <li>Access a complete log of all past sessions (Chat, Call, Video).</li>
+                    <li>View detailed information for each session, including user, listener, duration, and cost.</li>
+                    <li>For chat sessions, review the full conversation transcript.</li>
+                </ul>
+            </FeatureCard>
             
-            <FeatureCard title="Live Sessions Page" prompt={`Purpose: Track and control chat/voice/video sessions in real time.
+            <FeatureCard 
+                title="Live Sessions Page" 
+                prompt={`Purpose: Track and control chat/voice/video sessions in real time.
 Design elements:
 
 Table: Session ID, User, Listener, Type (Chat/Voice/Video), Duration, Cost, Status
@@ -61,7 +117,8 @@ Filter: Active / Completed / Disconnected
 
 Side detail panel: chat log preview, rating, call cost summary
 
-Visual timeline for session activity`}>
+Visual timeline for session activity`}
+            >
                 <ul className="list-disc list-inside">
                     <li>Real-time table of all ongoing and completed sessions.</li>
                     <li>Ability to filter sessions by status (Ongoing, Completed, Cancelled).</li>
@@ -71,7 +128,25 @@ Visual timeline for session activity`}>
                 </ul>
             </FeatureCard>
 
-             <FeatureCard title="Reports Dashboard" prompt={`reports Main Dashboard Cards:
+             <FeatureCard 
+                title="Support Ticket System" 
+                prompt={`Build a support ticket system. The main page should be a data table listing all tickets with Ticket ID, User, Subject, Status, and Creation Date. Each ticket should be viewable on a detail page.
+
+The ticket detail page should show:
+- The original ticket subject and description.
+- A timeline view of the conversation history between the user and admin.
+- A reply form for admins to respond to open tickets.`}
+            >
+                <ul className="list-disc list-inside">
+                    <li>Manage all user-submitted support tickets from a centralized location.</li>
+                    <li>View ticket details, including user information, issue description, and status.</li>
+                    <li>Reply to open tickets and view the complete conversation history.</li>
+                </ul>
+            </FeatureCard>
+
+             <FeatureCard 
+                title="Reports Dashboard" 
+                prompt={`reports Main Dashboard Cards:
 🧍 Total Users
 🎧 Total Listeners (Coaches)
 💬 Total Sessions (Chat + Call)
@@ -87,7 +162,8 @@ Payment Sources — pie chart (Razorpay, PhonePe, PayPal, Payoneer share)
 
 Tables Section:
 Recent Transactions Table:
-Columns → Transaction ID, User/Listener, Gateway, Amount, Date, Status`}>
+Columns → Transaction ID, User/Listener, Gateway, Amount, Date, Status`}
+            >
                  <ul className="list-disc list-inside">
                     <li>Key metric cards for a quick overview of users, listeners, sessions, revenue, and ratings.</li>
                     <li>A variety of charts to visualize data including user growth, revenue, top listeners, session volume, and payment sources.</li>
@@ -96,7 +172,9 @@ Columns → Transaction ID, User/Listener, Gateway, Amount, Date, Status`}>
                 </ul>
             </FeatureCard>
 
-            <FeatureCard title="Settings Page" prompt={`Settings Section (Admin Panel Design)
+            <FeatureCard 
+                title="Settings Page" 
+                prompt={`Settings Section (Admin Panel Design)
 🎯 Purpose:
 To manage all technical, operational, and financial configurations from one unified settings interface.
 
@@ -107,7 +185,8 @@ Payment Gateways
 System Configurations
 Security Settings
 
-... (Detailed field descriptions for General and Payment Gateways)`}>
+... (Detailed field descriptions for General and Payment Gateways)`}
+            >
                 <ul className="list-disc list-inside">
                     <li>A unified, tabbed interface for all platform configurations.</li>
                     <li><strong>General Settings:</strong> Manage platform name, call rates, currency, and contact information.</li>
@@ -115,7 +194,9 @@ Security Settings
                 </ul>
             </FeatureCard>
 
-             <FeatureCard title="System Configuration Tab" prompt={`⚙️ 3. System Configuration Tab
+             <FeatureCard 
+                title="System Configuration Tab" 
+                prompt={`⚙️ 3. System Configuration Tab
 
 Fields:
 API Base URL
@@ -125,7 +206,8 @@ Host, Port, Username, Password, Encryption Type
 Firebase Config Inputs (for notification integration)
 Agora Keys (App ID, Certificate)
 Supabase Credentials (optional, for analytics sync)
-File Storage Path or Cloud Bucket Config (MinIO / S3)`}>
+File Storage Path or Cloud Bucket Config (MinIO / S3)`}
+            >
                  <ul className="list-disc list-inside">
                     <li>A dedicated tab within Settings for technical configurations.</li>
                     <li>Fields to manage core URLs, SMTP for email, Firebase for notifications, and Agora for real-time communication.</li>
