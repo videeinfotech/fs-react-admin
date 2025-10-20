@@ -115,6 +115,37 @@ export interface QuizCategory {
     status: 'Active' | 'Inactive';
 }
 
+export interface QuizQuestion {
+    id: number;
+    question: string;
+    category: string;
+    difficulty: 'Easy' | 'Medium' | 'Hard';
+    status: 'Active' | 'Inactive';
+    createdBy: 'Admin' | 'AI';
+    date: string;
+}
+
+export interface QuizAssignment {
+    id: number;
+    title: string;
+    type: 'Daily' | 'Onboarding' | 'Manual';
+    listeners: number;
+    questions: number;
+    schedule: string;
+    status: 'Active' | 'Completed' | 'Paused';
+}
+
+export interface QuizReport {
+    listenerId: string;
+    listenerName: string;
+    quizType: string;
+    score: number;
+    attempts: number;
+    avgDifficulty: string;
+    weakArea: string;
+    lastTaken: string;
+}
+
 // Payout Management System Types
 export type PayoutStatus = 'Pending' | 'Processing' | 'Completed' | 'Failed';
 export type Gateway = 'Razorpay' | 'PayPal' | 'Payoneer' | 'PhonePe' | 'Manual';

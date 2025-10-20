@@ -143,6 +143,65 @@ const settingSchema = new mongoose.Schema({
     defaultCallRate: Number,
     // ... all other settings fields
 }, { capped: { size: 1024, max: 1 } }); // Capped collection to ensure only one settings doc
+
+// anonymousReportSchema.js
+const anonymousReportSchema = new mongoose.Schema({
+    listenerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Listener', required: true, index: true },
+    reason: { type: String, enum: ['Inappropriate Language', 'Unprofessional Conduct', 'Safety Concern', 'Other'], required: true },
+    details: { type: String, required: true },
+    status: { type: String, enum: ['New', 'Under Review', 'Resolved', 'Dismissed'], default: 'New', index: true },
+}, { timestamps: true });
+
+// --- Quiz & Evaluation Schemas ---
+const quizCategorySchema = new mongoose.Schema({
+    name: { type: String, required: true, unique: true },
+    description: String,
+    status: { type: String, enum: ['Active', 'Inactive'], default: 'Active' },
+});
+
+const quizQuestionSchema = new mongoose.Schema({
+    questionText: { type: String, required: true },
+    category: { type: mongoose.Schema.Types.ObjectId, ref: 'QuizCategory', required: true, index: true },
+    difficulty: { type: String, enum: ['Easy', 'Medium', 'Hard'], default: 'Medium' },
+    options: [{ text: String }],
+    correctAnswerIndex: { type: Number, required: true },
+    createdBy: { type: String, enum: ['Admin', 'AI'], default: 'Admin' },
+}, { timestamps: true });
+
+const quizAssignmentSchema = new mongoose.Schema({
+    title: { type: String, required: true },
+    type: { type: String, enum: ['Daily', 'Onboarding', 'Manual'], required: true },
+    questions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'QuizQuestion' }],
+    schedule: String, // e.g., "Every Day 9AM", cron string
+    status: { type: String, enum: ['Active', 'Completed', 'Paused'], default: 'Active' },
+});
+
+const quizResultSchema = new mongoose.Schema({
+    listenerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Listener', required: true, index: true },
+    assignmentId: { type: mongoose.Schema.Types.ObjectId, ref: 'QuizAssignment', required: true, index: true },
+    score: { type: Number, required: true }, // As a percentage
+    answers: [{ questionId: mongoose.Schema.Types.ObjectId, selectedAnswerIndex: Number, isCorrect: Boolean }],
+}, { timestamps: true });
+
+// --- Payout Management Schemas ---
+const payoutCycleSchema = new mongoose.Schema({
+    type: { type: String, enum: ['Weekly', 'Monthly'], required: true },
+    period: String, // e.g., "Oct 10–16"
+    status: { type: String, enum: ['Pending', 'Processing', 'Completed'], default: 'Pending' },
+    totalAmount: Number, // in paise/cents
+    listenerCount: Number,
+});
+
+const payoutSchema = new mongoose.Schema({
+    payoutCycleId: { type: mongoose.Schema.Types.ObjectId, ref: 'PayoutCycle', required: true, index: true },
+    listenerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Listener', required: true, index: true },
+    earnings: Number, // in paise/cents
+    commissionPercent: Number,
+    payableAmount: Number, // in paise/cents
+    gateway: { type: String, enum: ['Razorpay', 'PayPal', 'Payoneer', 'PhonePe', 'Manual'] },
+    status: { type: String, enum: ['Pending', 'Processing', 'Completed', 'Failed'], default: 'Pending', index: true },
+    transactionId: String, // from payment gateway
+}, { timestamps: true });
 `}</CodeBlock>
                          <h3 className="text-xl font-semibold mt-6">Performance & Indexing</h3>
                          <p>Indexes are crucial for fast query performance. The schemas above already include recommended indexes on key fields like emails, statuses, and foreign keys (`userId`, `listenerId`).</p>
@@ -371,8 +430,68 @@ CREATE TABLE settings (
    - \`POST /api/tickets/:id/reply\`: Add a new reply to a ticket's history. Update the ticket's status if necessary.`}
                 </PromptBlock>
             </ApiEndpointCard>
+            
+            <ApiEndpointCard title="8. Anonymized Reporting API">
+                <p>Endpoints for managing anonymous user reports against listeners.</p>
+                <h3 className="text-xl font-semibold">API Routes</h3>
+                <ul className="list-disc list-inside">
+                    <li><code>GET /api/reports/anonymous</code>: Fetch reports with filtering and pagination.</li>
+                    <li><code>GET /api/reports/anonymous/:id</code>: Get a single report.</li>
+                    <li><code>PUT /api/reports/anonymous/:id/status</code>: Update a report's status (`Under Review`, `Resolved`, `Dismissed`).</li>
+                </ul>
+                <PromptBlock>
+{`Create API endpoints for managing anonymous reports. All routes should be protected.
+1. Create a Mongoose schema for AnonymousReport based on the documentation.
+2. Implement controllers for:
+    - Fetching all reports with filtering by status and reason.
+    - Fetching a single report by ID.
+    - Updating a report's status.`}
+                </PromptBlock>
+            </ApiEndpointCard>
 
-            <ApiEndpointCard title="8. Push Notifications API">
+            <ApiEndpointCard title="9. Quiz & Evaluation API">
+                <p>A comprehensive set of endpoints to manage listener knowledge and performance through quizzes.</p>
+                <h3 className="text-xl font-semibold">API Routes</h3>
+                <ul className="list-disc list-inside">
+                    <li><code>GET, POST, PUT, DELETE /api/quiz/categories</code>: Full CRUD for quiz categories.</li>
+                    <li><code>GET, POST, PUT, DELETE /api/quiz/questions</code>: Full CRUD for the question bank.</li>
+                    <li><code>POST /api/quiz/questions/generate</code>: AI-powered endpoint to generate new questions based on a topic.</li>
+                    <li><code>GET, POST /api/quiz/assignments</code>: CRUD for quiz assignments and scheduling.</li>
+                    <li><code>GET /api/quiz/reports</code>: Get aggregated listener performance reports with filtering.</li>
+                </ul>
+                <PromptBlock>
+{`Build a comprehensive API for the Quiz & Evaluation module. All routes must be protected.
+1. Create Mongoose schemas for QuizCategory, QuizQuestion, QuizAssignment, and QuizResult.
+2. Implement full CRUD operations for Categories and Questions.
+3. Create an endpoint \`/api/quiz/questions/generate\` that accepts a topic and number of questions, then calls an external AI model to generate them.
+4. Implement endpoints to create and manage quiz assignments.
+5. Build an endpoint to provide aggregated reports on listener performance, with filtering by listener, category, and date.`}
+                </PromptBlock>
+            </ApiEndpointCard>
+
+            <ApiEndpointCard title="10. Payout Management API">
+                <p>A suite of financial endpoints to manage listener earnings and payouts.</p>
+                <h3 className="text-xl font-semibold">API Routes</h3>
+                <ul className="list-disc list-inside">
+                    <li><code>GET /api/payouts/overview</code>: Get aggregated data for the overview page (total earnings, pending payouts, etc).</li>
+                    <li><code>GET /api/payouts/cycles</code>: List all payout cycles (weekly/monthly).</li>
+                    <li><code>POST /api/payouts/cycles</code>: Manually generate a new payout cycle for a given period.</li>
+                    <li><code>GET /api/payouts/history</code>: Get a detailed list of all individual payout transactions with filtering.</li>
+                    <li><code>POST /api/payouts/process</code>: Bulk process a list of pending payout IDs.</li>
+                    <li><code>GET, PUT /api/payouts/gateways</code>: Manage payment gateway credentials.</li>
+                </ul>
+                <PromptBlock>
+{`Develop a full suite of APIs for Payout Management. All routes must be protected.
+1. Create Mongoose schemas for Payout and PayoutCycle.
+2. Build an endpoint for an overview dashboard with aggregated data.
+3. Implement endpoints for managing payout cycles (creation and listing).
+4. Create an endpoint for viewing detailed payout history with filters for date, gateway, and status.
+5. Implement a critical endpoint to process bulk payouts. This should interact with a mock or real payment gateway service and update the status of each payout within a database transaction.
+6. Include endpoints to securely manage payment gateway settings.`}
+                </PromptBlock>
+            </ApiEndpointCard>
+
+            <ApiEndpointCard title="11. Push Notifications API">
                 <p>Endpoints to send custom notifications, manage automations, and view analytics. This will require the `firebase-admin` SDK.</p>
                 <h3 className="text-xl font-semibold">API Routes</h3>
                 <ul className="list-disc list-inside">
@@ -394,7 +513,7 @@ CREATE TABLE settings (
                 </PromptBlock>
             </ApiEndpointCard>
 
-            <ApiEndpointCard title="9. Reports & Analytics API">
+            <ApiEndpointCard title="12. Reports & Analytics API">
                 <p>These endpoints will provide aggregated data for the dashboard charts. This requires efficient database queries.</p>
                  <PromptBlock>
 {`Create API endpoints for the Reports dashboard using Node.js. These endpoints will perform data aggregation.
@@ -412,7 +531,7 @@ CREATE TABLE settings (
                 </PromptBlock>
             </ApiEndpointCard>
             
-            <ApiEndpointCard title="10. Settings API">
+            <ApiEndpointCard title="13. Settings API">
                 <p>Endpoints to fetch and save all platform configurations from the Settings page.</p>
                 <PromptBlock>
 {`Create API endpoints to manage application settings.
@@ -424,7 +543,7 @@ CREATE TABLE settings (
                 </PromptBlock>
             </ApiEndpointCard>
             
-            <ApiEndpointCard title="11. Real-Time Updates with WebSockets">
+            <ApiEndpointCard title="14. Real-Time Updates with WebSockets">
                 <p>Use Socket.io to push real-time updates to the admin panel, primarily for the Live Sessions and Monitoring pages.</p>
                  <PromptBlock>
 {`Integrate Socket.io into the Node.js/Express application for real-time updates.
