@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+// FIX: Changed react-router-dom import to use namespace import to fix "no exported member" error.
+import * as ReactRouterDOM from 'react-router-dom';
 import { ResponsiveContainer, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar, LineChart, Line, PieChart, Pie, Cell } from 'recharts';
 import { DataTable } from '../components/ui/DataTable';
 import { IconProps } from '../components/ui/icons/Icon';
@@ -63,7 +64,7 @@ const StatusChip: React.FC<{ status: PayoutStatus }> = ({ status }) => {
 
 // --- MAIN COMPONENT ---
 const EarningsOverview: React.FC = () => {
-    const navigate = useNavigate();
+    const navigate = ReactRouterDOM.useNavigate();
     const [filters, setFilters] = useState({ search: '', gateway: 'All', status: 'All' });
     const [isFiltersVisible, setIsFiltersVisible] = useState(true);
 

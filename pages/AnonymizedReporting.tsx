@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+// FIX: Changed react-router-dom import to use namespace import to fix "no exported member" error.
+import * as ReactRouterDOM from 'react-router-dom';
 import { DataTable } from '../components/ui/DataTable';
 import { AnonymousReport } from '../types';
 import { useToast } from '../hooks/useToast';
@@ -29,7 +30,7 @@ const AnonymizedReporting: React.FC = () => {
 
     const columns = useMemo(() => [
         { header: 'Report ID', accessor: 'id' as keyof AnonymousReport, sortable: true },
-        { header: 'Listener', accessor: 'listenerName' as keyof AnonymousReport, sortable: true, render: (item: AnonymousReport) => <Link to={`/listeners/${item.listenerId}`} className="text-primary-600 hover:underline">{item.listenerName}</Link> },
+        { header: 'Listener', accessor: 'listenerName' as keyof AnonymousReport, sortable: true, render: (item: AnonymousReport) => <ReactRouterDOM.Link to={`/listeners/${item.listenerId}`} className="text-primary-600 hover:underline">{item.listenerName}</ReactRouterDOM.Link> },
         { header: 'Reason', accessor: 'reason' as keyof AnonymousReport, sortable: true },
         { header: 'Date', accessor: 'date' as keyof AnonymousReport, sortable: true },
         { header: 'Status', accessor: 'status' as keyof AnonymousReport, sortable: true, render: (item: AnonymousReport) => <StatusBadge status={item.status} /> },
@@ -62,7 +63,7 @@ const AnonymizedReporting: React.FC = () => {
                 <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-lg">
                     <div className="p-6 border-b dark:border-gray-700">
                         <h3 className="text-xl font-bold">Report Details: #{selectedReport.id}</h3>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">Report against <Link to={`/listeners/${selectedReport.listenerId}`} className="font-semibold text-primary-600 hover:underline">{selectedReport.listenerName}</Link></p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">Report against <ReactRouterDOM.Link to={`/listeners/${selectedReport.listenerId}`} className="font-semibold text-primary-600 hover:underline">{selectedReport.listenerName}</ReactRouterDOM.Link></p>
                     </div>
                     <div className="p-6 space-y-4">
                         <div><strong>Reason:</strong> {selectedReport.reason}</div>

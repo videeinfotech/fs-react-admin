@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+// FIX: Changed react-router-dom import to use namespace import to fix "no exported member" error.
+import * as ReactRouterDOM from 'react-router-dom';
 import { Session, TranscriptMessage } from '../types';
 import { useToast } from '../hooks/useToast';
 
@@ -59,8 +60,8 @@ const LiveSessions: React.FC = () => {
                 <div className="mt-4 space-y-4 overflow-y-auto">
                     <div className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-md">
                         <p><strong>Session ID:</strong> {selectedSession.id}</p>
-                        <p><strong>User:</strong> <Link to={`/users/${selectedSession.userId}`} className="text-primary-600 hover:underline">{selectedSession.user}</Link></p>
-                        <p><strong>Listener:</strong> <Link to={`/listeners/${selectedSession.listenerId}`} className="text-primary-600 hover:underline">{selectedSession.listener}</Link></p>
+                        <p><strong>User:</strong> <ReactRouterDOM.Link to={`/users/${selectedSession.userId}`} className="text-primary-600 hover:underline">{selectedSession.user}</ReactRouterDOM.Link></p>
+                        <p><strong>Listener:</strong> <ReactRouterDOM.Link to={`/listeners/${selectedSession.listenerId}`} className="text-primary-600 hover:underline">{selectedSession.listener}</ReactRouterDOM.Link></p>
                         <p><strong>Status:</strong> <StatusPill status={selectedSession.status} /></p>
                     </div>
 

@@ -1,5 +1,7 @@
+
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+// FIX: Changed react-router-dom import to use namespace import to fix "no exported member" errors.
+import * as ReactRouterDOM from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { ToastProvider } from './context/ToastContext';
 import { Layout } from './components/layout/Layout';
@@ -43,48 +45,48 @@ function App() {
   return (
     <AuthProvider>
       <ToastProvider>
-        <Router>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route element={<ProtectedRoute />}>
-              <Route path="/" element={<Layout />}>
-                <Route index element={<Dashboard />} />
-                <Route path="monitoring" element={<Monitoring />} />
-                <Route path="users" element={<UsersList />} />
-                <Route path="users/:id" element={<UserDetails />} />
-                <Route path="listeners" element={<ListenersList />} />
-                <Route path="listeners/:id" element={<ListenerDetails />} />
-                <Route path="wallet" element={<Wallet />} />
-                <Route path="sessions" element={<Sessions />} />
-                <Route path="live-sessions" element={<LiveSessions />} />
-                <Route path="sessions/:id" element={<SessionDetails />} />
+        <ReactRouterDOM.BrowserRouter>
+          <ReactRouterDOM.Routes>
+            <ReactRouterDOM.Route path="/login" element={<Login />} />
+            <ReactRouterDOM.Route element={<ProtectedRoute />}>
+              <ReactRouterDOM.Route path="/" element={<Layout />}>
+                <ReactRouterDOM.Route index element={<Dashboard />} />
+                <ReactRouterDOM.Route path="monitoring" element={<Monitoring />} />
+                <ReactRouterDOM.Route path="users" element={<UsersList />} />
+                <ReactRouterDOM.Route path="users/:id" element={<UserDetails />} />
+                <ReactRouterDOM.Route path="listeners" element={<ListenersList />} />
+                <ReactRouterDOM.Route path="listeners/:id" element={<ListenerDetails />} />
+                <ReactRouterDOM.Route path="wallet" element={<Wallet />} />
+                <ReactRouterDOM.Route path="sessions" element={<Sessions />} />
+                <ReactRouterDOM.Route path="live-sessions" element={<LiveSessions />} />
+                <ReactRouterDOM.Route path="sessions/:id" element={<SessionDetails />} />
                 {/* Payout Routes */}
-                <Route path="earnings-overview" element={<EarningsOverview />} />
-                <Route path="payout-cycles" element={<PayoutCycles />} />
-                <Route path="process-payouts" element={<ProcessPayouts />} />
-                <Route path="payout-history" element={<PayoutHistory />} />
-                <Route path="gateway-settings" element={<GatewaySettings />} />
+                <ReactRouterDOM.Route path="earnings-overview" element={<EarningsOverview />} />
+                <ReactRouterDOM.Route path="payout-cycles" element={<PayoutCycles />} />
+                <ReactRouterDOM.Route path="process-payouts" element={<ProcessPayouts />} />
+                <ReactRouterDOM.Route path="payout-history" element={<PayoutHistory />} />
+                <ReactRouterDOM.Route path="gateway-settings" element={<GatewaySettings />} />
                 
-                <Route path="feedback" element={<Feedback />} />
-                <Route path="anonymized-reporting" element={<AnonymizedReporting />} />
-                <Route path="tickets" element={<Tickets />} />
-                <Route path="tickets/:id" element={<TicketDetails />} />
-                <Route path="reports" element={<Reports />} />
-                <Route path="analytics" element={<Analytics />} />
-                <Route path="push-notifications" element={<PushNotifications />} />
-                <Route path="quiz-evaluation" element={<QuizEvaluation />} />
-                <Route path="admin-doc" element={<AdminDoc />} />
-                <Route path="api-doc" element={<ApiDoc />} />
-                <Route path="settings" element={<Settings />} />
+                <ReactRouterDOM.Route path="feedback" element={<Feedback />} />
+                <ReactRouterDOM.Route path="anonymized-reporting" element={<AnonymizedReporting />} />
+                <ReactRouterDOM.Route path="tickets" element={<Tickets />} />
+                <ReactRouterDOM.Route path="tickets/:id" element={<TicketDetails />} />
+                <ReactRouterDOM.Route path="reports" element={<Reports />} />
+                <ReactRouterDOM.Route path="analytics" element={<Analytics />} />
+                <ReactRouterDOM.Route path="push-notifications" element={<PushNotifications />} />
+                <ReactRouterDOM.Route path="quiz-evaluation" element={<QuizEvaluation />} />
+                <ReactRouterDOM.Route path="admin-doc" element={<AdminDoc />} />
+                <ReactRouterDOM.Route path="api-doc" element={<ApiDoc />} />
+                <ReactRouterDOM.Route path="settings" element={<Settings />} />
                 {/* Adding some other placeholder routes for completeness */}
-                <Route path="cms" element={<CMS />} />
-                <Route path="roles" element={<Roles />} />
-                <Route path="audit-logs" element={<AuditLogs />} />
-                <Route path="*" element={<Navigate to="/" replace />} />
-              </Route>
-            </Route>
-          </Routes>
-        </Router>
+                <ReactRouterDOM.Route path="cms" element={<CMS />} />
+                <ReactRouterDOM.Route path="roles" element={<Roles />} />
+                <ReactRouterDOM.Route path="audit-logs" element={<AuditLogs />} />
+                <ReactRouterDOM.Route path="*" element={<ReactRouterDOM.Navigate to="/" replace />} />
+              </ReactRouterDOM.Route>
+            </ReactRouterDOM.Route>
+          </ReactRouterDOM.Routes>
+        </ReactRouterDOM.BrowserRouter>
       </ToastProvider>
     </AuthProvider>
   );

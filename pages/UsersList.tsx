@@ -1,9 +1,11 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useMemo } from 'react';
+// FIX: Changed react-router-dom import to use namespace import to fix "no exported member" error.
+import * as ReactRouterDOM from 'react-router-dom';
 import { DataTable } from '../components/ui/DataTable';
 import { User } from '../types';
 import { IconProps } from '../components/ui/icons/Icon';
 import { UsersIcon } from '../components/ui/icons/UsersIcon';
+import { mockUsers } from './Users';
 
 const StatCard: React.FC<{ title: string; value: string; icon: React.ReactElement<IconProps> }> = ({ title, value, icon }) => (
     <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md flex items-center space-x-4">
@@ -27,38 +29,12 @@ const StatusBadge: React.FC<{ status: User['status'] }> = ({ status }) => {
 }
 
 const UsersList: React.FC = () => {
-    const navigate = useNavigate();
-    const [users, setUsers] = useState<User[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+    const navigate = ReactRouterDOM.useNavigate();
     
     const [statusFilter, setStatusFilter] = useState('all');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
 
-    useEffect(() => {
-        const fetchUsers = async () => {
-            try {
-                setLoading(true);
-                // This assumes the backend server is running on the same origin or a proxy is set up.
-                const response = await fetch('/api/users');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch users');
-                }
-                const data = await response.json();
-                setUsers(data);
-                setError(null);
-            } catch (err: any) {
-                setError(err.message);
-                setUsers([]); // Clear users on error
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchUsers();
-    }, []);
-    
     const columns = useMemo(() => [
         { header: 'Name', accessor: 'name' as keyof User, sortable: true, render: (user: User) => (
             <div>
@@ -73,7 +49,7 @@ const UsersList: React.FC = () => {
     ], []);
 
     const filteredUsers = useMemo(() => {
-        return users.filter(user => {
+        return mockUsers.filter(user => {
             const statusMatch = statusFilter === 'all' || user.status === statusFilter;
             
             if (!startDate && !endDate) {
@@ -96,13 +72,13 @@ const UsersList: React.FC = () => {
 
             return statusMatch && passesDateFilter;
         });
-    }, [users, statusFilter, startDate, endDate]);
+    }, [statusFilter, startDate, endDate]);
 
     const stats = useMemo(() => ({
-        total: users.length,
-        active: users.filter(u => u.status === 'Active').length,
-        suspended: users.filter(u => u.status === 'Suspended').length,
-    }), [users]);
+        total: mockUsers.length,
+        active: mockUsers.filter(u => u.status === 'Active').length,
+        suspended: mockUsers.filter(u => u.status === 'Suspended').length,
+    }), []);
 
     const renderActions = (user: User) => (
         <button onClick={() => navigate(`/users/${user.id}`)} className="text-primary-600 hover:underline font-medium">
@@ -163,9 +139,7 @@ const UsersList: React.FC = () => {
                 </div>
             </div>
 
-            {loading && <p>Loading users...</p>}
-            {error && <p className="text-red-500">Error: {error}</p>}
-            {!loading && !error && <DataTable columns={columns} data={filteredUsers} renderActions={renderActions} />}
+            <DataTable columns={columns} data={filteredUsers} renderActions={renderActions} />
         </div>
     );
 };

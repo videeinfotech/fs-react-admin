@@ -1,16 +1,17 @@
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+// FIX: Changed react-router-dom import to use namespace import to fix "no exported member" error.
+import * as ReactRouterDOM from 'react-router-dom';
 import { mockSessions } from './Sessions';
 
 const SessionDetails: React.FC = () => {
-    const { id } = useParams<{ id: string }>();
+    const { id } = ReactRouterDOM.useParams<{ id: string }>();
     const session = mockSessions.find(s => s.id === id);
 
     if (!session) {
         return (
             <div className="text-center text-gray-500 dark:text-gray-400">
                 <h1 className="text-2xl">Session not found.</h1>
-                <Link to="/sessions" className="text-primary-600 hover:underline">Back to Session List</Link>
+                <ReactRouterDOM.Link to="/sessions" className="text-primary-600 hover:underline">Back to Session List</ReactRouterDOM.Link>
             </div>
         );
     }
@@ -20,7 +21,7 @@ const SessionDetails: React.FC = () => {
             <nav className="text-sm" aria-label="Breadcrumb">
                 <ol className="list-none p-0 inline-flex space-x-2">
                     <li className="flex items-center">
-                        <Link to="/sessions" className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white">Sessions</Link>
+                        <ReactRouterDOM.Link to="/sessions" className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white">Sessions</ReactRouterDOM.Link>
                     </li>
                     <li className="flex items-center">
                         <span className="text-gray-400 mx-2">/</span>
@@ -34,8 +35,8 @@ const SessionDetails: React.FC = () => {
                     <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
                         <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Session Details</h2>
                         <ul className="space-y-3 text-sm text-gray-600 dark:text-gray-300">
-                            <li><strong>User:</strong> <Link to={`/users/${session.userId}`} className="text-primary-600 hover:underline">{session.user}</Link></li>
-                            <li><strong>Listener:</strong> <Link to={`/listeners/${session.listenerId}`} className="text-primary-600 hover:underline">{session.listener}</Link></li>
+                            <li><strong>User:</strong> <ReactRouterDOM.Link to={`/users/${session.userId}`} className="text-primary-600 hover:underline">{session.user}</ReactRouterDOM.Link></li>
+                            <li><strong>Listener:</strong> <ReactRouterDOM.Link to={`/listeners/${session.listenerId}`} className="text-primary-600 hover:underline">{session.listener}</ReactRouterDOM.Link></li>
                             <hr className="dark:border-gray-600"/>
                             <li><strong>Type:</strong> {session.type}</li>
                             <li><strong>Status:</strong> {session.status}</li>

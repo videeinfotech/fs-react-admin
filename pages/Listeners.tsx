@@ -1,6 +1,8 @@
 
+
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+// FIX: Changed react-router-dom import to use namespace import to fix "no exported member" error.
+import * as ReactRouterDOM from 'react-router-dom';
 import { DataTable } from '../components/ui/DataTable';
 import { Listener } from '../types';
 
@@ -45,7 +47,7 @@ export const mockListeners: Listener[] = [
 ];
 
 const Listeners: React.FC = () => {
-    const navigate = useNavigate();
+    const navigate = ReactRouterDOM.useNavigate();
     
     const columns = [
         { header: 'Name', accessor: 'name' as keyof Listener, sortable: true },

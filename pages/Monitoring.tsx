@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+// FIX: Changed react-router-dom import to use namespace import to fix "no exported member" error.
+import * as ReactRouterDOM from 'react-router-dom';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, BarChart, Bar, AreaChart, Area } from 'recharts';
 import { IconProps } from '../components/ui/icons/Icon';
 import { UsersIcon } from '../components/ui/icons/UsersIcon';
@@ -75,7 +76,7 @@ const Heatmap: React.FC<{ title: string }> = ({ title }) => {
 
 // --- VIEW COMPONENTS ---
 const UserMonitoringView: React.FC = () => {
-    const navigate = useNavigate();
+    const navigate = ReactRouterDOM.useNavigate();
     const { addToast } = useToast();
 
     const userColumns = useMemo(() => [
@@ -143,7 +144,7 @@ const UserMonitoringView: React.FC = () => {
 };
 
 const ListenerMonitoringView: React.FC = () => {
-    const navigate = useNavigate();
+    const navigate = ReactRouterDOM.useNavigate();
     const { addToast } = useToast();
 
     const listenerColumns = useMemo(() => [

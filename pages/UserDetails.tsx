@@ -1,5 +1,6 @@
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+// FIX: Changed react-router-dom import to use namespace import to fix "no exported member" error.
+import * as ReactRouterDOM from 'react-router-dom';
 import { useToast } from '../hooks/useToast';
 import { User } from '../types';
 import { mockSessions } from './Sessions';
@@ -17,7 +18,7 @@ const mockUsers: User[] = [
 
 
 const UserDetails: React.FC = () => {
-    const { id } = useParams<{ id: string }>();
+    const { id } = ReactRouterDOM.useParams<{ id: string }>();
     const { addToast } = useToast();
     const userId = parseInt(id || '0', 10);
     const user = mockUsers.find(u => u.id === userId);
@@ -29,7 +30,7 @@ const UserDetails: React.FC = () => {
         return (
             <div className="text-center text-gray-500 dark:text-gray-400">
                 <h1 className="text-2xl">User not found.</h1>
-                <Link to="/users" className="text-primary-600 hover:underline">Back to User List</Link>
+                <ReactRouterDOM.Link to="/users" className="text-primary-600 hover:underline">Back to User List</ReactRouterDOM.Link>
             </div>
         );
     }
@@ -43,7 +44,7 @@ const UserDetails: React.FC = () => {
             <nav className="text-sm" aria-label="Breadcrumb">
                 <ol className="list-none p-0 inline-flex space-x-2">
                     <li className="flex items-center">
-                        <Link to="/users" className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white">Users</Link>
+                        <ReactRouterDOM.Link to="/users" className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white">Users</ReactRouterDOM.Link>
                     </li>
                     <li className="flex items-center">
                         <span className="text-gray-400 mx-2">/</span>
@@ -97,13 +98,13 @@ const UserDetails: React.FC = () => {
                         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
                             {userSessions.length > 0 ? userSessions.map(s => (
                                 <li key={s.id} className="py-3">
-                                    <Link to={`/sessions/${s.id}`} className="flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-700 p-2 rounded-md">
+                                    <ReactRouterDOM.Link to={`/sessions/${s.id}`} className="flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-700 p-2 rounded-md">
                                         <div>
                                             <p className="font-medium text-gray-800 dark:text-gray-200">Session with {s.listener}</p>
                                             <p className="text-sm text-gray-500">{s.startedAt}</p>
                                         </div>
                                         <span className="text-sm font-semibold">₹{s.cost.toFixed(2)}</span>
-                                    </Link>
+                                    </ReactRouterDOM.Link>
                                 </li>
                             )) : <p className="text-sm text-gray-500">No sessions found.</p>}
                         </ul>

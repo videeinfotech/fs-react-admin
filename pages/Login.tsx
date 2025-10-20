@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate, Navigate } from 'react-router-dom';
+// FIX: Changed react-router-dom import to use namespace import to fix "no exported member" error.
+import * as ReactRouterDOM from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useToast } from '../hooks/useToast';
 
@@ -8,11 +9,11 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const { login, isAuthenticated } = useAuth();
-  const navigate = useNavigate();
+  const navigate = ReactRouterDOM.useNavigate();
   const { addToast } = useToast();
 
   if (isAuthenticated) {
-    return <Navigate to="/" replace />;
+    return <ReactRouterDOM.Navigate to="/" replace />;
   }
 
   const handleLogin = async (e: React.FormEvent) => {

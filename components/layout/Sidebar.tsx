@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+// FIX: Changed react-router-dom import to use namespace import to fix "no exported member" error.
+import * as ReactRouterDOM from 'react-router-dom';
 import { NAV_LINKS } from '../../constants';
 
 interface SidebarProps {
@@ -15,7 +16,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen }) => {
         <ul className="space-y-2 font-medium">
           {NAV_LINKS.map((link) => (
             <li key={link.name}>
-              <NavLink
+              <ReactRouterDOM.NavLink
                 to={link.path}
                 className={({ isActive }) =>
                   `flex items-center p-2 rounded-lg text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group ${isActive ? 'bg-gray-100 dark:bg-gray-700' : ''}`
@@ -23,7 +24,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen }) => {
               >
                 {React.cloneElement(link.icon, { className: 'w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white' })}
                 <span className="ml-3">{link.name}</span>
-              </NavLink>
+              </ReactRouterDOM.NavLink>
             </li>
           ))}
         </ul>
