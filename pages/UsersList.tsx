@@ -1,8 +1,7 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DataTable } from '../components/ui/DataTable';
 import { User } from '../types';
-import { mockUsers } from './Users';
 import { IconProps } from '../components/ui/icons/Icon';
 import { UsersIcon } from '../components/ui/icons/UsersIcon';
 
@@ -29,9 +28,36 @@ const StatusBadge: React.FC<{ status: User['status'] }> = ({ status }) => {
 
 const UsersList: React.FC = () => {
     const navigate = useNavigate();
+    const [users, setUsers] = useState<User[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    
     const [statusFilter, setStatusFilter] = useState('all');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
+
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                setLoading(true);
+                // This assumes the backend server is running on the same origin or a proxy is set up.
+                const response = await fetch('/api/users');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch users');
+                }
+                const data = await response.json();
+                setUsers(data);
+                setError(null);
+            } catch (err: any) {
+                setError(err.message);
+                setUsers([]); // Clear users on error
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchUsers();
+    }, []);
     
     const columns = useMemo(() => [
         { header: 'Name', accessor: 'name' as keyof User, sortable: true, render: (user: User) => (
@@ -47,7 +73,7 @@ const UsersList: React.FC = () => {
     ], []);
 
     const filteredUsers = useMemo(() => {
-        return mockUsers.filter(user => {
+        return users.filter(user => {
             const statusMatch = statusFilter === 'all' || user.status === statusFilter;
             
             if (!startDate && !endDate) {
@@ -70,13 +96,13 @@ const UsersList: React.FC = () => {
 
             return statusMatch && passesDateFilter;
         });
-    }, [statusFilter, startDate, endDate]);
+    }, [users, statusFilter, startDate, endDate]);
 
     const stats = useMemo(() => ({
-        total: mockUsers.length,
-        active: mockUsers.filter(u => u.status === 'Active').length,
-        suspended: mockUsers.filter(u => u.status === 'Suspended').length,
-    }), []);
+        total: users.length,
+        active: users.filter(u => u.status === 'Active').length,
+        suspended: users.filter(u => u.status === 'Suspended').length,
+    }), [users]);
 
     const renderActions = (user: User) => (
         <button onClick={() => navigate(`/users/${user.id}`)} className="text-primary-600 hover:underline font-medium">
@@ -137,7 +163,9 @@ const UsersList: React.FC = () => {
                 </div>
             </div>
 
-            <DataTable columns={columns} data={filteredUsers} renderActions={renderActions} />
+            {loading && <p>Loading users...</p>}
+            {error && <p className="text-red-500">Error: {error}</p>}
+            {!loading && !error && <DataTable columns={columns} data={filteredUsers} renderActions={renderActions} />}
         </div>
     );
 };

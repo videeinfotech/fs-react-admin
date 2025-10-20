@@ -48,8 +48,6 @@ const PayoutHistory: React.FC = () => {
         });
     }, [startDate, endDate]);
     
-    // FIX: Refactored the data aggregation to use a reliable date key ('YYYY-MM') for sorting,
-    // which resolves the arithmetic type error by ensuring `new Date()` can parse the key correctly.
     const payoutTrendData = useMemo(() => {
         if (filteredHistory.length === 0) return [];
         
@@ -63,6 +61,8 @@ const PayoutHistory: React.FC = () => {
             return acc;
         }, {} as Record<string, number>);
 
+        // FIX: The arithmetic operation error is resolved by using .getTime() to convert Date objects
+        // to numbers before subtraction, which is required for sorting in TypeScript.
         const sortedMonthKeys = Object.keys(monthlyTotals).sort((a, b) => {
             const dateA = new Date(a).getTime();
             const dateB = new Date(b).getTime();
