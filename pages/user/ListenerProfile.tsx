@@ -72,8 +72,20 @@ const ListenerProfile: React.FC = () => {
             </div>
 
             <div className="sticky bottom-20 md:bottom-4 grid grid-cols-2 gap-4">
-                <button onClick={startChat} className="p-4 bg-primary-600 text-white font-bold rounded-lg shadow-lg">Start Chat (₹{listener.rate * 10}/10min)</button>
-                <button onClick={startCall} className="p-4 bg-green-600 text-white font-bold rounded-lg shadow-lg">Start Call (₹{listener.rate * 15}/15min)</button>
+                <button onClick={startChat} className="p-4 bg-primary-600 text-white font-bold rounded-lg shadow-lg flex flex-col justify-center items-center">
+                    Start Chat
+                    <span className="text-xs font-normal">(₹{listener.rate * 10}/10min)</span>
+                </button>
+                <div className="space-y-2">
+                    <button onClick={startCall} className="w-full p-3 bg-green-600 text-white font-semibold rounded-lg shadow-lg text-sm flex flex-col items-center">
+                        Voice Call 
+                        <span className="text-xs font-normal">(₹{listener.rate * 15}/15min)</span>
+                    </button>
+                    <button onClick={startCall} className="w-full p-3 bg-teal-600 text-white font-semibold rounded-lg shadow-lg text-sm flex flex-col items-center">
+                        Video Call 
+                        <span className="text-xs font-normal">(₹{listener.rate * 20}/20min)</span>
+                    </button>
+                </div>
             </div>
         </div>
     );

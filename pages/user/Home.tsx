@@ -18,23 +18,28 @@ const ListenerShimmerCard: React.FC = () => (
 );
 
 // New listener card for a vertical list
-const ActiveListenerCard: React.FC<{ listener: typeof mockListeners[0] }> = ({ listener }) => (
-    <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md flex items-center space-x-4">
-        <ReactRouterDOM.Link to={`/user/listener/${listener.id}`} className="flex-shrink-0 relative">
-            <img src={listener.avatarUrl} alt={listener.name} className="w-16 h-16 rounded-full" />
-            <span className="absolute bottom-0 right-0 w-4 h-4 bg-green-500 rounded-full border-2 border-white dark:border-gray-800"></span>
-        </ReactRouterDOM.Link>
-        <div className="flex-1 min-w-0">
-            <ReactRouterDOM.Link to={`/user/listener/${listener.id}`}>
-                <h3 className="font-bold text-lg truncate">{listener.name}</h3>
-                <p className="text-sm text-gray-500 truncate">{listener.skills.join(', ')}</p>
+const ActiveListenerCard: React.FC<{ listener: typeof mockListeners[0] }> = ({ listener }) => {
+    const navigate = ReactRouterDOM.useNavigate();
+    return (
+        <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md flex items-center space-x-4">
+            <ReactRouterDOM.Link to={`/user/listener/${listener.id}`} className="flex-shrink-0 relative">
+                <img src={listener.avatarUrl} alt={listener.name} className="w-16 h-16 rounded-full" />
+                <span className="absolute bottom-0 right-0 w-4 h-4 bg-green-500 rounded-full border-2 border-white dark:border-gray-800"></span>
             </ReactRouterDOM.Link>
+            <div className="flex-1 min-w-0">
+                <ReactRouterDOM.Link to={`/user/listener/${listener.id}`}>
+                    <h3 className="font-bold text-lg truncate">{listener.name}</h3>
+                    <p className="text-sm text-gray-500 truncate">{listener.skills.join(', ')}</p>
+                </ReactRouterDOM.Link>
+            </div>
+            <button 
+                onClick={() => navigate(`/user/calling/${listener.id}`)}
+                className="flex-shrink-0 px-5 py-2 text-sm font-semibold text-white bg-primary-600 rounded-full hover:bg-primary-700 transition">
+                Call
+            </button>
         </div>
-        <button className="flex-shrink-0 px-5 py-2 text-sm font-semibold text-white bg-primary-600 rounded-full hover:bg-primary-700 transition">
-            Call
-        </button>
-    </div>
-);
+    );
+};
 
 
 const Home: React.FC = () => {
