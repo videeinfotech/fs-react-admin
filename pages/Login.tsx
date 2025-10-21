@@ -13,7 +13,7 @@ const Login: React.FC = () => {
   const { addToast } = useToast();
 
   if (isAuthenticated) {
-    return <ReactRouterDOM.Navigate to="/" replace />;
+    return <ReactRouterDOM.Navigate to="/admin" replace />;
   }
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -26,7 +26,7 @@ const Login: React.FC = () => {
         const fakeToken = 'fake-jwt-token-string';
         login(fakeToken);
         addToast('Login successful!', 'success');
-        navigate('/');
+        navigate('/admin');
       } else {
         addToast('Invalid credentials.', 'error');
       }

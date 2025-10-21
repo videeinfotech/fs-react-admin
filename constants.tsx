@@ -43,7 +43,7 @@ export const NAV_LINKS: NavLinkInfo[] = [
     { name: 'Earnings Overview', path: '/admin/earnings-overview', icon: <EarningsIcon /> },
     { name: 'Payout Cycles', path: '/admin/payout-cycles', icon: <PayoutCycleIcon /> },
     { name: 'Process Payouts', path: '/admin/process-payouts', icon: <ProcessPayoutsIcon /> },
-    { name: 'Payout History', path: '/admin/payout-history', icon: <PayoutHistoryIcon /> },
+    // { name: 'Payout History', path: '/admin/payout-history', icon: <PayoutHistoryIcon /> },
     { name: 'Gateway Settings', path: '/admin/gateway-settings', icon: <GatewaySettingsIcon /> },
     { name: 'Feedback', path: '/admin/feedback', icon: <FeedbackIcon /> },
     { name: 'Anonymized Reporting', path: '/admin/anonymized-reporting', icon: <FlagIcon /> },

@@ -13,6 +13,7 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 // --- Main Pages ---
 import LandingPage from './pages/Landing';
 import Login from './pages/Login';
+import NotFound from './pages/NotFound';
 
 // --- Admin Pages ---
 import Dashboard from './pages/Dashboard';
@@ -39,7 +40,7 @@ import AnonymizedReporting from './pages/AnonymizedReporting';
 import EarningsOverview from './pages/EarningsOverview';
 import PayoutCycles from './pages/PayoutCycles';
 import ProcessPayouts from './pages/ProcessPayouts';
-import PayoutHistory from './pages/PayoutHistory';
+// import PayoutHistory from './pages/PayoutHistory';
 import GatewaySettings from './pages/GatewaySettings';
 
 // --- User App Pages ---
@@ -125,7 +126,7 @@ function App() {
                   <ReactRouterDOM.Route path="earnings-overview" element={<EarningsOverview />} />
                   <ReactRouterDOM.Route path="payout-cycles" element={<PayoutCycles />} />
                   <ReactRouterDOM.Route path="process-payouts" element={<ProcessPayouts />} />
-                  <ReactRouterDOM.Route path="payout-history" element={<PayoutHistory />} />
+                  {/* <ReactRouterDOM.Route path="payout-history" element={<PayoutHistory />} /> */}
                   <ReactRouterDOM.Route path="gateway-settings" element={<GatewaySettings />} />
                   <ReactRouterDOM.Route path="feedback" element={<Feedback />} />
                   <ReactRouterDOM.Route path="anonymized-reporting" element={<AnonymizedReporting />} />
@@ -138,10 +139,11 @@ function App() {
                   <ReactRouterDOM.Route path="admin-doc" element={<AdminDoc />} />
                   <ReactRouterDOM.Route path="api-doc" element={<ApiDoc />} />
                   <ReactRouterDOM.Route path="settings" element={<Settings />} />
-                  <ReactRouterDOM.Route path="*" element={<ReactRouterDOM.Navigate to="/admin" replace />} />
                 </ReactRouterDOM.Route>
               </ReactRouterDOM.Route>
 
+              {/* Global 404 Fallback */}
+              <ReactRouterDOM.Route path="*" element={<NotFound />} />
             </ReactRouterDOM.Routes>
           </ReactRouterDOM.BrowserRouter>
         </ThemeProvider>

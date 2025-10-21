@@ -5,24 +5,35 @@ import { mockListeners } from '../Listeners';
 
 const moodEmojis = ['😔', '😟', '😐', '😌', '😊'];
 
+// New shimmer card for a vertical list
 const ListenerShimmerCard: React.FC = () => (
-    <div className="flex-shrink-0 w-32 text-center animate-pulse">
-        <div className="w-20 h-20 rounded-full bg-gray-200 dark:bg-gray-700 mx-auto"></div>
-        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded mt-3 w-24 mx-auto"></div>
-        <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded mt-2 w-16 mx-auto"></div>
+    <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md flex items-center space-x-4 animate-pulse">
+        <div className="w-16 h-16 rounded-full bg-gray-200 dark:bg-gray-700"></div>
+        <div className="flex-1 space-y-3">
+            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
+            <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+        </div>
+        <div className="w-20 h-9 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
     </div>
 );
 
+// New listener card for a vertical list
 const ActiveListenerCard: React.FC<{ listener: typeof mockListeners[0] }> = ({ listener }) => (
-     <ReactRouterDOM.Link to={`/user/listener/${listener.id}`} className="flex-shrink-0 w-32 text-center group">
-        <div className="relative">
-            <img src={listener.avatarUrl} alt={listener.name} className="w-20 h-20 rounded-full mx-auto border-2 border-transparent group-hover:border-primary-400 transition" />
-            <span className="absolute bottom-1 right-6 w-3 h-3 bg-green-500 rounded-full border-2 border-white dark:border-gray-900"></span>
+    <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md flex items-center space-x-4">
+        <ReactRouterDOM.Link to={`/user/listener/${listener.id}`} className="flex-shrink-0 relative">
+            <img src={listener.avatarUrl} alt={listener.name} className="w-16 h-16 rounded-full" />
+            <span className="absolute bottom-0 right-0 w-4 h-4 bg-green-500 rounded-full border-2 border-white dark:border-gray-800"></span>
+        </ReactRouterDOM.Link>
+        <div className="flex-1 min-w-0">
+            <ReactRouterDOM.Link to={`/user/listener/${listener.id}`}>
+                <h3 className="font-bold text-lg truncate">{listener.name}</h3>
+                <p className="text-sm text-gray-500 truncate">{listener.skills.join(', ')}</p>
+            </ReactRouterDOM.Link>
         </div>
-        <h3 className="mt-2 font-semibold text-sm truncate">{listener.name}</h3>
-        <p className="text-xs text-gray-500">{listener.skills[0]}</p>
-        <button className="mt-2 px-4 py-1 text-xs text-white bg-primary-600 rounded-full">Call</button>
-    </ReactRouterDOM.Link>
+        <button className="flex-shrink-0 px-5 py-2 text-sm font-semibold text-white bg-primary-600 rounded-full hover:bg-primary-700 transition">
+            Call
+        </button>
+    </div>
 );
 
 
@@ -58,26 +69,30 @@ const Home: React.FC = () => {
             {/* Mood Tracker */}
             <section className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
                 <h2 className="text-lg font-semibold mb-2 text-center">How are you feeling today?</h2>
-                <div className="text-5xl text-center mb-4">{moodEmojis[mood]}</div>
+                <div className="text-5xl text-center my-4">{moodEmojis[mood]}</div>
                 <input
                     type="range"
                     min="0"
                     max="4"
                     value={mood}
                     onChange={(e) => setMood(parseInt(e.target.value, 10))}
-                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700 accent-primary-600"
                 />
-                 <textarea className="mt-4 w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 text-sm" placeholder="Write what’s on your mind…"></textarea>
+                 <textarea className="mt-4 w-full p-3 border rounded-md dark:bg-gray-700 dark:border-gray-600 text-sm focus:ring-primary-500 focus:border-primary-500" placeholder="Write what’s on your mind…"></textarea>
             </section>
             
              {/* Active Listeners Section */}
             <section>
-                 <h2 className="text-lg font-semibold mb-4">Active Listeners</h2>
-                 <div className="flex space-x-4 overflow-x-auto pb-4 -mx-4 px-4">
+                 <h2 className="text-lg font-semibold mb-4">Available Listeners</h2>
+                 <div className="space-y-4">
                      {loading ? (
-                         Array.from({ length: 5 }).map((_, i) => <ListenerShimmerCard key={i} />)
+                         <>
+                            <ListenerShimmerCard />
+                            <ListenerShimmerCard />
+                            <ListenerShimmerCard />
+                         </>
                      ) : (
-                         mockListeners.map(l => <ActiveListenerCard key={l.id} listener={l} />)
+                         mockListeners.slice(0, 3).map(l => <ActiveListenerCard key={l.id} listener={l} />)
                      )}
                  </div>
             </section>
