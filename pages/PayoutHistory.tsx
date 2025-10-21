@@ -1,8 +1,7 @@
-/*
 import React, { useState, useMemo } from 'react';
 import { ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Line, BarChart, Bar } from 'recharts';
-import { DataTable } from '../../components/ui/DataTable';
-import { Payout } from '../../types';
+import { DataTable } from '../components/ui/DataTable';
+import { Payout } from '../types';
 
 // Expanded Mock Data
 const mockHistory: Payout[] = [
@@ -188,19 +187,6 @@ const PayoutHistory: React.FC = () => {
                 data={filteredHistory} 
                 renderActions={renderActions}
             />
-        </div>
-    );
-};
-
-export default PayoutHistory;
-*/
-import React from 'react';
-
-const PayoutHistory: React.FC = () => {
-    return (
-        <div>
-            <h1 className="text-3xl font-bold">Payout History</h1>
-            <p className="text-gray-500 dark:text-gray-400 mt-4">This page is temporarily disabled.</p>
         </div>
     );
 };

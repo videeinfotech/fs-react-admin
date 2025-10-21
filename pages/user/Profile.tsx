@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { EditIcon, LogoutIcon } from '../../components/ui/icons/OtherIcons';
 import * as ReactRouterDOM from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
+import { useAuth } from '../../hooks/useAuth';
 
 const ToggleSwitch: React.FC<{ label: string, enabled: boolean, setEnabled: () => void }> = ({ label, enabled, setEnabled }) => (
     <div className="flex justify-between items-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
@@ -20,11 +21,18 @@ const Profile: React.FC = () => {
     const { theme, toggleTheme } = useTheme();
     const [notifications, setNotifications] = useState(true);
     const [showJournal, setShowJournal] = useState(true);
+    const { logout } = useAuth();
+    const navigate = ReactRouterDOM.useNavigate();
 
     const user = {
         name: 'Riya Sharma',
         email: 'riya@example.com',
         avatarUrl: 'https://i.pravatar.cc/150?u=1'
+    };
+
+    const handleLogout = () => {
+        logout();
+        navigate('/');
     };
 
     return (
@@ -87,7 +95,10 @@ const Profile: React.FC = () => {
             </div>
 
              <div className="pt-4">
-                 <button className="w-full flex items-center justify-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm text-red-500 font-bold">
+                 <button 
+                    onClick={handleLogout}
+                    className="w-full flex items-center justify-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm text-red-500 font-bold hover:bg-red-50 dark:hover:bg-gray-700 transition-colors"
+                 >
                     <LogoutIcon className="w-5 h-5 mr-2" />
                     Logout
                  </button>

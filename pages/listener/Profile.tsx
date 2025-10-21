@@ -1,6 +1,8 @@
 import React from 'react';
-import { EditIcon } from '../../components/ui/icons/OtherIcons';
+import { EditIcon, LogoutIcon } from '../../components/ui/icons/OtherIcons';
 import { mockFeedback } from '../Feedback';
+import * as ReactRouterDOM from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
 
 const StatCard: React.FC<{ title: string, value: string }> = ({ title, value }) => (
     <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg text-center">
@@ -19,6 +21,13 @@ const StarRating: React.FC<{ rating: number }> = ({ rating }) => (
 
 const Profile: React.FC = () => {
     const listener = { name: 'Ananya Mehta', avatarUrl: 'https://i.pravatar.cc/150?u=1' };
+    const { logout } = useAuth();
+    const navigate = ReactRouterDOM.useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        navigate('/');
+    };
 
     return (
         <div className="space-y-8">
@@ -76,6 +85,16 @@ const Profile: React.FC = () => {
             </div>
             
             <button className="w-full p-3 bg-primary-600 text-white font-bold rounded-lg shadow-md">Withdraw Funds</button>
+            
+            <div className="pt-4">
+                 <button 
+                    onClick={handleLogout}
+                    className="w-full flex items-center justify-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm text-red-500 font-bold hover:bg-red-50 dark:hover:bg-gray-700 transition-colors"
+                 >
+                    <LogoutIcon className="w-5 h-5 mr-2" />
+                    Logout
+                 </button>
+            </div>
         </div>
     );
 };

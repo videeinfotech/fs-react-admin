@@ -1,23 +1,18 @@
 import React from 'react';
-import * as ReactRouterDOM from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { ToastProvider } from './context/ToastContext';
 import { ThemeProvider } from './context/ThemeContext';
+import { AuthGuard } from './components/AuthGuard';
 
-// --- Layouts ---
-import { Layout as AdminLayout } from './components/layout/Layout';
+// Layouts
+import { Layout } from './components/layout/Layout';
 import { UserLayout } from './pages/user/UserLayout';
-import { ListenerLayout } from './pages/listener/ListenerLayout';
-import { ProtectedRoute } from './components/ProtectedRoute';
+import ListenerLayout from './pages/listener/ListenerLayout';
 
-// --- Main Pages ---
-import LandingPage from './pages/Landing';
+// Pages
 import Login from './pages/Login';
-import NotFound from './pages/NotFound';
-
-// --- Admin Pages ---
 import Dashboard from './pages/Dashboard';
-import Monitoring from './pages/Monitoring';
 import UsersList from './pages/UsersList';
 import UserDetails from './pages/UserDetails';
 import ListenersList from './pages/ListenersList';
@@ -25,131 +20,147 @@ import ListenerDetails from './pages/ListenerDetails';
 import Wallet from './pages/Wallet';
 import Sessions from './pages/Sessions';
 import SessionDetails from './pages/SessionDetails';
+import LiveSessions from './pages/LiveSessions';
 import Feedback from './pages/Feedback';
 import Tickets from './pages/Tickets';
 import TicketDetails from './pages/TicketDetails';
+import AnonymizedReporting from './pages/AnonymizedReporting';
 import Reports from './pages/Reports';
-import Settings from './pages/Settings';
-import PushNotifications from './pages/PushNotifications';
 import Analytics from './pages/Analytics';
-import LiveSessions from './pages/LiveSessions';
+import Monitoring from './pages/Monitoring';
+import PushNotifications from './pages/PushNotifications';
+import QuizEvaluation from './pages/QuizEvaluation';
+import Settings from './pages/Settings';
 import AdminDoc from './pages/AdminDoc';
 import ApiDoc from './pages/ApiDoc';
-import QuizEvaluation from './pages/QuizEvaluation';
-import AnonymizedReporting from './pages/AnonymizedReporting';
-import EarningsOverview from './pages/EarningsOverview';
-import PayoutCycles from './pages/PayoutCycles';
-import ProcessPayouts from './pages/ProcessPayouts';
-// import PayoutHistory from './pages/PayoutHistory';
-import GatewaySettings from './pages/GatewaySettings';
+import LandingPage from './pages/Landing';
+import NotFound from './pages/NotFound';
 
-// --- User App Pages ---
+// User App Pages
 import UserHome from './pages/user/Home';
 import FindListener from './pages/user/FindListener';
 import UserListenerProfile from './pages/user/ListenerProfile';
-import UserChat from './pages/user/Chat';
-import UserActiveCall from './pages/user/Call';
-import UserWallet from './pages/user/Wallet';
-import UserFeedback from './pages/user/Feedback';
-import UserJournal from './pages/user/Journal';
-import UserSettings from './pages/user/Settings';
-import UserProfile from './pages/user/Profile';
 import UserChats from './pages/user/Chats';
+import UserChat from './pages/user/Chat';
 import UserCalls from './pages/user/Calls';
+import UserWallet from './pages/user/Wallet';
+import UserProfile from './pages/user/Profile';
+import UserFeedback from './pages/user/Feedback';
+import UserCalling from './pages/user/Calling';
+import UserActiveCall from './pages/user/ActiveCall';
+import UserCallSummary from './pages/user/CallSummary';
 
-// --- Listener App Pages ---
+
+// Listener App Pages
 import ListenerDashboard from './pages/listener/Dashboard';
 import ListenerActiveSessions from './pages/listener/ActiveSessions';
+import ListenerChats from './pages/listener/Chats';
+import ListenerChat from './pages/listener/Chat';
+import ListenerCalls from './pages/listener/Calls';
 import ListenerEarnings from './pages/listener/Earnings';
 import ListenerReviews from './pages/listener/Reviews';
 import ListenerQuiz from './pages/listener/Quiz';
 import ListenerAnalytics from './pages/listener/Analytics';
-import ListenerActiveChat from './pages/listener/Chat';
 import ListenerProfile from './pages/listener/Profile';
-import ListenerChats from './pages/listener/Chats';
-import ListenerCalls from './pages/listener/Calls';
+import ListenerSettings from './pages/listener/Settings';
+import ListenerActiveCall from './pages/listener/ActiveCall';
+import ListenerCallSummary from './pages/listener/CallSummary';
 
 
-function App() {
+// Payouts
+import EarningsOverview from './pages/EarningsOverview';
+import PayoutCycles from './pages/PayoutCycles';
+import ProcessPayouts from './pages/ProcessPayouts';
+import PayoutHistory from './pages/PayoutHistory';
+import GatewaySettings from './pages/GatewaySettings';
+
+const App: React.FC = () => {
   return (
-    <AuthProvider>
+    <ThemeProvider>
       <ToastProvider>
-        <ThemeProvider>
-          <ReactRouterDOM.BrowserRouter>
-            <ReactRouterDOM.Routes>
-              <ReactRouterDOM.Route path="/login" element={<Login />} />
-              <ReactRouterDOM.Route path="/" element={<LandingPage />} />
+        <AuthProvider>
+          <Router>
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/login" element={<Login />} />
               
-              {/* USER APP ROUTES */}
-              <ReactRouterDOM.Route path="/user" element={<UserLayout />}>
-                <ReactRouterDOM.Route index element={<UserHome />} />
-                <ReactRouterDOM.Route path="find" element={<FindListener />} />
-                <ReactRouterDOM.Route path="listener/:id" element={<UserListenerProfile />} />
-                <ReactRouterDOM.Route path="chat/:sessionId" element={<UserChat />} />
-                <ReactRouterDOM.Route path="active-call/:sessionId" element={<UserActiveCall />} />
-                <ReactRouterDOM.Route path="wallet" element={<UserWallet />} />
-                <ReactRouterDOM.Route path="feedback/:sessionId" element={<UserFeedback />} />
-                <ReactRouterDOM.Route path="journal" element={<UserJournal />} />
-                <ReactRouterDOM.Route path="settings" element={<UserSettings />} />
-                <ReactRouterDOM.Route path="profile" element={<UserProfile />} />
-                <ReactRouterDOM.Route path="chats" element={<UserChats />} />
-                <ReactRouterDOM.Route path="calls" element={<UserCalls />} />
-              </ReactRouterDOM.Route>
+              {/* Authenticated Routes */}
+              <Route element={<AuthGuard />}>
+                {/* Admin Panel */}
+                <Route path="/admin" element={<Layout />}>
+                  <Route index element={<Dashboard />} />
+                  <Route path="users" element={<UsersList />} />
+                  <Route path="users/:id" element={<UserDetails />} />
+                  <Route path="listeners" element={<ListenersList />} />
+                  <Route path="listeners/:id" element={<ListenerDetails />} />
+                  <Route path="wallet" element={<Wallet />} />
+                  <Route path="sessions" element={<Sessions />} />
+                  <Route path="sessions/:id" element={<SessionDetails />} />
+                  <Route path="live-sessions" element={<LiveSessions />} />
+                  <Route path="feedback" element={<Feedback />} />
+                  <Route path="tickets" element={<Tickets />} />
+                  <Route path="tickets/:id" element={<TicketDetails />} />
+                  <Route path="anonymized-reporting" element={<AnonymizedReporting />} />
+                  <Route path="reports" element={<Reports />} />
+                  <Route path="analytics" element={<Analytics />} />
+                  <Route path="monitoring" element={<Monitoring />} />
+                  <Route path="push-notifications" element={<PushNotifications />} />
+                  <Route path="quiz-evaluation" element={<QuizEvaluation />} />
+                  <Route path="settings" element={<Settings />} />
+                  <Route path="admin-doc" element={<AdminDoc />} />
+                  <Route path="api-doc" element={<ApiDoc />} />
+                   {/* Payout Management */}
+                  <Route path="earnings-overview" element={<EarningsOverview />} />
+                  <Route path="payout-cycles" element={<PayoutCycles />} />
+                  <Route path="process-payouts" element={<ProcessPayouts />} />
+                  <Route path="payout-history" element={<PayoutHistory />} />
+                  <Route path="gateway-settings" element={<GatewaySettings />} />
+                </Route>
 
-              {/* LISTENER APP ROUTES */}
-               <ReactRouterDOM.Route path="/listener" element={<ListenerLayout />}>
-                  <ReactRouterDOM.Route index element={<ListenerDashboard />} />
-                  <ReactRouterDOM.Route path="sessions" element={<ListenerActiveSessions />} />
-                  <ReactRouterDOM.Route path="chat/:sessionId" element={<ListenerActiveChat />} />
-                  <ReactRouterDOM.Route path="earnings" element={<ListenerEarnings />} />
-                  <ReactRouterDOM.Route path="reviews" element={<ListenerReviews />} />
-                  <ReactRouterDOM.Route path="quiz" element={<ListenerQuiz />} />
-                  <ReactRouterDOM.Route path="analytics" element={<ListenerAnalytics />} />
-                  <ReactRouterDOM.Route path="profile" element={<ListenerProfile />} />
-                  <ReactRouterDOM.Route path="chats" element={<ListenerChats />} />
-                  <ReactRouterDOM.Route path="calls" element={<ListenerCalls />} />
-               </ReactRouterDOM.Route>
+                {/* User App */}
+                <Route path="/user" element={<UserLayout />}>
+                   <Route index element={<UserHome />} />
+                   <Route path="home" element={<Navigate to="/user" replace />} />
+                   <Route path="find" element={<FindListener />} />
+                   <Route path="listener/:id" element={<UserListenerProfile />} />
+                   <Route path="chats" element={<UserChats />} />
+                   <Route path="chat/:sessionId" element={<UserChat />} />
+                   <Route path="calls" element={<UserCalls />} />
+                   <Route path="calling/:listenerId" element={<UserCalling />} />
+                   <Route path="call/:sessionId" element={<UserActiveCall />} />
+                   <Route path="call-summary/:sessionId" element={<UserCallSummary />} />
+                   <Route path="wallet" element={<UserWallet />} />
+                   <Route path="profile" element={<UserProfile />} />
+                   <Route path="feedback/:sessionId" element={<UserFeedback />} />
+                </Route>
 
-              {/* ADMIN APP ROUTES */}
-              <ReactRouterDOM.Route element={<ProtectedRoute />}>
-                <ReactRouterDOM.Route path="/admin" element={<AdminLayout />}>
-                  <ReactRouterDOM.Route index element={<Dashboard />} />
-                  <ReactRouterDOM.Route path="monitoring" element={<Monitoring />} />
-                  <ReactRouterDOM.Route path="users" element={<UsersList />} />
-                  <ReactRouterDOM.Route path="users/:id" element={<UserDetails />} />
-                  <ReactRouterDOM.Route path="listeners" element={<ListenersList />} />
-                  <ReactRouterDOM.Route path="listeners/:id" element={<ListenerDetails />} />
-                  <ReactRouterDOM.Route path="wallet" element={<Wallet />} />
-                  <ReactRouterDOM.Route path="sessions" element={<Sessions />} />
-                  <ReactRouterDOM.Route path="live-sessions" element={<LiveSessions />} />
-                  <ReactRouterDOM.Route path="sessions/:id" element={<SessionDetails />} />
-                  <ReactRouterDOM.Route path="earnings-overview" element={<EarningsOverview />} />
-                  <ReactRouterDOM.Route path="payout-cycles" element={<PayoutCycles />} />
-                  <ReactRouterDOM.Route path="process-payouts" element={<ProcessPayouts />} />
-                  {/* <ReactRouterDOM.Route path="payout-history" element={<PayoutHistory />} /> */}
-                  <ReactRouterDOM.Route path="gateway-settings" element={<GatewaySettings />} />
-                  <ReactRouterDOM.Route path="feedback" element={<Feedback />} />
-                  <ReactRouterDOM.Route path="anonymized-reporting" element={<AnonymizedReporting />} />
-                  <ReactRouterDOM.Route path="tickets" element={<Tickets />} />
-                  <ReactRouterDOM.Route path="tickets/:id" element={<TicketDetails />} />
-                  <ReactRouterDOM.Route path="reports" element={<Reports />} />
-                  <ReactRouterDOM.Route path="analytics" element={<Analytics />} />
-                  <ReactRouterDOM.Route path="push-notifications" element={<PushNotifications />} />
-                  <ReactRouterDOM.Route path="quiz-evaluation" element={<QuizEvaluation />} />
-                  <ReactRouterDOM.Route path="admin-doc" element={<AdminDoc />} />
-                  <ReactRouterDOM.Route path="api-doc" element={<ApiDoc />} />
-                  <ReactRouterDOM.Route path="settings" element={<Settings />} />
-                </ReactRouterDOM.Route>
-              </ReactRouterDOM.Route>
+                 {/* Listener App */}
+                <Route path="/listener" element={<ListenerLayout />}>
+                    <Route index element={<ListenerDashboard />} />
+                    <Route path="dashboard" element={<Navigate to="/listener" replace />} />
+                    <Route path="sessions" element={<ListenerActiveSessions />} />
+                    <Route path="chats" element={<ListenerChats />} />
+                    <Route path="chat/:sessionId" element={<ListenerChat />} />
+                    <Route path="calls" element={<ListenerCalls />} />
+                    <Route path="call/:sessionId" element={<ListenerActiveCall />} />
+                    <Route path="call-summary/:sessionId" element={<ListenerCallSummary />} />
+                    <Route path="earnings" element={<ListenerEarnings />} />
+                    <Route path="reviews" element={<ListenerReviews />} />
+                    <Route path="quiz" element={<ListenerQuiz />} />
+                    <Route path="analytics" element={<ListenerAnalytics />} />
+                    <Route path="profile" element={<ListenerProfile />} />
+                    <Route path="settings" element={<ListenerSettings />} />
+                </Route>
 
-              {/* Global 404 Fallback */}
-              <ReactRouterDOM.Route path="*" element={<NotFound />} />
-            </ReactRouterDOM.Routes>
-          </ReactRouterDOM.BrowserRouter>
-        </ThemeProvider>
+              </Route>
+              
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Router>
+        </AuthProvider>
       </ToastProvider>
-    </AuthProvider>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;

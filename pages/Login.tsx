@@ -5,15 +5,17 @@ import { useAuth } from '../hooks/useAuth';
 import { useToast } from '../hooks/useToast';
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('admin@findsukoon.com');
+  const [password, setPassword] = useState('password');
+  const [role, setRole] = useState('admin');
   const [loading, setLoading] = useState(false);
-  const { login, isAuthenticated } = useAuth();
+  const { login, isAuthenticated, role: authRole } = useAuth();
   const navigate = ReactRouterDOM.useNavigate();
   const { addToast } = useToast();
 
   if (isAuthenticated) {
-    return <ReactRouterDOM.Navigate to="/admin" replace />;
+    const path = authRole === 'admin' ? '/admin' : authRole === 'user' ? '/user' : '/listener';
+    return <ReactRouterDOM.Navigate to={path} replace />;
   }
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -22,11 +24,14 @@ const Login: React.FC = () => {
 
     // Simulate API call
     setTimeout(() => {
-      if (email === 'admin@findsukoon.com' && password === 'password') {
-        const fakeToken = 'fake-jwt-token-string';
-        login(fakeToken);
-        addToast('Login successful!', 'success');
-        navigate('/admin');
+      if (password === 'password') { // Simplified check for demo
+        const fakeToken = 'fake-jwt-token-string-for-' + role;
+        login(fakeToken, role);
+        addToast(`Login successful as ${role}!`, 'success');
+        
+        const path = role === 'admin' ? '/admin' : role === 'user' ? '/user/home' : '/listener/dashboard';
+        navigate(path);
+
       } else {
         addToast('Invalid credentials.', 'error');
       }
@@ -38,7 +43,7 @@ const Login: React.FC = () => {
     <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
       <div className="w-full max-w-sm p-6 bg-white rounded-lg shadow-md dark:bg-gray-800">
         <h2 className="text-2xl font-bold text-center text-gray-900 dark:text-white mb-6">
-          Admin Login
+          Find Sukoon Login
         </h2>
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
@@ -78,6 +83,24 @@ const Login: React.FC = () => {
               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
               placeholder="••••••••"
             />
+          </div>
+          <div>
+            <label
+              htmlFor="role"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Sign in as
+            </label>
+            <select
+              id="role"
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+            >
+                <option value="admin">Admin</option>
+                <option value="user">User</option>
+                <option value="listener">Listener</option>
+            </select>
           </div>
           <button
             type="submit"
