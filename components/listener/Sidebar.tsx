@@ -1,20 +1,14 @@
 import React from 'react';
 import * as ReactRouterDOM from 'react-router-dom';
-// FIX: Corrected icon imports to point to their respective files instead of DashboardIcon.
 import { DashboardIcon } from '../ui/icons/DashboardIcon';
-import { WalletIcon } from '../ui/icons/WalletIcon';
-import { ListenersIcon } from '../ui/icons/ListenersIcon';
-import { AnalyticsIcon } from '../ui/icons/AnalyticsIcon';
-import { SessionsTotalIcon } from '../ui/icons/OtherIcons';
-import { QuizIcon } from '../ui/icons/QuizIcon';
+import { UsersIcon } from '../ui/icons/UsersIcon';
+import { ChatBubbleIcon, PhoneIcon } from '../ui/icons/OtherIcons';
 
 const listenerNavLinks = [
     { name: 'Dashboard', path: '/listener', icon: <DashboardIcon /> },
-    { name: 'Active Sessions', path: '/listener/sessions', icon: <ListenersIcon /> },
-    { name: 'Earnings', path: '/listener/earnings', icon: <WalletIcon /> },
-    { name: 'Reviews', path: '/listener/reviews', icon: <SessionsTotalIcon /> },
-    { name: 'Analytics', path: '/listener/analytics', icon: <AnalyticsIcon /> },
-    { name: 'Quiz', path: '/listener/quiz', icon: <QuizIcon /> },
+    { name: 'Chats', path: '/listener/chats', icon: <ChatBubbleIcon /> },
+    { name: 'Calls', path: '/listener/calls', icon: <PhoneIcon /> },
+    { name: 'Profile', path: '/listener/profile', icon: <UsersIcon /> },
 ];
 
 interface SidebarProps {
@@ -38,7 +32,7 @@ export const ListenerSidebar: React.FC<SidebarProps> = ({ isSidebarOpen, toggleS
                         <li key={link.name}>
                             <ReactRouterDOM.NavLink
                                 to={link.path}
-                                end
+                                end={link.path === '/listener'}
                                 className={({ isActive }) =>
                                     `flex items-center p-2 rounded-lg text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group ${isActive ? 'bg-gray-100 dark:bg-gray-700' : ''}`
                                 }
