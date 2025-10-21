@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, ReactNode, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import * as ReactRouterDOM from 'react-router-dom';
 
 // Define the shape of the call state and context
 interface CallState {
@@ -30,9 +30,10 @@ export const CallProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         isMuted: false,
         isVideoOn: true,
     });
-    const navigate = useNavigate();
+    const navigate = ReactRouterDOM.useNavigate();
 
     const startCall = useCallback((user: CallState['user'], role: 'user' | 'listener') => {
+        if(!user) return;
         setCallState({ status: 'calling', user, isMuted: false, isVideoOn: true });
         navigate(`/${role}/calling/${user.id}`);
     }, [navigate]);

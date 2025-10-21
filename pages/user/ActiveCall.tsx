@@ -5,14 +5,14 @@ import { useCall } from '../../context/CallContext';
 const ActiveCall: React.FC = () => {
     const { sessionId } = ReactRouterDOM.useParams();
     const { status, user, endCall, isMuted, isVideoOn, toggleMute, toggleVideo } = useCall();
+    const navigate = ReactRouterDOM.useNavigate();
     
     useEffect(() => {
         if (status === 'idle') {
             // This might happen if user refreshes. Navigate away.
-            const navigate = ReactRouterDOM.useNavigate();
             navigate('/user');
         }
-    }, [status]);
+    }, [status, navigate]);
     
     if (!user) {
         return <div className="flex items-center justify-center h-screen">Loading call...</div>;

@@ -5,11 +5,13 @@ import { ListenerNavbar } from '../../components/listener/Navbar';
 import IncomingCallModal from '../../components/listener/IncomingCallModal';
 import { useCall } from '../../context/CallContext';
 import { mockUsers } from '../Users';
+import FloatingCallWidget from '../../components/FloatingCallWidget';
+import { ListenerBottomNav } from '../../components/listener/BottomNav';
 
 const ListenerLayout: React.FC = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const { status, user, acceptCall, rejectCall, setIncomingCall } = useCall();
-  const navigate = ReactRouterDOM.useNavigate();
+  const isCallActive = status === 'in-call';
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
@@ -19,7 +21,8 @@ const ListenerLayout: React.FC = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
         if (status === 'idle') {
-            setIncomingCall({ id: mockUsers[0].id.toString(), name: mockUsers[0].name, avatarUrl: `https://i.pravatar.cc/150?u=${mockUsers[0].id}` });
+            const randomUser = mockUsers[Math.floor(Math.random() * mockUsers.length)];
+            setIncomingCall({ id: randomUser.id.toString(), name: randomUser.name, avatarUrl: `https://i.pravatar.cc/150?u=${randomUser.id}` });
         }
     }, 5000); // Incoming call after 5 seconds
 
@@ -35,7 +38,7 @@ const ListenerLayout: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="relative min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white">
       {status === 'incoming' && user && (
           <IncomingCallModal 
               user={user.name}
@@ -45,11 +48,13 @@ const ListenerLayout: React.FC = () => {
       )}
       <ListenerNavbar toggleSidebar={toggleSidebar} />
       <ListenerSidebar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-      <div className="p-4 sm:ml-64">
-        <div className="p-4 mt-14">
+      <div className={`p-4 sm:ml-64 ${isCallActive ? 'pb-36' : 'pb-20'}`}>
+        <div className="p-0 sm:p-4 mt-14">
           <ReactRouterDOM.Outlet />
         </div>
       </div>
+       <FloatingCallWidget />
+       <ListenerBottomNav />
     </div>
   );
 };

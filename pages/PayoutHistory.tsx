@@ -64,8 +64,7 @@ const PayoutHistory: React.FC = () => {
         const sortedMonthKeys = Object.keys(monthlyTotals).sort((a, b) => {
             const dateA = new Date(a);
             const dateB = new Date(b);
-            // FIX: The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
-            // Converted Date objects to numbers using .getTime() for subtraction.
+            // FIX: Converted Date objects to numbers using .getTime() for subtraction to resolve TypeScript error.
             return dateA.getTime() - dateB.getTime();
         });
 

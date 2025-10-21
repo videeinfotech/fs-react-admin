@@ -25,7 +25,7 @@ const FloatingCallWidget: React.FC = () => {
     return (
         <div 
             onClick={handleReturnToCall}
-            className="fixed bottom-24 right-4 z-50 p-3 bg-green-500 text-white rounded-full shadow-lg cursor-pointer animate-pulse flex items-center space-x-2"
+            className="fixed bottom-20 right-4 z-50 p-3 bg-green-500 text-white rounded-full shadow-lg cursor-pointer animate-pulse flex items-center space-x-2 md:bottom-4"
         >
             <PhoneIcon className="w-6 h-6" />
             <span className="text-sm font-semibold pr-2">Return to call</span>
