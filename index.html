@@ -30,33 +30,35 @@
       }
     </script>
     <style>
-      .phone-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        padding: 2rem;
-      }
-      .phone-container #root {
-        width: 375px;
-        height: 812px;
-        border: 12px solid black;
-        border-radius: 44px;
-        overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        position: relative;
-        background-color: #f9fafb;
-        display: flex;
-        flex-direction: column;
-      }
-      .phone-container #root > div {
-        flex: 1;
-        overflow-y: auto;
-        -ms-overflow-style: none;  /* IE and Edge */
-        scrollbar-width: none;  /* Firefox */
-      }
-      .phone-container #root > div::-webkit-scrollbar {
-        display: none; /* Chrome, Safari, and Opera */
+      @media (min-width: 640px) {
+        .phone-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          padding: 2rem;
+        }
+        .phone-container #root {
+          width: 375px;
+          height: 812px;
+          border: 12px solid black;
+          border-radius: 44px;
+          overflow: hidden;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+          position: relative;
+          background-color: #f9fafb;
+          display: flex;
+          flex-direction: column;
+        }
+        .phone-container #root > div {
+          flex: 1;
+          overflow-y: auto;
+          -ms-overflow-style: none;  /* IE and Edge */
+          scrollbar-width: none;  /* Firefox */
+        }
+        .phone-container #root > div::-webkit-scrollbar {
+          display: none; /* Chrome, Safari, and Opera */
+        }
       }
     </style>
   <script type="importmap">

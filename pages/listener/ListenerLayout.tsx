@@ -13,7 +13,7 @@ export const ListenerLayout: React.FC = () => {
     return (
         <div className="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white min-h-full">
             <ListenerNavbar toggleSidebar={toggleSidebar} />
-            <ListenerSidebar isSidebarOpen={isSidebarOpen} />
+            <ListenerSidebar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
             <main className="p-4 sm:ml-64 mt-14">
                 <ReactRouterDOM.Outlet />
             </main>

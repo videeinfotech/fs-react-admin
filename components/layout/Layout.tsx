@@ -15,7 +15,7 @@ export const Layout: React.FC = () => {
   return (
     <div>
       <Navbar toggleSidebar={toggleSidebar} />
-      <Sidebar isSidebarOpen={isSidebarOpen} />
+      <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
       <div className="p-4 sm:ml-64">
         <div className="p-4 mt-14">
           <ReactRouterDOM.Outlet />

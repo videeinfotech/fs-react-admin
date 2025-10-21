@@ -64,8 +64,7 @@ const PayoutHistory: React.FC = () => {
         const sortedMonthKeys = Object.keys(monthlyTotals).sort((a, b) => {
             const dateA = new Date(a);
             const dateB = new Date(b);
-            // FIX: The arithmetic operation error is resolved by using .getTime() to convert Date objects
-            // to numbers before subtraction, which is required for sorting in TypeScript.
+            // FIX: Use .getTime() to convert Date objects to numbers for subtraction.
             return dateA.getTime() - dateB.getTime();
         });
 
