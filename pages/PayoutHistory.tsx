@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Line, BarChart, Bar } from 'recharts';
-import { DataTable } from '../components/ui/DataTable';
-import { Payout } from '../types';
+import { DataTable } from '../../components/ui/DataTable';
+import { Payout } from '../../types';
 
 // Expanded Mock Data
 const mockHistory: Payout[] = [
@@ -64,7 +64,8 @@ const PayoutHistory: React.FC = () => {
         const sortedMonthKeys = Object.keys(monthlyTotals).sort((a, b) => {
             const dateA = new Date(a);
             const dateB = new Date(b);
-            // FIX: Use .getTime() to convert Date objects to numbers for subtraction.
+            // FIX: The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+            // Converted Date objects to numbers using .getTime() for subtraction.
             return dateA.getTime() - dateB.getTime();
         });
 

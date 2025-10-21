@@ -46,12 +46,14 @@ import UserHome from './pages/user/Home';
 import FindListener from './pages/user/FindListener';
 import UserListenerProfile from './pages/user/ListenerProfile';
 import UserChat from './pages/user/Chat';
-import UserCall from './pages/user/Call';
+import UserActiveCall from './pages/user/Call';
 import UserWallet from './pages/user/Wallet';
 import UserFeedback from './pages/user/Feedback';
 import UserJournal from './pages/user/Journal';
 import UserSettings from './pages/user/Settings';
 import UserProfile from './pages/user/Profile';
+import UserChats from './pages/user/Chats';
+import UserCalls from './pages/user/Calls';
 
 // --- Listener App Pages ---
 import ListenerDashboard from './pages/listener/Dashboard';
@@ -60,8 +62,10 @@ import ListenerEarnings from './pages/listener/Earnings';
 import ListenerReviews from './pages/listener/Reviews';
 import ListenerQuiz from './pages/listener/Quiz';
 import ListenerAnalytics from './pages/listener/Analytics';
-import ListenerSettings from './pages/listener/Settings';
-import ListenerChat from './pages/listener/Chat';
+import ListenerActiveChat from './pages/listener/Chat';
+import ListenerProfile from './pages/listener/Profile';
+import ListenerChats from './pages/listener/Chats';
+import ListenerCalls from './pages/listener/Calls';
 
 
 function App() {
@@ -79,24 +83,28 @@ function App() {
               <ReactRouterDOM.Route path="find" element={<FindListener />} />
               <ReactRouterDOM.Route path="listener/:id" element={<UserListenerProfile />} />
               <ReactRouterDOM.Route path="chat/:sessionId" element={<UserChat />} />
-              <ReactRouterDOM.Route path="call/:sessionId" element={<UserCall />} />
+              <ReactRouterDOM.Route path="active-call/:sessionId" element={<UserActiveCall />} />
               <ReactRouterDOM.Route path="wallet" element={<UserWallet />} />
               <ReactRouterDOM.Route path="feedback/:sessionId" element={<UserFeedback />} />
               <ReactRouterDOM.Route path="journal" element={<UserJournal />} />
               <ReactRouterDOM.Route path="settings" element={<UserSettings />} />
               <ReactRouterDOM.Route path="profile" element={<UserProfile />} />
+              <ReactRouterDOM.Route path="chats" element={<UserChats />} />
+              <ReactRouterDOM.Route path="calls" element={<UserCalls />} />
             </ReactRouterDOM.Route>
 
             {/* LISTENER APP ROUTES */}
              <ReactRouterDOM.Route path="/listener" element={<ListenerLayout />}>
                 <ReactRouterDOM.Route index element={<ListenerDashboard />} />
                 <ReactRouterDOM.Route path="sessions" element={<ListenerActiveSessions />} />
-                <ReactRouterDOM.Route path="chat/:sessionId" element={<ListenerChat />} />
+                <ReactRouterDOM.Route path="chat/:sessionId" element={<ListenerActiveChat />} />
                 <ReactRouterDOM.Route path="earnings" element={<ListenerEarnings />} />
                 <ReactRouterDOM.Route path="reviews" element={<ListenerReviews />} />
                 <ReactRouterDOM.Route path="quiz" element={<ListenerQuiz />} />
                 <ReactRouterDOM.Route path="analytics" element={<ListenerAnalytics />} />
-                <ReactRouterDOM.Route path="settings" element={<ListenerSettings />} />
+                <ReactRouterDOM.Route path="profile" element={<ListenerProfile />} />
+                <ReactRouterDOM.Route path="chats" element={<ListenerChats />} />
+                <ReactRouterDOM.Route path="calls" element={<ListenerCalls />} />
              </ReactRouterDOM.Route>
 
             {/* ADMIN APP ROUTES */}

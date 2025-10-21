@@ -165,3 +165,15 @@ export const LogoutIcon: React.FC<IconProps> = ({ className = 'w-6 h-6' }) => (
         <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
     </svg>
 );
+
+export const ChatBubbleIcon: React.FC<IconProps> = ({ className = 'w-6 h-6' }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.76 9.76 0 01-2.53-.388m-5.383-.912A2.25 2.25 0 004.5 17.25l.538.076a9.033 9.033 0 013.29-2.22.67.67 0 01.54-.017l1.73-1.02a.75.75 0 000-1.306l-1.73-1.02a.67.67 0 01-.54-.017 9.033 9.033 0 01-3.29-2.22l-.538.076a2.25 2.25 0 00-1.342 2.224m5.383.912l-2.073 1.22a.75.75 0 000 1.306l2.073 1.22m0-2.522V12m0 1.262a.75.75 0 000 1.306l2.073 1.22m-2.073-3.728l2.073 1.22a.75.75 0 000-1.306l-2.073-1.22" />
+    </svg>
+);
+
+export const PhoneIcon: React.FC<IconProps> = ({ className = 'w-6 h-6' }) => (
+     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+    </svg>
+);

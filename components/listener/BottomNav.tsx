@@ -5,10 +5,10 @@ import { UsersIcon } from '../ui/icons/UsersIcon';
 import { IconProps } from '../ui/icons/Icon';
 
 const navLinks = [
-    { name: 'Home', path: '/user', icon: <HomeIcon /> },
-    { name: 'Chats', path: '/user/chats', icon: <ChatBubbleIcon /> },
-    { name: 'Calls', path: '/user/calls', icon: <PhoneIcon /> },
-    { name: 'Profile', path: '/user/profile', icon: <UsersIcon /> },
+    { name: 'Dashboard', path: '/listener', icon: <HomeIcon /> },
+    { name: 'Chats', path: '/listener/chats', icon: <ChatBubbleIcon /> },
+    { name: 'Calls', path: '/listener/calls', icon: <PhoneIcon /> },
+    { name: 'Profile', path: '/listener/profile', icon: <UsersIcon /> },
 ];
 
 const NavItem: React.FC<{ name: string; path: string; icon: React.ReactElement<IconProps> }> = ({ name, path, icon }) => {
@@ -24,7 +24,7 @@ const NavItem: React.FC<{ name: string; path: string; icon: React.ReactElement<I
     );
 };
 
-export const BottomNav: React.FC = () => {
+export const ListenerBottomNav: React.FC = () => {
     return (
         <div className="fixed bottom-0 left-0 right-0 z-50 h-16 bg-white border-t border-gray-200 dark:bg-gray-800 dark:border-gray-700 md:hidden">
             <div className="grid h-full max-w-lg grid-cols-4 mx-auto font-medium">

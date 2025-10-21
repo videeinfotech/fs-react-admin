@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import * as ReactRouterDOM from 'react-router-dom';
 import { ListenerSidebar } from '../../components/listener/Sidebar';
 import { ListenerNavbar } from '../../components/listener/Navbar';
+import { ListenerBottomNav } from '../../components/listener/BottomNav';
 
 export const ListenerLayout: React.FC = () => {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -14,9 +15,10 @@ export const ListenerLayout: React.FC = () => {
         <div className="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white min-h-full">
             <ListenerNavbar toggleSidebar={toggleSidebar} />
             <ListenerSidebar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-            <main className="p-4 sm:ml-64 mt-14">
+            <main className="p-4 sm:ml-64 mt-14 pb-20 md:pb-4">
                 <ReactRouterDOM.Outlet />
             </main>
+            <ListenerBottomNav />
         </div>
     );
 };
