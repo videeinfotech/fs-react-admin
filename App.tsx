@@ -1,15 +1,21 @@
-
 import React from 'react';
-// FIX: Changed react-router-dom import to use namespace import to fix "no exported member" errors.
 import * as ReactRouterDOM from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { ToastProvider } from './context/ToastContext';
-import { Layout } from './components/layout/Layout';
+
+// --- Layouts ---
+import { Layout as AdminLayout } from './components/layout/Layout';
+import { UserLayout } from './pages/user/UserLayout';
+import { ListenerLayout } from './pages/listener/ListenerLayout';
 import { ProtectedRoute } from './components/ProtectedRoute';
 
+// --- Main Pages ---
+import LandingPage from './pages/Landing';
 import Login from './pages/Login';
+
+// --- Admin Pages ---
 import Dashboard from './pages/Dashboard';
-import Monitoring from './pages/Monitoring'; // New Monitoring Page
+import Monitoring from './pages/Monitoring';
 import UsersList from './pages/UsersList';
 import UserDetails from './pages/UserDetails';
 import ListenersList from './pages/ListenersList';
@@ -22,23 +28,40 @@ import Tickets from './pages/Tickets';
 import TicketDetails from './pages/TicketDetails';
 import Reports from './pages/Reports';
 import Settings from './pages/Settings';
-import CMS from './pages/CMS';
-import PushNotifications from './pages/PushNotifications'; // New Push Notifications page
-import Roles from './pages/Roles';
-import AuditLogs from './pages/AuditLogs';
+import PushNotifications from './pages/PushNotifications';
 import Analytics from './pages/Analytics';
 import LiveSessions from './pages/LiveSessions';
 import AdminDoc from './pages/AdminDoc';
 import ApiDoc from './pages/ApiDoc';
 import QuizEvaluation from './pages/QuizEvaluation';
 import AnonymizedReporting from './pages/AnonymizedReporting';
-
-// Payout Management Pages
 import EarningsOverview from './pages/EarningsOverview';
 import PayoutCycles from './pages/PayoutCycles';
 import ProcessPayouts from './pages/ProcessPayouts';
 import PayoutHistory from './pages/PayoutHistory';
 import GatewaySettings from './pages/GatewaySettings';
+
+// --- User App Pages ---
+import UserHome from './pages/user/Home';
+import FindListener from './pages/user/FindListener';
+import UserListenerProfile from './pages/user/ListenerProfile';
+import UserChat from './pages/user/Chat';
+import UserCall from './pages/user/Call';
+import UserWallet from './pages/user/Wallet';
+import UserFeedback from './pages/user/Feedback';
+import UserJournal from './pages/user/Journal';
+import UserSettings from './pages/user/Settings';
+import UserProfile from './pages/user/Profile';
+
+// --- Listener App Pages ---
+import ListenerDashboard from './pages/listener/Dashboard';
+import ListenerActiveSessions from './pages/listener/ActiveSessions';
+import ListenerEarnings from './pages/listener/Earnings';
+import ListenerReviews from './pages/listener/Reviews';
+import ListenerQuiz from './pages/listener/Quiz';
+import ListenerAnalytics from './pages/listener/Analytics';
+import ListenerSettings from './pages/listener/Settings';
+import ListenerChat from './pages/listener/Chat';
 
 
 function App() {
@@ -48,8 +71,37 @@ function App() {
         <ReactRouterDOM.BrowserRouter>
           <ReactRouterDOM.Routes>
             <ReactRouterDOM.Route path="/login" element={<Login />} />
+            <ReactRouterDOM.Route path="/" element={<LandingPage />} />
+            
+            {/* USER APP ROUTES */}
+            <ReactRouterDOM.Route path="/user" element={<UserLayout />}>
+              <ReactRouterDOM.Route index element={<UserHome />} />
+              <ReactRouterDOM.Route path="find" element={<FindListener />} />
+              <ReactRouterDOM.Route path="listener/:id" element={<UserListenerProfile />} />
+              <ReactRouterDOM.Route path="chat/:sessionId" element={<UserChat />} />
+              <ReactRouterDOM.Route path="call/:sessionId" element={<UserCall />} />
+              <ReactRouterDOM.Route path="wallet" element={<UserWallet />} />
+              <ReactRouterDOM.Route path="feedback/:sessionId" element={<UserFeedback />} />
+              <ReactRouterDOM.Route path="journal" element={<UserJournal />} />
+              <ReactRouterDOM.Route path="settings" element={<UserSettings />} />
+              <ReactRouterDOM.Route path="profile" element={<UserProfile />} />
+            </ReactRouterDOM.Route>
+
+            {/* LISTENER APP ROUTES */}
+             <ReactRouterDOM.Route path="/listener" element={<ListenerLayout />}>
+                <ReactRouterDOM.Route index element={<ListenerDashboard />} />
+                <ReactRouterDOM.Route path="sessions" element={<ListenerActiveSessions />} />
+                <ReactRouterDOM.Route path="chat/:sessionId" element={<ListenerChat />} />
+                <ReactRouterDOM.Route path="earnings" element={<ListenerEarnings />} />
+                <ReactRouterDOM.Route path="reviews" element={<ListenerReviews />} />
+                <ReactRouterDOM.Route path="quiz" element={<ListenerQuiz />} />
+                <ReactRouterDOM.Route path="analytics" element={<ListenerAnalytics />} />
+                <ReactRouterDOM.Route path="settings" element={<ListenerSettings />} />
+             </ReactRouterDOM.Route>
+
+            {/* ADMIN APP ROUTES */}
             <ReactRouterDOM.Route element={<ProtectedRoute />}>
-              <ReactRouterDOM.Route path="/" element={<Layout />}>
+              <ReactRouterDOM.Route path="/admin" element={<AdminLayout />}>
                 <ReactRouterDOM.Route index element={<Dashboard />} />
                 <ReactRouterDOM.Route path="monitoring" element={<Monitoring />} />
                 <ReactRouterDOM.Route path="users" element={<UsersList />} />
@@ -60,13 +112,11 @@ function App() {
                 <ReactRouterDOM.Route path="sessions" element={<Sessions />} />
                 <ReactRouterDOM.Route path="live-sessions" element={<LiveSessions />} />
                 <ReactRouterDOM.Route path="sessions/:id" element={<SessionDetails />} />
-                {/* Payout Routes */}
                 <ReactRouterDOM.Route path="earnings-overview" element={<EarningsOverview />} />
                 <ReactRouterDOM.Route path="payout-cycles" element={<PayoutCycles />} />
                 <ReactRouterDOM.Route path="process-payouts" element={<ProcessPayouts />} />
                 <ReactRouterDOM.Route path="payout-history" element={<PayoutHistory />} />
                 <ReactRouterDOM.Route path="gateway-settings" element={<GatewaySettings />} />
-                
                 <ReactRouterDOM.Route path="feedback" element={<Feedback />} />
                 <ReactRouterDOM.Route path="anonymized-reporting" element={<AnonymizedReporting />} />
                 <ReactRouterDOM.Route path="tickets" element={<Tickets />} />
@@ -78,13 +128,10 @@ function App() {
                 <ReactRouterDOM.Route path="admin-doc" element={<AdminDoc />} />
                 <ReactRouterDOM.Route path="api-doc" element={<ApiDoc />} />
                 <ReactRouterDOM.Route path="settings" element={<Settings />} />
-                {/* Adding some other placeholder routes for completeness */}
-                <ReactRouterDOM.Route path="cms" element={<CMS />} />
-                <ReactRouterDOM.Route path="roles" element={<Roles />} />
-                <ReactRouterDOM.Route path="audit-logs" element={<AuditLogs />} />
-                <ReactRouterDOM.Route path="*" element={<ReactRouterDOM.Navigate to="/" replace />} />
+                <ReactRouterDOM.Route path="*" element={<ReactRouterDOM.Navigate to="/admin" replace />} />
               </ReactRouterDOM.Route>
             </ReactRouterDOM.Route>
+
           </ReactRouterDOM.Routes>
         </ReactRouterDOM.BrowserRouter>
       </ToastProvider>
