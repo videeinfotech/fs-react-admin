@@ -1,4 +1,3 @@
-
 import React from 'react';
 // FIX: Changed react-router-dom import to use namespace import to fix "no exported member" error.
 import * as ReactRouterDOM from 'react-router-dom';
@@ -25,6 +24,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen, toggleSidebar }
             <li key={link.name}>
               <ReactRouterDOM.NavLink
                 to={link.path}
+                end={link.path === '/admin'}
                 className={({ isActive }) =>
                   `flex items-center p-2 rounded-lg text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group ${isActive ? 'bg-gray-100 dark:bg-gray-700' : ''}`
                 }
