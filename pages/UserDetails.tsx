@@ -30,7 +30,7 @@ const UserDetails: React.FC = () => {
         return (
             <div className="text-center text-gray-500 dark:text-gray-400">
                 <h1 className="text-2xl">User not found.</h1>
-                <ReactRouterDOM.Link to="/users" className="text-primary-600 hover:underline">Back to User List</ReactRouterDOM.Link>
+                <ReactRouterDOM.Link to="/admin/users" className="text-primary-600 hover:underline">Back to User List</ReactRouterDOM.Link>
             </div>
         );
     }
@@ -44,7 +44,7 @@ const UserDetails: React.FC = () => {
             <nav className="text-sm" aria-label="Breadcrumb">
                 <ol className="list-none p-0 inline-flex space-x-2">
                     <li className="flex items-center">
-                        <ReactRouterDOM.Link to="/users" className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white">Users</ReactRouterDOM.Link>
+                        <ReactRouterDOM.Link to="/admin/users" className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white">Users</ReactRouterDOM.Link>
                     </li>
                     <li className="flex items-center">
                         <span className="text-gray-400 mx-2">/</span>
@@ -98,7 +98,7 @@ const UserDetails: React.FC = () => {
                         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
                             {userSessions.length > 0 ? userSessions.map(s => (
                                 <li key={s.id} className="py-3">
-                                    <ReactRouterDOM.Link to={`/sessions/${s.id}`} className="flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-700 p-2 rounded-md">
+                                    <ReactRouterDOM.Link to={`/admin/sessions/${s.id}`} className="flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-700 p-2 rounded-md">
                                         <div>
                                             <p className="font-medium text-gray-800 dark:text-gray-200">Session with {s.listener}</p>
                                             <p className="text-sm text-gray-500">{s.startedAt}</p>

@@ -102,7 +102,7 @@ const EarningsOverview: React.FC = () => {
 
     const transactionColumns = [
         { header: 'Date', accessor: 'date' as keyof PayoutTransaction, sortable: true },
-        { header: 'Listener', accessor: 'listenerName' as keyof PayoutTransaction, sortable: true, render: (p: PayoutTransaction) => <button onClick={() => navigate(`/listeners/${p.listenerId}`)} className="text-primary-600 hover:underline">{p.listenerName} (L-{p.listenerId})</button> },
+        { header: 'Listener', accessor: 'listenerName' as keyof PayoutTransaction, sortable: true, render: (p: PayoutTransaction) => <button onClick={() => navigate(`/admin/listeners/${p.listenerId}`)} className="text-primary-600 hover:underline">{p.listenerName} (L-{p.listenerId})</button> },
         { header: 'Session Count', accessor: 'sessionCount' as keyof PayoutTransaction, sortable: true },
         { header: 'Gateway', accessor: 'gateway' as keyof PayoutTransaction, sortable: true },
         { header: 'Amount', accessor: 'payableAmount' as keyof PayoutTransaction, sortable: true, render: (p: PayoutTransaction) => `₹${p.payableAmount.toLocaleString()}`},

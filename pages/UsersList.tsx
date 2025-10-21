@@ -81,7 +81,7 @@ const UsersList: React.FC = () => {
     }), []);
 
     const renderActions = (user: User) => (
-        <button onClick={() => navigate(`/users/${user.id}`)} className="text-primary-600 hover:underline font-medium">
+        <button onClick={() => navigate(`/admin/users/${user.id}`)} className="text-primary-600 hover:underline font-medium">
             View Details
         </button>
     );

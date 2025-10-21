@@ -73,7 +73,7 @@ const ListenersList: React.FC = () => {
     }), []);
 
     const renderActions = (listener: Listener) => (
-        <button onClick={() => navigate(`/listeners/${listener.id}`)} className="text-primary-600 hover:underline font-medium">
+        <button onClick={() => navigate(`/admin/listeners/${listener.id}`)} className="text-primary-600 hover:underline font-medium">
             View Details
         </button>
     );

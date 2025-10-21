@@ -25,7 +25,7 @@ const Sessions: React.FC = () => {
     ];
     
     const handleViewDetails = (session: Session) => {
-        navigate(`/sessions/${session.id}`);
+        navigate(`/admin/sessions/${session.id}`);
     };
 
     const renderActions = (session: Session) => (

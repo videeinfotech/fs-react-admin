@@ -18,7 +18,7 @@ const TicketDetails: React.FC = () => {
         return (
             <div className="text-center text-gray-500 dark:text-gray-400">
                 <h1 className="text-2xl">Ticket not found.</h1>
-                <ReactRouterDOM.Link to="/tickets" className="text-primary-600 hover:underline">Back to Ticket List</ReactRouterDOM.Link>
+                <ReactRouterDOM.Link to="/admin/tickets" className="text-primary-600 hover:underline">Back to Ticket List</ReactRouterDOM.Link>
             </div>
         );
     }
@@ -36,7 +36,7 @@ const TicketDetails: React.FC = () => {
              <nav className="text-sm" aria-label="Breadcrumb">
                 <ol className="list-none p-0 inline-flex space-x-2">
                     <li className="flex items-center">
-                        <ReactRouterDOM.Link to="/tickets" className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white">Support Tickets</ReactRouterDOM.Link>
+                        <ReactRouterDOM.Link to="/admin/tickets" className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white">Support Tickets</ReactRouterDOM.Link>
                     </li>
                     <li className="flex items-center">
                         <span className="text-gray-400 mx-2">/</span>
@@ -48,7 +48,7 @@ const TicketDetails: React.FC = () => {
             <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
                 <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{ticket.subject}</h1>
                 <div className="flex items-center space-x-4 mt-2 text-sm text-gray-500 dark:text-gray-400">
-                    <span>From: <ReactRouterDOM.Link to={`/users/${ticket.userId}`} className="text-primary-600 hover:underline">{ticket.user}</ReactRouterDOM.Link></span>
+                    <span>From: <ReactRouterDOM.Link to={`/admin/users/${ticket.userId}`} className="text-primary-600 hover:underline">{ticket.user}</ReactRouterDOM.Link></span>
                     <span>Status: {ticket.status}</span>
                     <span>Created: {ticket.createdAt}</span>
                 </div>

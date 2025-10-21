@@ -24,7 +24,7 @@ const Tickets: React.FC = () => {
     ];
 
     const handleViewDetails = (ticket: Ticket) => {
-        navigate(`/tickets/${ticket.id}`);
+        navigate(`/admin/tickets/${ticket.id}`);
     };
 
     const renderActions = (ticket: Ticket) => (

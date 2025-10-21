@@ -92,7 +92,7 @@ const ListenerDetails: React.FC = () => {
         return (
             <div className="text-center text-gray-500 dark:text-gray-400">
                 <h1 className="text-2xl">Listener not found.</h1>
-                <ReactRouterDOM.Link to="/listeners" className="text-primary-600 hover:underline">Back to Listener List</ReactRouterDOM.Link>
+                <ReactRouterDOM.Link to="/admin/listeners" className="text-primary-600 hover:underline">Back to Listener List</ReactRouterDOM.Link>
             </div>
         );
     }
@@ -100,7 +100,7 @@ const ListenerDetails: React.FC = () => {
     const sessionColumns = useMemo(() => [
         { header: 'Session ID', accessor: 'id' as keyof Session, sortable: true },
         { header: 'Date', accessor: 'startedAt' as keyof Session, sortable: true },
-        { header: 'User', accessor: 'user' as keyof Session, sortable: true, render: (s: Session) => <ReactRouterDOM.Link to={`/users/${s.userId}`} className="text-primary-600 hover:underline">{s.user}</ReactRouterDOM.Link> },
+        { header: 'User', accessor: 'user' as keyof Session, sortable: true, render: (s: Session) => <ReactRouterDOM.Link to={`/admin/users/${s.userId}`} className="text-primary-600 hover:underline">{s.user}</ReactRouterDOM.Link> },
         { header: 'Type', accessor: 'type' as keyof Session, sortable: true },
         { header: 'Duration', accessor: 'duration' as keyof Session, sortable: true },
         { header: 'Earning', accessor: 'cost' as keyof Session, sortable: true, render: (s: Session) => `₹${s.cost.toFixed(2)}` },
@@ -122,7 +122,7 @@ const ListenerDetails: React.FC = () => {
             {/* Breadcrumbs */}
             <nav className="text-sm" aria-label="Breadcrumb">
                 <ol className="list-none p-0 inline-flex space-x-2">
-                    <li className="flex items-center"><ReactRouterDOM.Link to="/listeners" className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white">Listeners</ReactRouterDOM.Link></li>
+                    <li className="flex items-center"><ReactRouterDOM.Link to="/admin/listeners" className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white">Listeners</ReactRouterDOM.Link></li>
                     <li className="flex items-center"><span className="text-gray-400 mx-2">/</span><span className="text-gray-700 dark:text-white font-medium">{listener.name}</span></li>
                 </ol>
             </nav>
