@@ -58,7 +58,8 @@ const Listeners: React.FC = () => {
     ];
     
     const handleViewDetails = (listener: Listener) => {
-        navigate(`/listeners/${listener.id}`);
+        // FIX: The navigation path should be prefixed with /admin for the admin panel routes.
+        navigate(`/admin/listeners/${listener.id}`);
     };
 
     const renderActions = (listener: Listener) => (

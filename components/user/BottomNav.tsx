@@ -1,4 +1,5 @@
 import React from 'react';
+// FIX: Changed react-router-dom import to use namespace import to fix "no exported member" error.
 import * as ReactRouterDOM from 'react-router-dom';
 import { HomeIcon, ChatBubbleIcon, PhoneIcon } from '../ui/icons/OtherIcons';
 import { UsersIcon } from '../ui/icons/UsersIcon';

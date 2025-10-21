@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { EditIcon, LogoutIcon } from '../../components/ui/icons/OtherIcons';
+// FIX: Changed react-router-dom import to use namespace import to fix "no exported member" error.
 import * as ReactRouterDOM from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../hooks/useAuth';

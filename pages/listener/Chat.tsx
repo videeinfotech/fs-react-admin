@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+// FIX: Changed react-router-dom import to use namespace import to fix "no exported member" error.
 import * as ReactRouterDOM from 'react-router-dom';
 
 const ChatBubble: React.FC<{ message: string, isSender: boolean, time: string }> = ({ message, isSender, time }) => (

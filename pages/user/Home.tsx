@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+// FIX: Changed react-router-dom import to use namespace import to fix "no exported member" error.
 import * as ReactRouterDOM from 'react-router-dom';
 import { BellIcon, HeartIcon } from '../../components/ui/icons/OtherIcons';
 import { mockListeners } from '../Listeners';
+import { useCall } from '../../context/CallContext';
 
 const moodEmojis = ['😔', '😟', '😐', '😌', '😊'];
 
@@ -19,7 +21,7 @@ const ListenerShimmerCard: React.FC = () => (
 
 // New listener card for a vertical list
 const ActiveListenerCard: React.FC<{ listener: typeof mockListeners[0] }> = ({ listener }) => {
-    const navigate = ReactRouterDOM.useNavigate();
+    const { startCall } = useCall();
     return (
         <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md flex items-center space-x-4">
             <ReactRouterDOM.Link to={`/user/listener/${listener.id}`} className="flex-shrink-0 relative">
@@ -33,7 +35,7 @@ const ActiveListenerCard: React.FC<{ listener: typeof mockListeners[0] }> = ({ l
                 </ReactRouterDOM.Link>
             </div>
             <button 
-                onClick={() => navigate(`/user/calling/${listener.id}`)}
+                onClick={() => startCall({id: listener.id.toString(), name: listener.name, avatarUrl: listener.avatarUrl}, 'user')}
                 className="flex-shrink-0 px-5 py-2 text-sm font-semibold text-white bg-primary-600 rounded-full hover:bg-primary-700 transition">
                 Call
             </button>

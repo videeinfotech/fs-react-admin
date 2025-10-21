@@ -60,7 +60,8 @@ const Users: React.FC = () => {
     }, [statusFilter, startDate, endDate]);
 
     const handleViewDetails = (user: User) => {
-        navigate(`/users/${user.id}`);
+        // FIX: The navigation path should be prefixed with /admin for the admin panel routes.
+        navigate(`/admin/users/${user.id}`);
     };
 
     const renderActions = (user: User) => (

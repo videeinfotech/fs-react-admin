@@ -1,8 +1,10 @@
 import React from 'react';
+// FIX: Changed react-router-dom import to use namespace import to fix "no exported member" error.
 import * as ReactRouterDOM from 'react-router-dom';
 import { mockListeners } from '../Listeners';
 import { RatingIcon } from '../../components/ui/icons/OtherIcons';
 import { mockFeedback } from '../Feedback';
+import { useCall } from '../../context/CallContext';
 
 const StarRating: React.FC<{ rating: number, reviewCount?: number }> = ({ rating, reviewCount }) => (
     <div className="flex items-center">
@@ -16,6 +18,7 @@ const StarRating: React.FC<{ rating: number, reviewCount?: number }> = ({ rating
 const ListenerProfile: React.FC = () => {
     const { id } = ReactRouterDOM.useParams();
     const navigate = ReactRouterDOM.useNavigate();
+    const { startCall } = useCall();
     const listener = mockListeners.find(l => l.id.toString() === id);
 
     if (!listener) {
@@ -27,8 +30,8 @@ const ListenerProfile: React.FC = () => {
         navigate(`/user/chat/sess_${listener.id}`);
     };
     
-    const startCall = () => {
-        navigate(`/user/calling/${listener.id}`);
+    const handleStartCall = () => {
+        startCall({ id: listener.id.toString(), name: listener.name, avatarUrl: listener.avatarUrl }, 'user');
     }
 
     return (
@@ -77,11 +80,11 @@ const ListenerProfile: React.FC = () => {
                     <span className="text-xs font-normal">(₹{listener.rate * 10}/10min)</span>
                 </button>
                 <div className="space-y-2">
-                    <button onClick={startCall} className="w-full p-3 bg-green-600 text-white font-semibold rounded-lg shadow-lg text-sm flex flex-col items-center">
+                    <button onClick={handleStartCall} className="w-full p-3 bg-green-600 text-white font-semibold rounded-lg shadow-lg text-sm flex flex-col items-center">
                         Voice Call 
                         <span className="text-xs font-normal">(₹{listener.rate * 15}/15min)</span>
                     </button>
-                    <button onClick={startCall} className="w-full p-3 bg-teal-600 text-white font-semibold rounded-lg shadow-lg text-sm flex flex-col items-center">
+                    <button onClick={handleStartCall} className="w-full p-3 bg-teal-600 text-white font-semibold rounded-lg shadow-lg text-sm flex flex-col items-center">
                         Video Call 
                         <span className="text-xs font-normal">(₹{listener.rate * 20}/20min)</span>
                     </button>

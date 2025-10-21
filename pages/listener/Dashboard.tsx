@@ -3,6 +3,7 @@ import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianG
 import { RatingIcon, SessionsTotalIcon, BellIcon } from '../../components/ui/icons/OtherIcons';
 import { EarningsIcon } from '../../components/ui/icons/EarningsIcon';
 import { IconProps } from '../../components/ui/icons/Icon';
+// FIX: Changed react-router-dom import to use namespace import to fix "no exported member" error.
 import * as ReactRouterDOM from 'react-router-dom';
 
 const StatCard: React.FC<{ title: string, value: string, icon: React.ReactElement<IconProps> }> = ({ title, value, icon }) => (
