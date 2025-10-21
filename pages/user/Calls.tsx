@@ -31,8 +31,13 @@ const CallItem: React.FC<{ listener: any, type: 'Voice' | 'Video', duration: str
 const Calls: React.FC = () => {
     const [activeTab, setActiveTab] = useState<'voice' | 'video'>('voice');
     const calls = [
-        { listener: mockListeners[0], type: 'Voice', duration: '15:23', status: 'Completed' },
-        { listener: mockListeners[1], type: 'Video', duration: '05:10', status: 'Missed' },
+        { listener: mockListeners[0], type: 'Voice' as const, duration: '15:23', status: 'Completed' as const },
+        { listener: mockListeners[1], type: 'Video' as const, duration: '05:10', status: 'Missed' as const },
+        { listener: mockListeners[1], type: 'Voice' as const, duration: '25:40', status: 'Completed' as const },
+        { listener: mockListeners[0], type: 'Video' as const, duration: '30:00', status: 'Completed' as const },
+        { listener: mockListeners[0], type: 'Voice' as const, duration: '02:15', status: 'Missed' as const },
+        { listener: mockListeners[1], type: 'Voice' as const, duration: '45:11', status: 'Completed' as const },
+        { listener: mockListeners[0], type: 'Video' as const, duration: '22:05', status: 'Completed' as const },
     ];
 
     return (
@@ -59,6 +64,11 @@ const Calls: React.FC = () => {
                 {calls.filter(c => c.type.toLowerCase() === activeTab).map((call, i) => (
                     <CallItem key={i} {...call} />
                 ))}
+                 {calls.filter(c => c.type.toLowerCase() === activeTab).length === 0 && (
+                    <div className="text-center py-10 text-gray-500">
+                        <p>No {activeTab} calls found.</p>
+                    </div>
+                )}
             </div>
 
             {/* Floating Action Button */}

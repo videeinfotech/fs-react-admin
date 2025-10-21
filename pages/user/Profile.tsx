@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { EditIcon, LogoutIcon } from '../../components/ui/icons/OtherIcons';
-import { WalletIcon } from '../../components/ui/icons/WalletIcon';
 import * as ReactRouterDOM from 'react-router-dom';
+import { useTheme } from '../../context/ThemeContext';
 
-const ToggleSwitch: React.FC<{ label: string, enabled: boolean, setEnabled: (e: boolean) => void }> = ({ label, enabled, setEnabled }) => (
+const ToggleSwitch: React.FC<{ label: string, enabled: boolean, setEnabled: () => void }> = ({ label, enabled, setEnabled }) => (
     <div className="flex justify-between items-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
         <span className="font-medium">{label}</span>
         <button
             type="button"
             className={`${enabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-gray-700'} relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out`}
-            onClick={() => setEnabled(!enabled)}
+            onClick={setEnabled}
         >
             <span className={`${enabled ? 'translate-x-5' : 'translate-x-0'} pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out`} />
         </button>
@@ -17,7 +17,7 @@ const ToggleSwitch: React.FC<{ label: string, enabled: boolean, setEnabled: (e: 
 );
 
 const Profile: React.FC = () => {
-    const [darkMode, setDarkMode] = useState(false);
+    const { theme, toggleTheme } = useTheme();
     const [notifications, setNotifications] = useState(true);
     const [showJournal, setShowJournal] = useState(true);
 
@@ -72,9 +72,9 @@ const Profile: React.FC = () => {
 
             {/* Toggles */}
             <div className="space-y-3">
-                <ToggleSwitch label="Dark Mode" enabled={darkMode} setEnabled={setDarkMode} />
-                <ToggleSwitch label="Notifications" enabled={notifications} setEnabled={setNotifications} />
-                <ToggleSwitch label="Show Mood Journal" enabled={showJournal} setEnabled={setShowJournal} />
+                <ToggleSwitch label="Dark Mode" enabled={theme === 'dark'} setEnabled={toggleTheme} />
+                <ToggleSwitch label="Notifications" enabled={notifications} setEnabled={() => setNotifications(p => !p)} />
+                <ToggleSwitch label="Show Mood Journal" enabled={showJournal} setEnabled={() => setShowJournal(p => !p)} />
             </div>
 
             {/* Help & Support */}
