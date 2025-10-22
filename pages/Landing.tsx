@@ -4,15 +4,15 @@ import * as ReactRouterDOM from 'react-router-dom';
 import { UsersIcon } from '../components/ui/icons/UsersIcon';
 import { ListenersIcon } from '../components/ui/icons/ListenersIcon';
 import { MonitoringIcon } from '../components/ui/icons/MonitoringIcon';
+import { WebsiteIcon } from '../components/ui/icons/WebsiteIcon';
 // FIX: Add IconProps to fix cloneElement typing issue
 import { IconProps } from '../components/ui/icons/Icon';
 
 const AppCard: React.FC<{ title: string; description: string; path: string; icon: React.ReactElement<IconProps> }> = ({ title, description, path, icon }) => {
-    const navigate = ReactRouterDOM.useNavigate();
     return (
-        <div 
-            onClick={() => navigate(path)}
-            className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 cursor-pointer"
+        <ReactRouterDOM.Link 
+            to={path}
+            className="block bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 cursor-pointer"
         >
             <div className="flex items-center justify-center h-16 w-16 mb-6 bg-primary-100 dark:bg-primary-900/50 rounded-full">
                 {React.cloneElement(icon, { className: 'w-8 h-8 text-primary-600 dark:text-primary-400' })}
@@ -24,7 +24,7 @@ const AppCard: React.FC<{ title: string; description: string; path: string; icon
                     Go to {title} &rarr;
                 </span>
             </div>
-        </div>
+        </ReactRouterDOM.Link>
     );
 };
 
@@ -40,7 +40,13 @@ const LandingPage: React.FC = () => {
                     Select an application to view.
                 </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl w-full">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl w-full">
+                <AppCard 
+                    title="Main Website" 
+                    description="The public-facing marketing website to attract new users and listeners."
+                    path="/website"
+                    icon={<WebsiteIcon />}
+                />
                 <AppCard 
                     title="User App" 
                     description="The client-facing application for users seeking emotional support and wellness services."

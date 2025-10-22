@@ -67,6 +67,7 @@ import ListenerQuiz from './pages/listener/Quiz';
 import ListenerAnalytics from './pages/listener/Analytics';
 import ListenerProfile from './pages/listener/Profile';
 
+import Website from './pages/Website';
 import LandingPage from './pages/Landing';
 import NotFound from './pages/NotFound';
 
@@ -81,6 +82,7 @@ function App() {
             <CallProvider>
               <Routes>
                 <Route path="/" element={<LandingPage />} />
+                <Route path="/website" element={<Website />} />
                 <Route path="/login" element={<Login />} />
 
                 {/* Authenticated Routes */}
