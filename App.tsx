@@ -70,6 +70,10 @@ import ListenerProfile from './pages/listener/Profile';
 import WebsiteLayout from './components/website/WebsiteLayout';
 import WebsiteHome from './pages/website/Home';
 import About from './pages/website/About';
+import WhyChooseUs from './pages/website/WhyChooseUs';
+import WebsiteListeners from './pages/website/Listeners';
+import HowItWorks from './pages/website/HowItWorks';
+import Testimonials from './pages/website/Testimonials';
 import LandingPage from './pages/Landing';
 import NotFound from './pages/NotFound';
 
@@ -88,6 +92,10 @@ function App() {
                 <Route path="/website" element={<WebsiteLayout />}>
                   <Route index element={<WebsiteHome />} />
                   <Route path="about" element={<About />} />
+                  <Route path="why-choose-us" element={<WhyChooseUs />} />
+                  <Route path="listeners" element={<WebsiteListeners />} />
+                  <Route path="how-it-works" element={<HowItWorks />} />
+                  <Route path="testimonials" element={<Testimonials />} />
                 </Route>
 
                 <Route path="/login" element={<Login />} />

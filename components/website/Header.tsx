@@ -4,8 +4,10 @@ import * as ReactRouterDOM from 'react-router-dom';
 const navLinks = [
     { name: 'Home', path: '/website' },
     { name: 'About', path: '/website/about' },
-    { name: 'Why Choose Us', path: '#' },
-    { name: 'Listeners', path: '#' },
+    { name: 'Why Choose Us', path: '/website/why-choose-us' },
+    { name: 'Listeners', path: '/website/listeners' },
+    { name: 'How It Works', path: '/website/how-it-works' },
+    { name: 'Testimonials', path: '/website/testimonials' },
     { name: 'Blogs', path: '#' },
     { name: 'Contact', path: '#' },
     { name: 'Careers', path: '#' },
