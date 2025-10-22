@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import * as ReactRouterDOM from 'react-router-dom';
 // FIX: Changed EnvelopeIcon to MessageIcon as it is exported from OtherIcons.tsx.
 import { MessageIcon, PhoneIcon, MapPinIcon, PlusIcon, MinusIcon } from '../../components/ui/icons/OtherIcons';
 import { useToast } from '../../hooks/useToast';
@@ -137,7 +137,7 @@ const FAQSection = () => (
             <h2 className="text-3xl font-bold text-center mb-8">Quick Answers</h2>
             <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
                 <FAQItem question="How do I become a listener?">
-                    <p>You can apply to become a listener by navigating to our <Link to="/signup" className="text-blue-600 hover:underline">Signup page</Link> and selecting the "Join as Listener" option. You will need to complete an application and a verification process.</p>
+                    <p>You can apply to become a listener by navigating to our <ReactRouterDOM.Link to="/signup" className="text-blue-600 hover:underline">Signup page</ReactRouterDOM.Link> and selecting the "Join as Listener" option. You will need to complete an application and a verification process.</p>
                 </FAQItem>
                 <FAQItem question="What are the payment options?">
                     <p>We accept all major credit cards, UPI, and various digital wallets for recharging your in-app balance. All payments are processed securely.</p>

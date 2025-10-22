@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import * as ReactRouterDOM from 'react-router-dom';
 import { FacebookIcon, LinkedInIcon, TwitterIcon, EnvelopeIcon } from '../../components/ui/icons/OtherIcons';
 import NotFound from '../NotFound';
 
@@ -11,7 +11,7 @@ const mockBlogs = [
 ];
 
 const BlogDetail: React.FC = () => {
-    const { slug } = useParams();
+    const { slug } = ReactRouterDOM.useParams();
     const post = mockBlogs.find(p => p.slug === slug);
 
     if (!post) {
@@ -73,13 +73,13 @@ const BlogDetail: React.FC = () => {
                         <div className="grid md:grid-cols-2 gap-8">
                             {relatedPosts.map(p => (
                                 <div key={p.slug} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden group">
-                                    <Link to={`/website/blogs/${p.slug}`}>
+                                    <ReactRouterDOM.Link to={`/website/blogs/${p.slug}`}>
                                         <img src={p.image} alt={p.title} className="w-full h-48 object-cover" />
                                         <div className="p-6">
                                             <h3 className="font-bold text-lg mb-2 group-hover:text-primary-600">{p.title}</h3>
                                             <p className="text-xs text-gray-500">{p.date}</p>
                                         </div>
-                                    </Link>
+                                    </ReactRouterDOM.Link>
                                 </div>
                             ))}
                         </div>

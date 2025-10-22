@@ -1,5 +1,5 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import * as ReactRouterDOM from 'react-router-dom';
 import { Header } from './Header';
 import { Footer } from './Footer';
 
@@ -8,7 +8,7 @@ const WebsiteLayout: React.FC = () => {
         <div className="bg-gray-50 dark:bg-gray-900/50 antialiased">
             <Header />
             <main>
-                <Outlet />
+                <ReactRouterDOM.Outlet />
             </main>
             <Footer />
         </div>

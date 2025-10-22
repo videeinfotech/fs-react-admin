@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import * as ReactRouterDOM from 'react-router-dom';
 // FIX: Corrected the import for `UsersIcon`. It is in its own file, not in OtherIcons.
 import { DownloadIcon, SearchIcon, PhoneIcon, PlusIcon, MinusIcon, QrCodeIcon } from '../../components/ui/icons/OtherIcons';
 import { UsersIcon } from '../../components/ui/icons/UsersIcon';
@@ -116,9 +116,9 @@ const FinalCTA = () => (
                  <a href={playStoreLink} target="_blank" rel="noopener noreferrer" className="px-8 py-3 text-blue-600 font-semibold bg-white rounded-full hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg">
                     Download the App
                 </a>
-                <Link to="/login" className="px-8 py-3 text-white font-semibold border-2 border-white rounded-full hover:bg-white/10 transition-all duration-300 transform hover:scale-105">
+                <ReactRouterDOM.Link to="/login" className="px-8 py-3 text-white font-semibold border-2 border-white rounded-full hover:bg-white/10 transition-all duration-300 transform hover:scale-105">
                     Become a Listener
-                </Link>
+                </ReactRouterDOM.Link>
             </div>
         </div>
     </section>

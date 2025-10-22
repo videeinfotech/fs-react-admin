@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import * as ReactRouterDOM from 'react-router-dom';
 import { SearchIcon, EnvelopeIcon } from '../../components/ui/icons/OtherIcons';
 
 const mockBlogs = [
@@ -12,13 +12,13 @@ const mockBlogs = [
 
 const BlogCard: React.FC<{ post: typeof mockBlogs[0] }> = ({ post }) => (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden group">
-        <Link to={`/website/blogs/${post.slug}`}>
+        <ReactRouterDOM.Link to={`/website/blogs/${post.slug}`}>
             <img src={post.image} alt={post.title} className="w-full h-56 object-cover group-hover:opacity-90 transition-opacity" />
-        </Link>
+        </ReactRouterDOM.Link>
         <div className="p-6">
             <p className="text-sm text-primary-600 font-semibold mb-1">{post.category}</p>
             <h2 className="font-bold text-xl mb-2 group-hover:text-primary-600 transition-colors">
-                <Link to={`/website/blogs/${post.slug}`}>{post.title}</Link>
+                <ReactRouterDOM.Link to={`/website/blogs/${post.slug}`}>{post.title}</ReactRouterDOM.Link>
             </h2>
             <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">{post.excerpt}</p>
             <div className="flex items-center text-xs text-gray-500">
@@ -56,7 +56,7 @@ const Sidebar = () => (
                     <li key={post.slug} className="flex items-start space-x-3">
                         <img src={post.image} alt={post.title} className="w-16 h-16 object-cover rounded-md" />
                         <div>
-                            <Link to={`/website/blogs/${post.slug}`} className="font-semibold text-sm hover:text-primary-600 leading-tight">{post.title}</Link>
+                            <ReactRouterDOM.Link to={`/website/blogs/${post.slug}`} className="font-semibold text-sm hover:text-primary-600 leading-tight">{post.title}</ReactRouterDOM.Link>
                             <p className="text-xs text-gray-500 mt-1">{post.date}</p>
                         </div>
                     </li>

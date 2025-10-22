@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import * as ReactRouterDOM from 'react-router-dom';
 import { mockListeners } from '../Listeners';
 import { Listener } from '../../types';
 import { FilterIcon } from '../../components/ui/icons/OtherIcons';
@@ -119,9 +119,9 @@ const ListenersPage: React.FC = () => {
                     <h2 className="text-3xl font-bold">Want to teach your language?</h2>
                     <p className="mt-4 text-lg text-teal-100">If you are a fluent speaker and a great communicator, join our community of listeners and start earning.</p>
                     <div className="mt-8">
-                        <Link to="/login" className="px-8 py-3 text-teal-600 font-semibold bg-white rounded-full hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                        <ReactRouterDOM.Link to="/login" className="px-8 py-3 text-teal-600 font-semibold bg-white rounded-full hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg">
                             Join as a Listener
-                        </Link>
+                        </ReactRouterDOM.Link>
                     </div>
                 </div>
             </section>
