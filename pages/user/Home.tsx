@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 // FIX: Changed react-router-dom import to use namespace import to fix "no exported member" error.
 import * as ReactRouterDOM from 'react-router-dom';
-import { BellIcon, HeartIcon } from '../../components/ui/icons/OtherIcons';
+import { BellIcon, HeartIcon, SunIcon, MoonIcon } from '../../components/ui/icons/OtherIcons';
 import { mockListeners } from '../Listeners';
 import { useCall } from '../../context/CallContext';
+import { useTheme } from '../../context/ThemeContext';
 
 const moodEmojis = ['😔', '😟', '😐', '😌', '😊'];
 
@@ -47,6 +48,7 @@ const ActiveListenerCard: React.FC<{ listener: typeof mockListeners[0] }> = ({ l
 const Home: React.FC = () => {
     const [mood, setMood] = useState(2); // Index for '😐'
     const [loading, setLoading] = useState(true);
+    const { theme, toggleTheme } = useTheme();
 
     useEffect(() => {
         const timer = setTimeout(() => setLoading(false), 1500);
@@ -61,14 +63,20 @@ const Home: React.FC = () => {
                     <h1 className="text-2xl font-bold">Welcome back!</h1>
                     <p className="text-gray-500 dark:text-gray-400">Ready to find your peace?</p>
                 </div>
-                <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-2 sm:space-x-4">
                      <div className="text-right">
                         <span className="text-xs text-gray-500">Balance</span>
                         <p className="font-bold text-primary-600">₹5,250</p>
                     </div>
-                    <button className="relative">
+                    <button
+                        onClick={toggleTheme}
+                        className="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"
+                    >
+                        {theme === 'dark' ? <SunIcon className="w-6 h-6" /> : <MoonIcon className="w-6 h-6" />}
+                    </button>
+                    <button className="relative p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
                         <BellIcon />
-                        <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+                        <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                     </button>
                 </div>
             </header>

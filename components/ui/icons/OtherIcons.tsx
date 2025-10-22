@@ -90,7 +90,7 @@ export const HomeIcon: React.FC<IconProps> = ({ className = 'w-6 h-6' }) => (
 );
 
 export const ChatBubbleIcon: React.FC<IconProps> = ({ className = 'w-6 h-6' }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}><path strokeLinecap="round" strokeLinejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193l-3.72 3.72a.75.75 0 01-1.06 0l-3.72-3.72C6.347 20.77 2.25 16.55 2.25 12.25v-4.286c0-.97.616-1.813 1.5-2.097m16.5 0a2.25 2.25 0 00-2.25-2.25H3.75A2.25 2.25 0 001.5 6.25v4.286c0 4.298 4.098 8.51 9.706 8.51l.557.557a.75.75 0 001.06 0l.557-.557c5.608 0 9.706-4.212 9.706-8.51V6.25a2.25 2.25 0 00-2.25-2.25h-3.872z" /></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}><path strokeLinecap="round" strokeLinejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193l-3.72 3.72a.75.75 0 01-1.06 0l-3.72-3.72C6.347 20.77 2.25 16.55 2.25 12.25v-4.286c0 -.97.616-1.813 1.5-2.097m16.5 0a2.25 2.25 0 00-2.25-2.25H3.75A2.25 2.25 0 001.5 6.25v4.286c0 4.298 4.098 8.51 9.706 8.51l.557.557a.75.75 0 001.06 0l.557-.557c5.608 0 9.706-4.212 9.706-8.51V6.25a2.25 2.25 0 00-2.25-2.25h-3.872z" /></svg>
 );
 
 export const PhoneIcon: React.FC<IconProps> = ({ className = 'w-6 h-6' }) => (
@@ -205,5 +205,17 @@ export const TwitterIcon: React.FC<IconProps> = ({ className = 'w-6 h-6' }) => (
 export const EnvelopeIcon: React.FC<IconProps> = ({ className = 'w-6 h-6' }) => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+    </svg>
+);
+
+export const SunIcon: React.FC<IconProps> = ({ className = 'w-6 h-6' }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.364l-1.591 1.591M21 12h-2.25m-.364 6.364l-1.591-1.591M12 18.75V21m-4.95-4.243l-1.591 1.591M5.25 12H3m4.243-4.95l1.591-1.591M12 12a4.5 4.5 0 000 9 4.5 4.5 0 000-9z" />
+    </svg>
+);
+
+export const MoonIcon: React.FC<IconProps> = ({ className = 'w-6 h-6' }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
     </svg>
 );

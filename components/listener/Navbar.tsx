@@ -1,11 +1,14 @@
 import React from 'react';
-import { BellIcon } from '../ui/icons/OtherIcons';
+import { BellIcon, SunIcon, MoonIcon } from '../ui/icons/OtherIcons';
+import { useTheme } from '../../context/ThemeContext';
 
 interface NavbarProps {
   toggleSidebar: () => void;
 }
 
 export const ListenerNavbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
+  const { theme, toggleTheme } = useTheme();
+
   return (
     <nav className="fixed top-0 z-30 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
       <div className="px-3 py-3 lg:px-5 lg:pl-3">
@@ -20,6 +23,12 @@ export const ListenerNavbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
           </div>
           <div className="flex items-center">
             <div className="flex items-center ml-3">
+               <button
+                  onClick={toggleTheme}
+                  className="p-2 mr-2 text-gray-500 rounded-lg hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700"
+              >
+                  {theme === 'dark' ? <SunIcon className="w-6 h-6" /> : <MoonIcon className="w-6 h-6" />}
+              </button>
               <button className="p-2 text-gray-500 rounded-lg hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700">
                 <BellIcon className="w-6 h-6" />
               </button>
