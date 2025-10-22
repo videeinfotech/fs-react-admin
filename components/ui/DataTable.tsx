@@ -43,7 +43,6 @@ export function DataTable<T,>({ columns, data, renderActions }: DataTableProps<T
             const dateA = new Date(valA).getTime();
             const dateB = new Date(valB).getTime();
              if (!isNaN(dateA) && !isNaN(dateB)) {
-                // FIX: Corrected a typo in the date sorting logic. The operand `a` was incorrect and has been changed to `dateA`.
                 return sortConfig.direction === 'asc' ? dateA - dateB : dateB - dateA;
              }
         }

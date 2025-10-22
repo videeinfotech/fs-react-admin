@@ -64,7 +64,6 @@ const PayoutHistory: React.FC = () => {
         const sortedMonthKeys = Object.keys(monthlyTotals).sort((a, b) => {
             const dateA = new Date(a);
             const dateB = new Date(b);
-            // FIX: Converted Date objects to numbers using .getTime() for subtraction to resolve TypeScript error.
             return dateA.getTime() - dateB.getTime();
         });
 
@@ -91,7 +90,8 @@ const PayoutHistory: React.FC = () => {
 
         return Object.entries(listenerTotals)
             .map(([name, earnings]) => ({ name, earnings }))
-            .sort((a, b) => b.earnings - a.earnings)
+            // FIX: Explicitly cast earnings to Number to satisfy TypeScript's type checker for the arithmetic operation.
+            .sort((a, b) => Number(b.earnings) - Number(a.earnings))
             .slice(0, 10);
     }, [filteredHistory]);
 
