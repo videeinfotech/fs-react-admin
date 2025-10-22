@@ -30,6 +30,7 @@ import AnonymizedReporting from './pages/AnonymizedReporting';
 import AdminDoc from './pages/AdminDoc';
 import ApiDoc from './pages/ApiDoc';
 import Monitoring from './pages/Monitoring';
+import WebsiteCMS from './pages/WebsiteCMS';
 
 import EarningsOverview from './pages/EarningsOverview';
 import PayoutCycles from './pages/PayoutCycles';
@@ -139,6 +140,7 @@ function App() {
                     <Route path="admin-doc" element={<AdminDoc />} />
                     <Route path="api-doc" element={<ApiDoc />} />
                     <Route path="monitoring" element={<Monitoring />} />
+                    <Route path="website-cms" element={<WebsiteCMS />} />
                     <Route path="earnings-overview" element={<EarningsOverview />} />
                     <Route path="payout-cycles" element={<PayoutCycles />} />
                     <Route path="process-payouts" element={<ProcessPayouts />} />

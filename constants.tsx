@@ -17,6 +17,7 @@ import { PayoutCycleIcon } from './components/ui/icons/PayoutCycleIcon';
 import { ProcessPayoutsIcon } from './components/ui/icons/ProcessPayoutsIcon';
 import { PayoutHistoryIcon } from './components/ui/icons/PayoutHistoryIcon';
 import { GatewaySettingsIcon } from './components/ui/icons/GatewaySettingsIcon';
+import { CmsIcon } from './components/ui/icons/CmsIcon';
 
 // A helper type for nav links
 export interface NavLinkInfo {
@@ -52,6 +53,7 @@ export const NAV_LINKS: NavLinkInfo[] = [
     { name: 'Analytics', path: '/admin/analytics', icon: <AnalyticsIcon /> },
     { name: 'Push Notifications', path: '/admin/push-notifications', icon: <PushIcon /> },
     { name: 'Quiz & Evaluation', path: '/admin/quiz-evaluation', icon: <QuizIcon /> },
+    { name: 'Website CMS', path: '/admin/website-cms', icon: <CmsIcon /> },
     { name: 'Admin Doc', path: '/admin/admin-doc', icon: <DocIcon /> },
     { name: 'API Doc', path: '/admin/api-doc', icon: <ApiIcon /> },
     { name: 'Settings', path: '/admin/settings', icon: <SettingsIcon /> },
