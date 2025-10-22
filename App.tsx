@@ -74,8 +74,15 @@ import WhyChooseUs from './pages/website/WhyChooseUs';
 import WebsiteListeners from './pages/website/Listeners';
 import HowItWorks from './pages/website/HowItWorks';
 import Testimonials from './pages/website/Testimonials';
+import Blogs from './pages/website/Blogs';
+import BlogDetail from './pages/website/BlogDetail';
+import Contact from './pages/website/Contact';
+import Careers from './pages/website/Careers';
 import LandingPage from './pages/Landing';
 import NotFound from './pages/NotFound';
+import Signup from './pages/Signup';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import Terms from './pages/Terms';
 
 const { BrowserRouter, Routes, Route } = ReactRouterDOM;
 
@@ -96,9 +103,16 @@ function App() {
                   <Route path="listeners" element={<WebsiteListeners />} />
                   <Route path="how-it-works" element={<HowItWorks />} />
                   <Route path="testimonials" element={<Testimonials />} />
+                  <Route path="blogs" element={<Blogs />} />
+                  <Route path="blogs/:slug" element={<BlogDetail />} />
+                  <Route path="contact" element={<Contact />} />
+                  <Route path="careers" element={<Careers />} />
                 </Route>
 
                 <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                <Route path="/terms-and-conditions" element={<Terms />} />
 
                 {/* Authenticated Routes */}
                 <Route element={<AuthGuard />}>

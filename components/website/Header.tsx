@@ -8,9 +8,9 @@ const navLinks = [
     { name: 'Listeners', path: '/website/listeners' },
     { name: 'How It Works', path: '/website/how-it-works' },
     { name: 'Testimonials', path: '/website/testimonials' },
-    { name: 'Blogs', path: '#' },
-    { name: 'Contact', path: '#' },
-    { name: 'Careers', path: '#' },
+    { name: 'Blogs', path: '/website/blogs' },
+    { name: 'Contact', path: '/website/contact' },
+    { name: 'Careers', path: '/website/careers' },
 ];
 
 const playStoreLink = "https://play.google.com/store/apps/details?id=com.findsukoon.findsukoon&hl=en_IN";
