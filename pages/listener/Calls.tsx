@@ -32,9 +32,10 @@ const CallItem: React.FC<{ user: { name: string, avatarUrl: string }, type: 'Voi
 
 const Calls: React.FC = () => {
     const [activeTab, setActiveTab] = useState<'voice' | 'video'>('voice');
+    // FIX: Added 'as const' to 'type' and 'status' properties to ensure they are inferred as literal types, not strings, to match the CallItem component's props.
     const calls = [
-        { user: { name: 'Riya Sharma', avatarUrl: 'https://i.pravatar.cc/150?u=1' }, type: 'Voice', duration: '15:23', earnings: 150, status: 'Completed' },
-        { user: { name: 'Aman Gupta', avatarUrl: 'https://i.pravatar.cc/150?u=2' }, type: 'Video', duration: '05:10', earnings: 100, status: 'Canceled' },
+        { user: { name: 'Riya Sharma', avatarUrl: 'https://i.pravatar.cc/150?u=1' }, type: 'Voice' as const, duration: '15:23', earnings: 150, status: 'Completed' as const },
+        { user: { name: 'Aman Gupta', avatarUrl: 'https://i.pravatar.cc/150?u=2' }, type: 'Video' as const, duration: '05:10', earnings: 100, status: 'Canceled' as const },
     ];
 
     return (
