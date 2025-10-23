@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "description": "A responsive admin panel for the Find Sukoon emotional support platform, built with React and Tailwind CSS. It includes features for managing users, listeners, sessions, transactions, and more.",
+  "scripts": {
+    "build": "echo \"Build script placeholder: project is not configured to be built.\""
+  },
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
