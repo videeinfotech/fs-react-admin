@@ -169,25 +169,34 @@ const TestimonialsSection: React.FC = () => {
 
 const BlogsPreviewSection: React.FC = () => {
     const blogs = [
-        { title: "5 Tips to Overcome the Fear of Speaking a New Language", snippet: "Feeling nervous? You're not alone. Here are five practical tips to boost your confidence and start speaking...", image: "https://storage.googleapis.com/aistudio-hosting/find-sukoon/blog1.jpg" },
-        { title: "Understanding Culture Through Local Dialects", snippet: "Language is more than just words; it's a window into culture. Discover how learning local dialects can deepen your understanding...", image: "https://storage.googleapis.com/aistudio-hosting/find-sukoon/blog2.jpg" },
-        { title: "Why 1-on-1 Conversation is the Fastest Way to Learn", snippet: "Forget boring drills. We explore the science behind conversational learning and why it's so effective for fluency...", image: "https://storage.googleapis.com/aistudio-hosting/find-sukoon/blog3.jpg" },
+        { slug: "5-tips-to-overcome-fear", title: "5 Tips to Overcome the Fear of Speaking a New Language", excerpt: "Feeling nervous? You're not alone. Here are five practical tips to boost your confidence and start speaking...", image: "https://storage.googleapis.com/aistudio-hosting/find-sukoon/blog1.jpg" },
+        { slug: "culture-through-dialects", title: "Understanding Culture Through Local Dialects", excerpt: "Language is more than just words; it's a window into culture. Discover how learning local dialects can deepen your understanding...", image: "https://storage.googleapis.com/aistudio-hosting/find-sukoon/blog2.jpg" },
+        { slug: "why-1-on-1-is-fastest", title: "Why 1-on-1 Conversation is the Fastest Way to Learn", excerpt: "Forget boring drills. We explore the science behind conversational learning and why it's so effective for fluency...", image: "https://storage.googleapis.com/aistudio-hosting/find-sukoon/blog3.jpg" },
     ];
     return (
         <section className="py-20 bg-white dark:bg-gray-800">
             <div className="container mx-auto px-6 max-w-7xl">
                  <h2 className="text-3xl font-bold text-center mb-12">From Our Blog</h2>
                 <div className="grid md:grid-cols-3 gap-8">
-                    {blogs.map((blog, i) => (
-                        <div key={i} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden group">
-                            <img src={blog.image} alt={blog.title} className="w-full h-48 object-cover" />
+                    {blogs.map((blog) => (
+                        <div key={blog.slug} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden group">
+                            <ReactRouterDOM.Link to={`/website/blogs/${blog.slug}`}>
+                                <img src={blog.image} alt={blog.title} className="w-full h-48 object-cover" />
+                            </ReactRouterDOM.Link>
                             <div className="p-6">
-                                <h3 className="font-bold text-lg mb-2 group-hover:text-primary-600 transition-colors">{blog.title}</h3>
-                                <p className="text-sm text-gray-500 mb-4">{blog.snippet}</p>
-                                <a href="#" className="font-semibold text-primary-600">Read More &rarr;</a>
+                                <h3 className="font-bold text-lg mb-2 group-hover:text-primary-600 transition-colors">
+                                    <ReactRouterDOM.Link to={`/website/blogs/${blog.slug}`}>{blog.title}</ReactRouterDOM.Link>
+                                </h3>
+                                <p className="text-sm text-gray-500 mb-4">{blog.excerpt}</p>
+                                <ReactRouterDOM.Link to={`/website/blogs/${blog.slug}`} className="font-semibold text-primary-600">Read More &rarr;</ReactRouterDOM.Link>
                             </div>
                         </div>
                     ))}
+                </div>
+                <div className="text-center mt-12">
+                    <ReactRouterDOM.Link to="/website/blogs" className="px-8 py-3 text-primary-600 font-semibold bg-white rounded-full hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">
+                        View All Posts
+                    </ReactRouterDOM.Link>
                 </div>
             </div>
         </section>
