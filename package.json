@@ -1,24 +1,9 @@
 {
   "name": "find-sukoon-admin-panel",
+  "version": "1.0.0",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
+  "description": "A responsive admin panel for the Find Sukoon emotional support platform, built with React and Tailwind CSS. It includes features for managing users, listeners, sessions, transactions, and more.",
   "dependencies": {
-    "react": "^19.2.0",
-    "recharts": "3.0.0-alpha.10",
-    "react-router-dom": "^7.9.4",
-    "react-dom": "^19.2.0",
     "react-quill": "3.0.0-beta.2"
-  },
-  "devDependencies": {
-    "@types/node": "^22.14.0",
-    "@vitejs/plugin-react": "^5.0.0",
-    "typescript": "~5.8.2",
-    "vite": "^6.2.0"
   }
 }
