@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import * as ReactRouterDOM from 'react-router-dom';
 import { SearchIcon, EnvelopeIcon } from '../../components/ui/icons/OtherIcons';
 
-const mockBlogs = [
+export const mockBlogs = [
     { 
         slug: "5-tips-to-overcome-fear", 
         title: "5 Tips to Overcome the Fear of Speaking a New Language", 
@@ -12,7 +12,8 @@ const mockBlogs = [
         author: { name: "Priya Singh", avatar: "https://i.pravatar.cc/150?u=23" }, 
         date: "Oct 22, 2023", 
         readTime: "5 min read", 
-        category: "Learning Tips" 
+        category: "Learning Tips" ,
+        status: "Published"
     },
     { 
         slug: "culture-through-dialects", 
@@ -23,7 +24,8 @@ const mockBlogs = [
         author: { name: "Rohan Kapoor", avatar: "https://i.pravatar.cc/150?u=22" }, 
         date: "Oct 15, 2023", 
         readTime: "7 min read", 
-        category: "Culture" 
+        category: "Culture" ,
+        status: "Published"
     },
     { 
         slug: "why-1-on-1-is-fastest", 
@@ -34,7 +36,8 @@ const mockBlogs = [
         author: { name: "Diya Mehta", avatar: "https://i.pravatar.cc/150?u=21" }, 
         date: "Oct 08, 2023", 
         readTime: "6 min read", 
-        category: "App Updates" 
+        category: "App Updates" ,
+        status: "Draft"
     },
     { 
         slug: "common-mistakes-in-hindi", 
@@ -45,7 +48,8 @@ const mockBlogs = [
         author: { name: "Priya Singh", avatar: "https://i.pravatar.cc/150?u=23" }, 
         date: "Oct 01, 2023", 
         readTime: "4 min read", 
-        category: "Learning Tips" 
+        category: "Learning Tips",
+        status: "Published" 
     },
 ];
 

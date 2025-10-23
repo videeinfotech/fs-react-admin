@@ -4,6 +4,7 @@ import AboutUsEditor from '../components/cms/AboutUsEditor';
 import SeoEditor from '../components/cms/SeoEditor';
 import FooterEditor from '../components/cms/FooterEditor';
 import CreatePageEditor from '../components/cms/CreatePageEditor';
+import BlogsEditor from '../components/cms/BlogsEditor';
 
 type Tab = 'homepage' | 'about' | 'why-choose-us' | 'listeners' | 'testimonials' | 'blogs' | 'contact' | 'careers' | 'how-it-works' | 'app-info' | 'seo' | 'footer' | 'create-page';
 
@@ -40,6 +41,7 @@ const WebsiteCMS: React.FC = () => {
             case 'seo': return <SeoEditor />;
             case 'footer': return <FooterEditor />;
             case 'create-page': return <CreatePageEditor />;
+            case 'blogs': return <BlogsEditor />;
             default:
                 const tab = tabs.find(t => t.id === activeTab);
                 return <PlaceholderEditor pageName={tab?.name || 'Page'} />;
