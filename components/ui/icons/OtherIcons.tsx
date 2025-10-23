@@ -188,6 +188,12 @@ export const PlayCircleIcon: React.FC<IconProps> = ({ className = 'w-6 h-6' }) =
     </svg>
 );
 
+export const BriefcaseIcon: React.FC<IconProps> = ({ className = 'w-6 h-6' }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 14.15v4.075a3.375 3.375 0 01-3.375 3.375H7.125a3.375 3.375 0 01-3.375-3.375V14.15M12 18.375V12.75m0 0a3.375 3.375 0 013.375-3.375h1.5a3.375 3.375 0 013.375 3.375m-4.875 0h-1.5a3.375 3.375 0 01-3.375-3.375h1.5A3.375 3.375 0 0112 12.75zm0 0v-2.625A3.375 3.375 0 008.625 6.75H7.125a3.375 3.375 0 00-3.375 3.375v2.625" />
+    </svg>
+);
+
 // FIX: Added MapPinIcon component to fix missing export error in Contact.tsx
 export const MapPinIcon: React.FC<IconProps> = ({ className = 'w-6 h-6' }) => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
