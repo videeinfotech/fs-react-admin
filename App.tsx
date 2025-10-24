@@ -86,106 +86,108 @@ import Signup from './pages/Signup';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import Terms from './pages/Terms';
 
-const { Routes, Route } = ReactRouterDOM;
+const { Routes, Route, BrowserRouter } = ReactRouterDOM;
 
 function App() {
   return (
     <ThemeProvider>
       <AuthProvider>
         <ToastProvider>
-          <CallProvider>
-            <Routes>
-              <Route path="/" element={<LandingPage />} />
-              
-              <Route path="/website" element={<WebsiteLayout />}>
-                <Route index element={<WebsiteHome />} />
-                <Route path="about" element={<About />} />
-                <Route path="why-choose-us" element={<WhyChooseUs />} />
-                <Route path="listeners" element={<WebsiteListeners />} />
-                <Route path="how-it-works" element={<HowItWorks />} />
-                <Route path="testimonials" element={<Testimonials />} />
-                <Route path="blogs" element={<Blogs />} />
-                <Route path="blogs/:slug" element={<BlogDetail />} />
-                <Route path="contact" element={<Contact />} />
-                <Route path="careers" element={<Careers />} />
-              </Route>
-
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-              <Route path="/terms-and-conditions" element={<Terms />} />
-
-              {/* Authenticated Routes */}
-              <Route element={<AuthGuard />}>
-                {/* Admin Routes */}
-                <Route path="/admin" element={<Layout />}>
-                  <Route index element={<Dashboard />} />
-                  <Route path="users" element={<UsersList />} />
-                  <Route path="users/:id" element={<UserDetails />} />
-                  <Route path="listeners" element={<ListenersList />} />
-                  <Route path="listeners/:id" element={<ListenerDetails />} />
-                  <Route path="wallet" element={<Wallet />} />
-                  <Route path="sessions" element={<Sessions />} />
-                  <Route path="sessions/:id" element={<SessionDetails />} />
-                  <Route path="live-sessions" element={<LiveSessions />} />
-                  <Route path="feedback" element={<Feedback />} />
-                  <Route path="tickets" element={<Tickets />} />
-                  <Route path="tickets/:id" element={<TicketDetails />} />
-                  <Route path="reports" element={<Reports />} />
-                  <Route path="analytics" element={<Analytics />} />
-                  <Route path="settings" element={<Settings />} />
-                  <Route path="push-notifications" element={<PushNotifications />} />
-                  <Route path="quiz-evaluation" element={<QuizEvaluation />} />
-                  <Route path="anonymized-reporting" element={<AnonymizedReporting />} />
-                  <Route path="admin-doc" element={<AdminDoc />} />
-                  <Route path="api-doc" element={<ApiDoc />} />
-                  <Route path="monitoring" element={<Monitoring />} />
-                  <Route path="website-cms" element={<WebsiteCMS />} />
-                  <Route path="earnings-overview" element={<EarningsOverview />} />
-                  <Route path="payout-cycles" element={<PayoutCycles />} />
-                  <Route path="process-payouts" element={<ProcessPayouts />} />
-                  <Route path="payout-history" element={<PayoutHistory />} />
-                  <Route path="gateway-settings" element={<GatewaySettings />} />
-                </Route>
+          <BrowserRouter>
+            <CallProvider>
+              <Routes>
+                <Route path="/" element={<LandingPage />} />
                 
-                {/* User Routes */}
-                <Route path="/user" element={<UserLayout />}>
-                    <Route index element={<UserHome />} />
-                    <Route path="home" element={<UserHome />} />
-                    <Route path="find" element={<FindListener />} />
-                    <Route path="listener/:id" element={<UserListenerProfile />} />
-                    <Route path="chats" element={<UserChats />} />
-                    <Route path="chat/:sessionId" element={<UserChat />} />
-                    <Route path="calls" element={<UserCalls />} />
-                    <Route path="calling/:listenerId" element={<UserCalling />} />
-                    <Route path="active-call/:sessionId" element={<UserActiveCall />} />
-                    <Route path="call-summary/:sessionId" element={<UserCallSummary />} />
-                    <Route path="wallet" element={<UserWallet />} />
-                    <Route path="feedback/:sessionId" element={<UserFeedback />} />
-                    <Route path="profile" element={<UserProfile />} />
+                <Route path="/website" element={<WebsiteLayout />}>
+                  <Route index element={<WebsiteHome />} />
+                  <Route path="about" element={<About />} />
+                  <Route path="why-choose-us" element={<WhyChooseUs />} />
+                  <Route path="listeners" element={<WebsiteListeners />} />
+                  <Route path="how-it-works" element={<HowItWorks />} />
+                  <Route path="testimonials" element={<Testimonials />} />
+                  <Route path="blogs" element={<Blogs />} />
+                  <Route path="blogs/:slug" element={<BlogDetail />} />
+                  <Route path="contact" element={<Contact />} />
+                  <Route path="careers" element={<Careers />} />
                 </Route>
 
-                {/* Listener Routes */}
-                <Route path="/listener" element={<ListenerLayout />}>
-                  <Route index element={<ListenerDashboard />} />
-                  <Route path="dashboard" element={<ListenerDashboard />} />
-                  <Route path="sessions" element={<ListenerActiveSessions />} />
-                  <Route path="chats" element={<ListenerChats />} />
-                  <Route path="chat/:sessionId" element={<ListenerChat />} />
-                  <Route path="calls" element={<ListenerCalls />} />
-                  <Route path="active-call/:sessionId" element={<ListenerActiveCall />} />
-                  <Route path="call-summary/:sessionId" element={<ListenerCallSummary />} />
-                  <Route path="earnings" element={<ListenerEarnings />} />
-                  <Route path="reviews" element={<ListenerReviews />} />
-                  <Route path="quiz" element={<ListenerQuiz />} />
-                  <Route path="analytics" element={<ListenerAnalytics />} />
-                  <Route path="profile" element={<ListenerProfile />} />
-                </Route>
-              </Route>
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                <Route path="/terms-and-conditions" element={<Terms />} />
 
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </CallProvider>
+                {/* Authenticated Routes */}
+                <Route element={<AuthGuard />}>
+                  {/* Admin Routes */}
+                  <Route path="/admin" element={<Layout />}>
+                    <Route index element={<Dashboard />} />
+                    <Route path="users" element={<UsersList />} />
+                    <Route path="users/:id" element={<UserDetails />} />
+                    <Route path="listeners" element={<ListenersList />} />
+                    <Route path="listeners/:id" element={<ListenerDetails />} />
+                    <Route path="wallet" element={<Wallet />} />
+                    <Route path="sessions" element={<Sessions />} />
+                    <Route path="sessions/:id" element={<SessionDetails />} />
+                    <Route path="live-sessions" element={<LiveSessions />} />
+                    <Route path="feedback" element={<Feedback />} />
+                    <Route path="tickets" element={<Tickets />} />
+                    <Route path="tickets/:id" element={<TicketDetails />} />
+                    <Route path="reports" element={<Reports />} />
+                    <Route path="analytics" element={<Analytics />} />
+                    <Route path="settings" element={<Settings />} />
+                    <Route path="push-notifications" element={<PushNotifications />} />
+                    <Route path="quiz-evaluation" element={<QuizEvaluation />} />
+                    <Route path="anonymized-reporting" element={<AnonymizedReporting />} />
+                    <Route path="admin-doc" element={<AdminDoc />} />
+                    <Route path="api-doc" element={<ApiDoc />} />
+                    <Route path="monitoring" element={<Monitoring />} />
+                    <Route path="website-cms" element={<WebsiteCMS />} />
+                    <Route path="earnings-overview" element={<EarningsOverview />} />
+                    <Route path="payout-cycles" element={<PayoutCycles />} />
+                    <Route path="process-payouts" element={<ProcessPayouts />} />
+                    <Route path="payout-history" element={<PayoutHistory />} />
+                    <Route path="gateway-settings" element={<GatewaySettings />} />
+                  </Route>
+                  
+                  {/* User Routes */}
+                  <Route path="/user" element={<UserLayout />}>
+                      <Route index element={<UserHome />} />
+                      <Route path="home" element={<UserHome />} />
+                      <Route path="find" element={<FindListener />} />
+                      <Route path="listener/:id" element={<UserListenerProfile />} />
+                      <Route path="chats" element={<UserChats />} />
+                      <Route path="chat/:sessionId" element={<UserChat />} />
+                      <Route path="calls" element={<UserCalls />} />
+                      <Route path="calling/:listenerId" element={<UserCalling />} />
+                      <Route path="active-call/:sessionId" element={<UserActiveCall />} />
+                      <Route path="call-summary/:sessionId" element={<UserCallSummary />} />
+                      <Route path="wallet" element={<UserWallet />} />
+                      <Route path="feedback/:sessionId" element={<UserFeedback />} />
+                      <Route path="profile" element={<UserProfile />} />
+                  </Route>
+
+                  {/* Listener Routes */}
+                  <Route path="/listener" element={<ListenerLayout />}>
+                    <Route index element={<ListenerDashboard />} />
+                    <Route path="dashboard" element={<ListenerDashboard />} />
+                    <Route path="sessions" element={<ListenerActiveSessions />} />
+                    <Route path="chats" element={<ListenerChats />} />
+                    <Route path="chat/:sessionId" element={<ListenerChat />} />
+                    <Route path="calls" element={<ListenerCalls />} />
+                    <Route path="active-call/:sessionId" element={<ListenerActiveCall />} />
+                    <Route path="call-summary/:sessionId" element={<ListenerCallSummary />} />
+                    <Route path="earnings" element={<ListenerEarnings />} />
+                    <Route path="reviews" element={<ListenerReviews />} />
+                    <Route path="quiz" element={<ListenerQuiz />} />
+                    <Route path="analytics" element={<ListenerAnalytics />} />
+                    <Route path="profile" element={<ListenerProfile />} />
+                  </Route>
+                </Route>
+
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </CallProvider>
+          </BrowserRouter>
         </ToastProvider>
       </AuthProvider>
     </ThemeProvider>
