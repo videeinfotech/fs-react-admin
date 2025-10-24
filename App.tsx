@@ -86,14 +86,13 @@ import Signup from './pages/Signup';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import Terms from './pages/Terms';
 
-const { Routes, Route, BrowserRouter } = ReactRouterDOM;
+const { Routes, Route } = ReactRouterDOM;
 
 function App() {
   return (
     <ThemeProvider>
       <AuthProvider>
         <ToastProvider>
-          <BrowserRouter>
             <CallProvider>
               <Routes>
                 <Route path="/" element={<LandingPage />} />
@@ -187,7 +186,6 @@ function App() {
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </CallProvider>
-          </BrowserRouter>
         </ToastProvider>
       </AuthProvider>
     </ThemeProvider>
